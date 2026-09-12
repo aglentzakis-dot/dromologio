@@ -22,9 +22,13 @@ header{position:sticky;top:0;z-index:5;background:var(--brand);color:var(--onbra
 .hbtn{position:relative;flex:none;background:none;border:0;color:var(--onbrand);width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:21px}
 .hbtn .dot{position:absolute;top:3px;right:1px;background:var(--accent);color:var(--onaccent);font-size:11px;font-weight:800;border-radius:9px;min-width:18px;height:18px;line-height:18px;text-align:center;padding:0 4px}
 .hbtn .dot.red{background:var(--red);color:#fff}
+.hbtn.warn{color:var(--accent)}
+.hbtn.bad{color:#FF8A7A}
+.hbtn.ok{color:#9FE3C4}
+.hbtn .pipdot{position:absolute;bottom:5px;right:6px;width:9px;height:9px;border-radius:50%;background:currentColor}
 main{max-width:720px;margin:0 auto;padding:14px 14px 120px}
 nav{position:fixed;left:0;right:0;bottom:0;z-index:5;transition:none;background:var(--card);border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom)}
-nav button{flex:1;min-width:0;background:none;border:0;padding:8px 2px 9px;color:var(--muted);font-size:clamp(9.5px,2.8vw,12px);display:flex;flex-direction:column;align-items:center;gap:2px;position:relative}
+nav button{flex:1;min-width:0;background:none;border:0;padding:7px 1px 8px;color:var(--muted);font-size:clamp(8.5px,2.35vw,11.5px);letter-spacing:-.2px;display:flex;flex-direction:column;align-items:center;gap:2px;position:relative}
 nav button.on{color:var(--ink);font-weight:800}
 nav .ndot{position:absolute;top:2px;left:50%;margin-left:4px;background:var(--accent);color:var(--onaccent);font-size:10.5px;font-weight:800;border-radius:9px;min-width:17px;height:17px;line-height:17px;text-align:center;padding:0 4px}
 nav .ndot.red{background:var(--red);color:#fff}
@@ -51,7 +55,7 @@ nav button.on::before{content:"";position:absolute;top:0;left:30%;right:30%;heig
 .tag.late,.tag.noloc{background:color-mix(in srgb,var(--red) 15%,var(--card));color:var(--red)}
 .tag.progress{background:color-mix(in srgb,var(--accent) 30%,var(--card));color:var(--ink)}
 .tag.done,.tag.paid{background:color-mix(in srgb,var(--green) 15%,var(--card));color:var(--green)}
-.today-date{font-size:32px;font-weight:850;line-height:1.1;margin:8px 2px 4px;letter-spacing:-.3px}
+.today-date{font-size:clamp(19px,6.2vw,30px);font-weight:850;line-height:1.15;margin:8px 2px 4px;letter-spacing:-.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .today-sub{color:var(--muted);margin:0 2px}
 .routecta{width:100%;margin:16px 0 4px;border:0;border-radius:14px;background:var(--brand);color:var(--onbrand);text-align:left;padding:16px;display:flex;gap:14px;align-items:center}
 .routecta svg{color:var(--accent);flex:none}
@@ -62,6 +66,14 @@ nav button.on::before{content:"";position:absolute;top:0;left:30%;right:30%;heig
 .search{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;font:inherit;font-size:16px;background:var(--card);color:var(--ink)}
 .avatar{flex:none;width:38px;height:38px;border-radius:50%;background:var(--paper);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
 .avatar.busy{background:var(--accent);color:var(--onaccent)}
+.whos{display:inline-flex;gap:3px;vertical-align:middle;margin-left:2px}
+.who{width:20px;height:20px;border-radius:50%;color:#fff;font-size:10.5px;font-weight:800;display:flex;align-items:center;justify-content:center;letter-spacing:-.3px}
+.pplrow{display:flex;flex-wrap:wrap;gap:8px}
+.pbtn{border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:20px;padding:7px 13px 7px 8px;font-weight:750;font-size:14px;display:flex;align-items:center;gap:7px}
+.pbtn .dotc{width:18px;height:18px;border-radius:50%}
+.pbtn.on{border-color:transparent;color:#fff}
+.goto{flex:none;width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--loc);display:flex;align-items:center;justify-content:center}
+.nearbadge{color:var(--loc);font-weight:700}
 .stars{display:flex;gap:2px;align-items:center}
 .stars button{background:none;border:0;padding:2px;line-height:1;color:var(--line)}
 .stars button.on{color:var(--accent)}
@@ -77,6 +89,24 @@ nav button.on::before{content:"";position:absolute;top:0;left:30%;right:30%;heig
 .back{background:none;border:0;color:var(--muted);font-weight:700;padding:4px 0;margin-bottom:6px}
 .cl-name{font-size:26px;font-weight:850;line-height:1.15;margin:0 2px 2px;overflow-wrap:anywhere}
 .actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:8px;margin:14px 0}
+.actions.four{grid-template-columns:repeat(4,1fr);gap:6px}
+.actions.four .act{padding:9px 2px;font-size:11.5px;gap:3px}
+.act.off{opacity:.4;pointer-events:none}
+.twobtn{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 14px}
+.twobtn .btn{width:100%}
+.row.ent{align-items:center;padding:10px 14px}
+.entic{flex:none;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px}
+.entic.in{background:color-mix(in srgb,var(--green) 16%,var(--card));color:var(--green)}
+.entic.out{background:color-mix(in srgb,var(--red) 14%,var(--card));color:var(--red)}
+.amt{flex:none;font-weight:800;font-size:15px}
+.amt.in{color:var(--green)}
+.amt.out{color:var(--red)}
+.bigsum{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:4px 0 2px}
+.sumcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.sumcard span{display:block;color:var(--muted);font-size:13px}
+.sumcard b{font-size:20px;font-weight:850;letter-spacing:-.3px}
+.sumcard b.in{color:var(--green)}
+.sumcard b.out{color:var(--red)}
 .act{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:13px;font-weight:700;text-decoration:none;color:var(--ink)}
 .kv{display:flex;justify-content:space-between;gap:14px;padding:11px 14px;border-bottom:1px solid var(--line)}
 .kv:last-child{border-bottom:0}
@@ -85,6 +115,15 @@ nav button.on::before{content:"";position:absolute;top:0;left:30%;right:30%;heig
 .kv b.money{color:var(--green);font-size:16px}
 .kv b.owe{color:var(--red);font-size:16px}
 .notes{padding:12px 14px;white-space:pre-wrap;overflow-wrap:anywhere}
+.filterbar{display:flex;align-items:center;gap:9px;width:100%;margin-bottom:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:11px 14px;font-weight:750;font-size:15px}
+.filterbar i{font-style:normal;color:var(--muted)}
+.filterbar .fcnt{margin-left:auto;background:var(--paper);border-radius:20px;padding:2px 10px;font-size:13px;color:var(--muted)}
+.filterbar svg{color:var(--muted)}
+.optrow{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);background:none;color:var(--ink);padding:13px 14px;font-size:15.5px;font-weight:600}
+.optrow:last-child{border-bottom:0}
+.optrow.on{font-weight:850;background:color-mix(in srgb,var(--accent) 14%,var(--card))}
+.optrow .tick{margin-left:auto;color:var(--green);font-weight:900}
+.optrow .n{color:var(--muted);font-weight:600;font-size:13.5px}
 .chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:none;position:relative}
 .chips::-webkit-scrollbar{display:none}
 .chip{white-space:nowrap;border:1px solid var(--line);background:var(--card);border-radius:20px;padding:7px 14px;font-size:14px}
@@ -129,6 +168,10 @@ h3.sub{font-size:16px;margin:24px 0 4px}
 .seg button.on{background:var(--brand);color:var(--onbrand)}
 .seg.prio button{font-weight:850;font-size:15.5px;color:var(--ink)}
 .seg.prio button[data-v="1"].on{background:var(--muted);color:#fff}
+.kinds{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.kb{border:1.5px solid var(--line);background:var(--card);border-radius:10px;padding:10px 4px;font-weight:700;font-size:13.5px;color:var(--ink)}
+.kb.in.on{background:var(--green);border-color:var(--green);color:#fff}
+.kb.out.on{background:var(--red);border-color:var(--red);color:#fff}
 .seg.prio button[data-v="2"].on{background:var(--green);color:#fff}
 .seg.prio button[data-v="3"]{color:var(--red)}
 .seg.prio button[data-v="3"].on{background:var(--red);color:#fff}
@@ -257,6 +300,7 @@ body.overnav nav{z-index:22;box-shadow:0 -2px 10px rgba(0,0,0,.25)}
 <header class="zm">
   <svg class="mark" viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="10" fill="var(--accent)"/><path d="M8 31c3-7 15-6 15-14 0-4-3-6-3-6" stroke="var(--brand)" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M8 31c3-7 15-6 15-14" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="2.2 2.4" fill="none"/><path d="M20 4.5c-3 0-5 2.2-5 4.9 0 3.6 5 8 5 8s5-4.4 5-8c0-2.7-2-4.9-5-4.9z" fill="var(--red)"/><circle cx="20" cy="9.4" r="1.8" fill="#fff"/></svg>
   <div class="htitle"><h1 id="appTitle">Δρομολόγιο</h1><small id="appTag"></small></div>
+  <button class="hbtn" data-act="backup" id="bkBtn"></button>
   <button class="hbtn" data-act="lang" id="langBtn"></button>
   <button class="hbtn" data-act="settings" id="gearBtn"></button>
 </header>
@@ -330,7 +374,7 @@ const inFrame=()=>{try{return window.self!==window.top}catch(e){return true}};
 /* ---------- Γλώσσα ---------- */
 let LANG="el";
 function T(s,v){let r=(LANG==="en"&&EN[s])||s;if(r.includes("|"))r=r.split("|")[0];if(v)for(const k in v)r=r.split("{"+k+"}").join(v[k]);return r}
-const EN={"1 μέρα πριν": "1 day before", "{n} αλλαγές από το τελευταίο αντίγραφο ασφαλείας.": "{n} changes since the last backup.", "{n} αλλαγή από το τελευταίο αντίγραφο ασφαλείας.": "{n} change since the last backup.", "{n} ανοιχτές": "{n} open", "{n} ανοιχτές εργασίες": "{n} open tasks", "{n} ανοιχτές εργασίες δεν έχουν τοποθεσία και δεν μπήκαν στον υπολογισμό.": "{n} open tasks have no location and were left out.", "{n} ανοιχτή": "{n} open", "{n} ανοιχτή εργασία": "{n} open task", "{n} ανοιχτή εργασία δεν έχει τοποθεσία και δεν μπήκε στον υπολογισμό.": "{n} open task has no location and was left out.", "{n} λεπτά πριν": "{n} minutes before", "{n} στάσεις": "{n} stops", "{n} στάση": "{n} stop", "{n} υπήρχαν ήδη.": "{n} already existed.", "{n} υπήρχε ήδη.": "{n} already existed.", "{n} ώρα πριν": "{n} hour before", "{n} ώρες πριν": "{n} hours before", "«{b}», μπαίνει αυτόματα ως αφετηρία στη διαδρομή.": "“{b}” is used automatically as the route start.", "Άκυρο": "Cancel", "Άλλος προορισμός": "Other destination", "Άνοιγμα διαδρομής στον χάρτη": "Open route in maps", "Έγινε": "Done", "Έδρα": "Base", "Έληξαν, δεν τις έχεις διαβάσει": "Expired, not read yet", "Έληξε": "Expired", "Ένα κείμενο και μια ώρα": "A note and a time", "Έναρξη": "Start", "Έξοδος από την εφαρμογή;": "Exit the app?", "Έτοιμα θέματα": "Ready themes", "Όλα διαγράφηκαν.": "Everything was deleted.", "Όλες": "All", "Όλοι οι υπόλοιποι": "Everyone else", "Όνομα": "Name", "Όνομα εφαρμογής": "App name", "Όρισε σπίτι ή έδρα": "Set home or base", "Όρισε σπίτι ή έδρα στις ρυθμίσεις για να μπαίνει αυτόματα εδώ.": "Set a home or base in settings to fill this in automatically.", "Όροφος, κουδούνι": "Floor, doorbell", "Όχι": "No", "Ώρα έναρξης εργασίας": "Task start time", "Α": "A", "ΑΦΜ": "Tax number", "Ακριβής": "Exact", "Ακριβής θέση": "Exact location", "Ακριβής θέση αποθηκευμένη.": "Exact location saved.", "Αλλαγές από τότε: {n}.": "Changes since then: {n}.", "Αλλαγή": "Change", "Αλλαγή σπιτιού ή έδρας": "Change home or base", "Αλλαγή υπενθύμισης": "Edit reminder", "Αναζήτηση πελάτη": "Search clients", "Αναζήτηση…": "Searching…", "Ανεξόφλητα": "Unpaid", "Ανοιχτές": "Open", "Ανοιχτές εργασίες": "Open tasks", "Αντέγραψε όλο το κείμενο του μηνύματος με το αντίγραφο και επικόλλησέ το εδώ.": "Copy the whole text of the backup email and paste it here.", "Αντίγραφο ασφαλείας": "Backup", "Αντίγραφο ασφαλείας και επαναφορά": "Backup and restore", "Αντίγραφο τώρα": "Back up now", "Απευθείας περίπου {a}, με {s} περίπου {b}, δηλαδή {c} επιπλέον.": "Direct about {a}; with {s} about {b}, that is {c} extra.", "Απλή υπενθύμιση": "Simple reminder", "Αποθήκευση": "Save", "Αποθήκευση αρχείου στο κινητό": "Save file on phone", "Αποθηκεύτηκε.": "Saved.", "Αποστολή στο ταχυδρομείο": "Send by email", "Αποστολή τώρα": "Send now", "Αποστολή…": "Sending…", "Από": "From", "Από επαφές": "From contacts", "Αριθμός": "Number", "Αρχείο": "File", "Αρχείο ολοκληρωμένων και διαγραμμένων": "Completed and deleted archive", "Αρχείο υπενθυμίσεων": "Reminder archive", "Αυτόματη αποστολή κάθε {n} αλλαγές": "Send automatically every {n} changes", "Αυτόματη συμπλήρωση": "Fill in automatically", "Αφετηρία": "Start", "Αφετηρία η θέση σου.": "Starting from your location.", "Αφετηρία: {b}.": "Start: {b}.", "Β": "B", "Βάλ' την στη διαδρομή": "Add to route", "Βάλε τοποθεσία: διεύθυνση, σημείο στον χάρτη ή «Είμαι εκεί τώρα».": "Add a location: address, map point or “I'm here now”.", "Βρέθηκαν {c} πελάτες, {k} εργασίες και {r} υπενθυμίσεις.": "Found {c} clients, {k} tasks and {r} reminders.", "Βρες τι πιάνω στο δρόμο": "Find what's on my way", "Γλώσσα": "Language", "Γράμματα": "Text", "Γράψε ή πες πρώτα τι θες να κάνεις.": "First type or say what you want to do.", "Γράψε από πού ξεκινάς ή όρισε έδρα στις ρυθμίσεις.": "Enter where you start or set a base in settings.", "Γράψε από πού ξεκινάς.": "Enter where you start.", "Γράψε περιοχή ή πάτα το εικονίδιο για να διαλέξεις από τις δουλειές σου.": "Type an area or tap the icon to pick from your tasks.", "Γράψε πού πηγαίνεις.": "Enter where you're going.", "Γράψε πρώτα διεύθυνση.": "Enter an address first.", "Γράψε σωστό ηλεκτρονικό ταχυδρομείο.": "Enter a valid email address.", "Γράψε τι να σου θυμίσω.": "Enter what to remind you of.", "Γράψε τι πρέπει να γίνει.": "Enter what needs to be done.", "Γράψε όνομα πελάτη.": "Enter the client's name.", "Γράψε όνομα.": "Enter a name.", "Δάσος": "Forest", "Δειλινό": "Dusk", "Δεν έχει κρατηθεί ακόμα αντίγραφο από αυτή τη συσκευή.": "No backup has been made from this device yet.", "Δεν έχει οριστεί. Από εδώ ξεκινάς συνήθως τις δουλειές.": "Not set. This is where you usually start your jobs.", "Δεν έχεις εργασίες ακόμα. Πάτα + για να προσθέσεις.": "No tasks yet. Tap + to add one.", "Δεν έχεις κρατήσει ακόμα αντίγραφο ασφαλείας.": "You haven't made a backup yet.", "Δεν έχεις πελάτες ακόμα. Πάτα + για να προσθέσεις τον πρώτο ή φέρε πελάτες από τις επαφές σου.": "No clients yet. Tap + to add the first one, or bring them in from your contacts.", "Δεν ακούστηκε κάτι. Δοκίμασε ξανά.": "Nothing was heard. Try again.", "Δεν αναγνωρίστηκαν στοιχεία. Γράψε λίγο πιο αναλυτικά.": "Nothing recognised. Try adding a bit more detail.", "Δεν αναγνωρίστηκαν συντεταγμένες σε αυτό το κείμενο.": "No coordinates recognised in this text.", "Δεν βρέθηκαν δεδομένα της εφαρμογής σε αυτό το αρχείο.": "No app data found in this file.", "Δεν βρέθηκε η αφετηρία «{x}». Διάλεξε από τη λίστα.": "Start “{x}” not found. Pick one from the list.", "Δεν βρέθηκε η διεύθυνση. Δοκίμασε στους Χάρτες Google ή διάλεξε στον χάρτη.": "Address not found. Try Google Maps or pick on the map.", "Δεν βρέθηκε θέση. Έλεγξε ότι η τοποθεσία του κινητού είναι ανοιχτή.": "No location found. Check that location is on.", "Δεν βρέθηκε ο προορισμός «{x}». Διάλεξε από τη λίστα.": "Destination “{x}” not found. Pick one from the list.", "Δεν δόθηκε άδεια για το μικρόφωνο.": "Microphone permission was not given.", "Δεν δόθηκε πρόσβαση στις επαφές.": "Contacts access was not given.", "Δεν υπάρχει σύνδεση στο διαδίκτυο. Δοκίμασε ξανά ή αποθήκευσε αρχείο.": "No internet connection. Try again or save a file.", "Δεν υπάρχουν ακόμα ολοκληρωμένες δουλειές.": "No completed jobs yet.", "Δεν υπάρχουν ανοιχτές δουλειές με τοποθεσία.": "No open tasks with a location.", "Διάλεξε από τις δουλειές": "Pick from tasks", "Διάλεξε δουλειά και δες τι άλλο πιάνεις στο δρόμο": "Pick a task and see what else is on the way", "Διάλεξε ημερομηνία και ώρα.": "Pick a date and time.", "Διάλεξε τη δουλειά που πας να κάνεις. Θα δεις τι άλλο πιάνεις στο δρόμο.": "Pick the task you're heading to. You'll see what else is on the way.", "Διάλεξε το σωστό αποτέλεσμα:": "Pick the right result:", "Διαγράφηκε": "Deleted", "Διαγραφή": "Delete", "Διαγραφή όλων των δεδομένων": "Delete all data", "Διαδρομή": "Route", "Διεύθυνση": "Address", "Δικά σου χρώματα": "Your colours", "Δικές μου τοποθεσίες": "My places", "Δουλειές συνολικά": "Total jobs", "Δρομολόγιο": "Route Planner", "Είμαι εκεί τώρα": "I'm here now", "Εδώ μένουν όσες ολοκλήρωσες ή διέγραψες, για να τις επαναφέρεις αν έγινε λάθος.": "Completed or deleted reminders stay here, so you can restore them if needed.", "Εισπράχθηκαν συνολικά": "Total received", "Εκκρεμεί": "Pending", "Εκπρόθεσμες": "Overdue", "Εκπρόθεσμη": "Overdue", "Εμφάνιση εφαρμογής": "Appearance", "Εντάξει": "OK", "Εντοπισμός θέσης…": "Finding location…", "Εξοφλήθηκε": "Paid", "Επανάληψη": "Repeat", "Επαναφορά": "Restore", "Επαναφορά από αρχείο": "Restore from file", "Επαναφορά από το κείμενο": "Restore from text", "Επαναφορά αρχικής εμφάνισης": "Reset appearance", "Επαφές": "Contacts", "Επεξεργασία": "Edit", "Επεξεργασία εργασίας": "Edit task", "Επεξεργασία πελάτη": "Edit client", "Επεξεργασία τοποθεσίας": "Edit place", "Επεξεργασία…": "Working…", "Επικόλληση αντιγράφου από το ταχυδρομείο": "Paste a backup from email", "Επιλογή στον χάρτη": "Pick on map", "Επωνυμία επιχείρησης": "Company name", "Επόμενες υπενθυμίσεις": "Upcoming reminders", "Επόμενες, με σειρά ώρας": "Upcoming, by time", "Επόμενη": "Next", "Εργασίες": "Tasks", "Εύρεση διεύθυνσης": "Find address", "Η αναζήτηση χρειάζεται σύνδεση στο διαδίκτυο.": "Search needs an internet connection.", "Η αποστολή απέτυχε, κωδικός σφάλματος {c}.": "Sending failed, error code {c}.", "Η αποστολή στο ταχυδρομείο δεν έχει ενεργοποιηθεί ακόμα στην εφαρμογή.": "Email sending hasn't been enabled in the app yet.", "Η αποστολή στο ταχυδρομείο θα λειτουργήσει μόλις ενεργοποιηθεί στην εφαρμογή από τον διαχειριστή.": "Email sending will work once the administrator enables it in the app.", "Η διεύθυνση βρέθηκε. Έλεγξέ τη στον χάρτη αν θέλεις.": "Address found. Check it on the map if you like.", "Η εργασία δεν έχει τοποθεσία και δεν θα μπαίνει στις διαδρομές. Να αποθηκευτεί έτσι;": "This task has no location and won't appear in routes. Save anyway?", "Η εργασία διαγράφηκε.": "Task deleted.", "Η εργασία ξεκινάει σε {n} λεπτά": "Task starts in {n} minutes", "Η εργασία ολοκληρώθηκε.": "Task completed.", "Η εργασία προστέθηκε.": "Task added.", "Η θέση άργησε να βρεθεί. Βγες σε ανοιχτό χώρο ή δοκίμασε ξανά.": "Location took too long. Go outdoors or try again.", "Η θέση αποθηκεύτηκε στη φόρμα.": "Location added to the form.", "Η θέση λειτουργεί μόνο όταν η σελίδα ανοίγει με ασφαλή σύνδεση.": "Location only works over a secure connection.", "Η θέση μου": "My location", "Η κοινοποίηση δεν ολοκληρώθηκε.": "Sharing didn't complete.", "Η λήξη είναι πριν από την έναρξη.": "The end is before the start.", "Η συσκευή δεν δίνει θέση.": "This device doesn't provide location.", "Η υπαγόρευση δεν υποστηρίζεται εδώ. Πάτα το μικρόφωνο του πληκτρολογίου σου.": "Dictation isn't supported here. Use your keyboard's microphone.", "Η υπενθύμιση ενημερώθηκε.": "Reminder updated.", "Η υπενθύμιση επανήλθε.": "Reminder restored.", "Η υπενθύμιση προστέθηκε.": "Reminder added.", "Ηλεκτρονικό ταχυδρομείο": "Email", "Ημέρα και ώρα": "Date and time", "Θάλασσα": "Sea", "Θέση για τις διαδρομές": "Location for routes", "Θέση στις διαδρομές": "Location in routes", "Θα αλλάξουν:": "These will change:", "Θα αντικαταστήσουν τα τωρινά δεδομένα. Συνέχεια;": "They will replace the current data. Continue?", "Θα χρησιμοποιηθεί το κέντρο της περιοχής {a}. Για ακρίβεια βάλε διεύθυνση ή σημείο.": "The centre of {a} will be used. For accuracy add an address or point.", "Ιστορικό δουλειών": "Job history", "Κάθε εβδομάδα": "Every week", "Κάθε μέρα": "Every day", "Κάθε μήνα": "Every month", "Κέντρο περιοχής {a}": "Centre of {a}", "Καθαρισμός": "Clear", "Καμία άλλη εκκρεμότητα δεν πέφτει στο δρόμο με παράκαμψη έως {k}, δοκίμασε μεγαλύτερη.": "No other task is on the way within {k} detour; try a larger one.", "Καμία ανοιχτή εργασία": "No open tasks", "Καμία ανοιχτή εργασία για αυτόν τον πελάτη.": "No open tasks for this client.", "Καμία επόμενη υπενθύμιση. Γράψε μία παρακάτω.": "No upcoming reminders. Add one below.", "Καμία εργασία σε αυτή την προβολή.": "No tasks in this view.", "Καμία υπενθύμιση. Πάτα το κουδούνι στην κάτω μπάρα για να προσθέσεις.": "No reminders. Tap the bell in the bottom bar to add one.", "Κανένας πελάτης δεν ταιριάζει στην αναζήτηση.": "No client matches the search.", "Κανονικά": "Normal", "Κανονική": "Normal", "Κατάσταση": "Status", "Κείμενο": "Text", "Κεφαλίδα και κουμπιά": "Header and buttons", "Κινητό": "Mobile", "Κλήση": "Call", "Κλασικό": "Classic", "Κλείσιμο": "Close", "Κοινοποίηση σε άλλη εφαρμογή": "Share to another app", "Κωδικός εισόδου, στάθμευση, προτιμήσεις…": "Entry code, parking, preferences…", "Λήγει σύντομα": "Due soon", "Λήξη": "End", "Λήξη ή προθεσμία": "End or deadline", "Λεπτομέρειες": "Details", "Μέγεθος γραμμάτων": "Text size", "Μέγιστη παράκαμψη": "Maximum detour", "Μέσα στην προεπισκόπηση η θέση δεν επιτρέπεται. Άνοιξε την εφαρμογή από τη σελίδα της στο Chrome.": "Location isn't allowed inside the preview. Open the app from its page in Chrome.", "Μέσα στην προεπισκόπηση οι επαφές δεν ανοίγουν. Άνοιξε την εφαρμογή από τη σελίδα της στο Chrome.": "Contacts don't open inside the preview. Open the app from its page in Chrome.", "Μήνυμα": "Message", "Μία φορά": "Once", "Μίλα τώρα…": "Speak now…", "Με εκκρεμότητες": "With pending work", "Με πελάτη ή περιοχή, ώρα και υπενθύμιση": "With client or area, time and reminder", "Μεγάλα": "Large", "Μετακινήθηκε στην επόμενη φορά.": "Moved to the next time.", "Μεταφέρθηκε στο αρχείο.": "Moved to the archive.", "Νέα εργασία": "New task", "Νέα τοποθεσία": "New place", "Νέα υπενθύμιση": "New reminder", "Νέος": "New", "Νέος πελάτης": "New client", "Νέος πελάτης…": "New client…", "Να γίνει η επαναφορά;": "Restore now?", "Να διαγραφεί η εργασία;": "Delete this task?", "Να διαγραφεί η τοποθεσία;": "Delete this place?", "Να διαγραφεί ο πελάτης; Οι εργασίες του θα μείνουν χωρίς πελάτη.": "Delete this client? Their tasks will stay, without a client.", "Να διαγραφεί;": "Delete?", "Να διαγραφούν οριστικά όλες οι υπενθυμίσεις του αρχείου;": "Permanently delete all archived reminders?", "Να διαγραφούν όλοι οι πελάτες, οι εργασίες και οι υπενθυμίσεις;": "Delete all clients, tasks and reminders?", "Να κλείσει χωρίς να αποθηκευτούν οι αλλαγές;": "Close without saving changes?", "Να μεταφερθεί η υπενθύμιση στο αρχείο;": "Move this reminder to the archive?", "Ναι, έξοδος": "Yes, exit", "Ξεκίνησα": "I've started", "Ο πελάτης δεν έχει τοποθεσία και οι δουλειές του δεν θα μπαίνουν στις διαδρομές. Να αποθηκευτεί έτσι;": "This client has no location, so their jobs won't appear in routes. Save anyway?", "Ο πελάτης δεν έχει τοποθεσία. Συμπλήρωσέ τη στην καρτέλα του.": "This client has no location. Add it in their profile.", "Ο πελάτης διαγράφηκε. Οι εργασίες του κρατήθηκαν.": "Client deleted. Their tasks were kept.", "Ο πελάτης ενημερώθηκε από την επαφή.": "Client updated from the contact.", "Ο πελάτης προστέθηκε.": "Client added.", "Ο χάρτης δέχεται έως 9 ενδιάμεσες στάσεις, οπότε ανοίγουν οι πρώτες 9.": "Maps accepts up to 9 stops, so the first 9 are opened.", "Ο χάρτης χρειάζεται σύνδεση στο διαδίκτυο.": "The map needs an internet connection.", "Οδός": "Street", "Οδός και αριθμός, περιοχή": "Street and number, area", "Οι αλλαγές αποθηκεύτηκαν.": "Changes saved.", "Οι αποστάσεις είναι εκτιμήσεις με βάση το κέντρο κάθε περιοχής, εκτός αν έχεις αποθηκεύσει ακριβή θέση.": "Distances are estimates from each area's centre, unless an exact location is saved.", "Οι επαφές ανοίγουν από το Chrome του κινητού, όταν η εφαρμογή είναι ανεβασμένη στο διαδίκτυο.": "Contacts open from Chrome on your phone when the app is online.", "Οι σύντομοι σύνδεσμοι δεν διαβάζονται. Άνοιξέ τον, πάτα παρατεταμένα το σημείο και αντέγραψε τις συντεταγμένες.": "Short links can't be read. Open it, long-press the spot and copy the coordinates.", "Ολοκλήρωση": "Complete", "Ολοκληρωμένες": "Completed", "Ολοκληρώθηκε": "Completed", "Ολοκληρώθηκε. Θα τη βρεις στο αρχείο.": "Done. You'll find it in the archive.", "Ομαδοποίηση ανά περιοχή": "Group by area", "Ονοματεπώνυμο": "Full name", "Οριστική διαγραφή": "Delete permanently", "Οριστική διαγραφή όλων": "Delete all permanently", "Οριστική διαγραφή; Δεν αναιρείται.": "Delete permanently? This can't be undone.", "Πάτα για να προσθέσεις τοποθεσία": "Tap to add a location", "Πάτα ξανά το πίσω για να βγεις.": "Press back again to exit.", "Πάτα πρώτα ένα σημείο στον χάρτη.": "Tap a point on the map first.", "Πάτα στον χάρτη για να διαλέξεις σημείο": "Tap the map to pick a point", "Πίσω": "Back", "Παράλειψη στάσης": "Skip stop", "Πελάτες": "Clients", "Πελάτης": "Client", "Περιοχή": "Area", "Πες ή γράψε τι θες να κάνεις": "Say or type what you want to do", "Πλοήγηση": "Navigate", "Πολύ μεγάλα": "Extra large", "Ποσό σε ευρώ": "Amount in euros", "Πού πηγαίνεις;": "Where are you going?", "Προεπιλεγμένη μέγιστη παράκαμψη σε χιλιόμετρα": "Default maximum detour in km", "Προεπιλογή: {b}. Πάτα την πινέζα για την τρέχουσα θέση σου.": "Default: {b}. Tap the pin for your current location.", "Προορισμός": "Destination", "Προς": "To", "Προσθήκη": "Add", "Προστέθηκαν {n} πελάτες.": "{n} clients added.", "Προστέθηκε {n} πελάτης.": "{n} client added.", "Προτεραιότητα": "Priority", "Πότε": "When", "Ρυθμίσεις": "Settings", "Σήμερα": "Today", "Σίγουρα; Δεν αναιρείται.": "Are you sure? This can't be undone.", "Σε 10 λεπτά": "In 10 minutes", "Σε εξέλιξη": "In progress", "Σημεία που δεν είναι στη λίστα, π.χ. «Αποθήκη». Βάζεις διεύθυνση, σημείο στον χάρτη ή την τρέχουσα θέση.": "Places not in the list, e.g. “Warehouse”. Add an address, a map point or your current location.", "Σημείωσε εξόφληση": "Mark as paid", "Σημειώθηκε ως διαβασμένη.": "Marked as read.", "Σημειώθηκε ως εξοφλημένη.": "Marked as paid.", "Σημειώσεις": "Notes", "Σκούρο": "Dark", "Σπίτι ή έδρα": "Home or base", "Στάλθηκε αυτόματα αντίγραφο στο ταχυδρομείο σου.": "A backup was sent to your email automatically.", "Σταθερό": "Landline", "Στην ώρα της": "At the time", "Στοιχεία, διεύθυνση, σημειώσεις": "Details, address, notes", "Στους Χάρτες Google": "In Google Maps", "Συμπλήρωσε κείμενο και ώρα.": "Fill in text and time.", "Συμπλήρωση από τις επαφές": "Fill in from contacts", "Συμπληρώθηκαν: {x}. Έλεγξέ τα πριν την αποθήκευση.": "Filled in: {x}. Check before saving.", "Συνέχεια;": "Continue?", "Συντεταγμένες ή σύνδεσμος χάρτη": "Coordinates or map link", "Σύνοψη δουλειών": "Job summary", "ΤΚ": "Postcode", "Τίποτα για σήμερα. Πάτα + για νέα εργασία, πελάτη ή υπενθύμιση.": "Nothing for today. Tap + for a new task, client or reminder.", "Τα δεδομένα είναι πολλά για αποστολή. Χρησιμοποίησε την κοινοποίηση αρχείου.": "Too much data to email. Use file sharing instead.", "Τα δεδομένα επαναφέρθηκαν.": "Data restored.", "Τα δεδομένα σου μένουν αποθηκευμένα.": "Your data stays saved.", "Τα στοιχεία είναι ήδη ίδια με την επαφή.": "The details already match the contact.", "Τα στοιχεία συμπληρώθηκαν. Έλεγξέ τα και πάτα αποθήκευση.": "Details filled in. Check them and tap save.", "Τελευταίο αντίγραφο: {d}.": "Last backup: {d}.", "Τι να σου θυμίσω;": "What should I remind you of?", "Τι πρέπει να γίνει": "What needs to be done", "Το Chrome δεν έχει άδεια θέσης για αυτή τη σελίδα. Πάτα το εικονίδιο αριστερά από τη διεύθυνση, άνοιξε «Άδειες» και επίτρεψε την τοποθεσία.": "Chrome has no location permission for this page. Tap the icon left of the address, open “Permissions” and allow location.", "Το αντίγραφο κοινοποιήθηκε.": "Backup shared.", "Το αντίγραφο στάλθηκε στο {e}.": "Backup sent to {e}.", "Το αρχείο αποθηκεύτηκε στις λήψεις του κινητού.": "File saved to your downloads.", "Το αρχείο δεν διαβάστηκε.": "The file couldn't be read.", "Το αρχείο είναι άδειο.": "The archive is empty.", "Το διάβασα": "Read it", "Το ηλεκτρονικό σου ταχυδρομείο": "Your email", "Το ποσό πρέπει να είναι αριθμός.": "The amount must be a number.", "Τονισμός": "Accent", "Τοποθεσία από τον πελάτη: {a}": "Location from client: {a}", "Υπάρχει ήδη τοποθεσία με αυτό το όνομα.": "A place with this name already exists.", "Υπενθυμίσεις": "Reminders", "Υπενθύμιση": "Reminder", "Υπενθύμιση και αυτόματη αποστολή μετά από τόσες αλλαγές": "Reminder and automatic sending after this many changes", "Υψηλή": "High", "Υψηλή προτεραιότητα": "High priority", "Φωνητική υπαγόρευση": "Voice dictation", "Φόντο": "Background", "Χαμηλή": "Low", "Χρήση σημείου": "Use this point", "Χρώματα, γράμματα και όνομα": "Colours, text and name", "Χωρίς ημερομηνία": "No date", "Χωρίς θέση": "No location", "Χωρίς πελάτη": "No client", "Χωρίς τοποθεσία": "No location", "Πρόσθεσε τοποθεσία για να μπαίνει στις διαδρομές.":"Add a location so it appears in routes.","Χωρίς τοποθεσία. Δεν θα εμφανίζεται στις διαδρομές.": "No location. It won't appear in routes.", "Χωρίς υπενθύμιση": "No reminder", "Ωράριο": "Hours", "Ωράριο ή πότε βρίσκεται": "Opening hours or availability", "διεύθυνση": "address", "δουλειές και διαδρομές": "jobs and routes", "εξοφλημένο": "paid", "η διεύθυνσή σου": "your address", "π.χ. 37.9601, 23.7530": "e.g. 37.9601, 23.7530", "π.χ. Αθήνα": "e.g. Athens", "π.χ. Αύριο 9 το πρωί να πάω στον Κολωνό να πάρω ξύλο": "e.g. Tomorrow 9 am go to Kolonos to buy wood", "π.χ. Γλυφάδα": "e.g. Glyfada", "π.χ. Δευτέρα έως Παρασκευή, 9:00 έως 17:00": "e.g. Monday to Friday, 9:00 to 17:00", "π.χ. Σπίτι, Αποθήκη": "e.g. Home, Warehouse", "παράκαμψη": "detour", "πελάτης": "client", "περιοχή": "area", "ποσό": "amount", "προθεσμία": "deadline", "προτεραιότητα": "priority", "τίτλος": "title", "υπενθύμιση": "reminder", "χλμ.": "km", "ώρα": "time", "Ζητείται άδεια τοποθεσίας…": "Asking for location permission…", "Η τοποθεσία είναι μπλοκαρισμένη για αυτή τη σελίδα στο Chrome. Πάτα το εικονίδιο αριστερά από τη διεύθυνση, «Άδειες», και επίτρεψε την τοποθεσία.": "Location is blocked for this page in Chrome. Tap the icon left of the address, open “Permissions” and allow location.", "Η άδεια υπάρχει, αλλά το σύστημα δεν έδωσε θέση. Άνοιξε την Τοποθεσία του κινητού και ξαναδοκίμασε.": "Permission is granted, but the system gave no position. Turn on your phone's Location and try again.", "Δεν δόθηκε άδεια τοποθεσίας. Όταν εμφανιστεί το μήνυμα του Chrome, πάτα «Να επιτρέπεται».": "Location permission wasn't given. When Chrome asks, tap “Allow”.", "Καταχώρηση": "Save entry", "Διάλεξε επαφές και πάτα το ✓ πάνω δεξιά στη λίστα του κινητού.": "Pick contacts and tap the ✓ at the top right of your phone's list.", "Διάλεξε επαφή και πάτα το ✓ πάνω δεξιά στη λίστα του κινητού.": "Pick a contact and tap the ✓ at the top right of your phone's list.", "Τα στοιχεία συμπληρώθηκαν. Έλεγξέ τα και πάτα «Καταχώρηση» κάτω δεξιά.": "Details filled in. Check them and tap “Save entry” at the bottom right.", "Έλεγξε τα στοιχεία και πάτα «Καταχώρηση» κάτω δεξιά για να αποθηκευτεί ο πελάτης.": "Check the details and tap “Save entry” at the bottom right to save the client.", "Τοποθεσία": "Location", "Έλεγχος άδειας τοποθεσίας": "Check location permission", "Έλεγχος…": "Checking…", "Ασφαλής σύνδεση": "Secure connection", "Μέσα σε πλαίσιο άλλης σελίδας": "Inside another page's frame", "Άδεια της σελίδας": "Page permission", "ναι": "yes", "όχι": "no", "ναι, με φραγή θέσης": "yes, location blocked", "δόθηκε": "granted", "απορρίφθηκε": "denied", "θα ζητηθεί": "will be asked", "άγνωστη": "unknown", "Η θέση βρέθηκε": "Location found", "Σφάλμα": "Error", "Δικά μου σημεία": "My places", "Ανοιχτές δουλειές": "Open jobs", "Διάλεξε επαφές και πάτα «Ολοκληρώθηκε» πάνω δεξιά.": "Pick contacts and tap “Done” at the top right.", "Διάλεξε την επαφή και πάτα «Ολοκληρώθηκε» πάνω δεξιά.": "Pick the contact and tap “Done” at the top right.", "Βρέθηκαν {n} σημεία. Πάτα παρακάτω αυτό που θέλεις.": "{n} places found. Tap the one you want below.", "Δείξε διαδρομή και στάσεις": "Show route and stops", "Η τοποθεσία μπήκε και σε {n} ανοιχτή εργασία του.": "The location now also applies to {n} open task of theirs.", "Η τοποθεσία μπήκε και στις {n} ανοιχτές εργασίες του.": "The location now also applies to their {n} open tasks.", "Καταχώρηση|ώρα": "Entry time", "Θα ξαναχτυπήσει την ώρα της.": "It will ring again at its time.", "Σε {n} ώρες": "In {n} hours", "Σε {n} λεπτά": "In {n} minutes", "Κορυφαίος πελάτης": "Top client", "Κορυφαίος πελάτης 💎": "Top client 💎", "Αναζήτηση διεύθυνσης από το σημείο…": "Looking up the address for this point…", "Συμπληρώθηκαν από το σημείο: {x}.": "Filled in from the point: {x}.", "Το σημείο αποθηκεύτηκε, αλλά δεν βρέθηκε διεύθυνση για αυτό.": "The point was saved, but no address was found for it.", "Η διεύθυνση δεν βρέθηκε από το σημείο. Χρειάζεται σύνδεση στο διαδίκτυο.": "No address found for the point. An internet connection is needed.", "οδός": "street", "αριθμός": "number", "ΤΚ": "postcode", "Ο σύντομος σύνδεσμος δεν διαβάζεται. Άνοιξέ τον στους Χάρτες, πάτα παρατεταμένα το σημείο, αντέγραψε τις συντεταγμένες και επικόλλησέ τες εδώ.": "Short links can't be read. Open it in Maps, long-press the spot, copy the coordinates and paste them here.", "Άνοιγμα συνδέσμου": "Open link", "Αλφαβητικά": "Alphabetical", "Περισσότερα χρήματα": "Highest earnings", "Καλύτερη αξιολόγηση": "Best rated", "Πόσο καλός πελάτης": "How good a client", "Αξιολόγηση πελάτη": "Client rating", "Αξιολόγηση: {n} στα 5": "Rating: {n} out of 5", "Η αξιολόγηση καθαρίστηκε.": "Rating cleared.", "Διατήρηση στη λίστα": "Keep in the list", "Μένει κόκκινη στη λίστα μέχρι να την κλείσεις.": "It stays red in the list until you close it.", "Μεταφέρθηκε στα διαγραμμένα.": "Moved to deleted.", "Μεταφέρθηκε στα ολοκληρωμένα.": "Moved to completed.", "Επαναφορά στη λίστα": "Restore to list", "Άδειασμα φακέλου": "Empty this folder", "Ο φάκελος είναι άδειος.": "This folder is empty.", "Ό,τι ολοκλήρωσες ή διέγραψες μένει εδώ, σε δύο φακέλους, μέχρι να το σβήσεις εσύ.": "Whatever you complete or delete stays here, in two folders, until you delete it yourself.", "Διαγραμμένες": "Deleted", "Να σβηστούν οριστικά όλες οι διαγραμμένες;": "Permanently delete all deleted reminders?", "Να σβηστούν οριστικά όλες οι ολοκληρωμένες;": "Permanently delete all completed reminders?", "Αρχείο: ολοκληρωμένες και διαγραμμένες": "Archive: completed and deleted", "Η εφαρμογή τρέχει ως αρχείο από τις Λήψεις. Το Chrome δεν δίνει τοποθεσία σε αρχεία — ανέβασέ τη στο διαδίκτυο ή βάλε διεύθυνση και σημείο στον χάρτη.": "The app is running as a file from Downloads. Chrome gives no location to files — put it online, or use an address and a map point.", "Οι επαφές δεν ανοίγουν όταν η εφαρμογή τρέχει ως αρχείο από τις Λήψεις. Ανέβασέ τη στο διαδίκτυο.": "Contacts don't open when the app runs as a file from Downloads. Put it online first.", "Τρόπος ανοίγματος": "Opened as", "τοπικό αρχείο ({p}) — χωρίς τοποθεσία, επαφές και ασφαλή αποθήκευση": "a local file ({p}) — no location, contacts or safe storage", "κανονική ιστοσελίδα": "a normal web page", "Τρέχει ως τοπικό αρχείο.": "Running as a local file.", "Η τοποθεσία, οι επαφές και η μόνιμη αποθήκευση δεν δουλεύουν έτσι. Ανέβασε την εφαρμογή στο διαδίκτυο και άνοιξέ τη από τη διεύθυνσή της.": "Location, contacts and permanent storage don't work this way. Put the app online and open it from its address."};
+const EN={"1 μέρα πριν": "1 day before", "{n} αλλαγές από το τελευταίο αντίγραφο ασφαλείας.": "{n} changes since the last backup.", "{n} αλλαγή από το τελευταίο αντίγραφο ασφαλείας.": "{n} change since the last backup.", "{n} ανοιχτές": "{n} open", "{n} ανοιχτές εργασίες": "{n} open tasks", "{n} ανοιχτές εργασίες δεν έχουν τοποθεσία και δεν μπήκαν στον υπολογισμό.": "{n} open tasks have no location and were left out.", "{n} ανοιχτή": "{n} open", "{n} ανοιχτή εργασία": "{n} open task", "{n} ανοιχτή εργασία δεν έχει τοποθεσία και δεν μπήκε στον υπολογισμό.": "{n} open task has no location and was left out.", "{n} λεπτά πριν": "{n} minutes before", "{n} στάσεις": "{n} stops", "{n} στάση": "{n} stop", "{n} υπήρχαν ήδη.": "{n} already existed.", "{n} υπήρχε ήδη.": "{n} already existed.", "{n} ώρα πριν": "{n} hour before", "{n} ώρες πριν": "{n} hours before", "«{b}», μπαίνει αυτόματα ως αφετηρία στη διαδρομή.": "“{b}” is used automatically as the route start.", "Άκυρο": "Cancel", "Άλλος προορισμός": "Other destination", "Άνοιγμα διαδρομής στον χάρτη": "Open route in maps", "Έγινε": "Done", "Έδρα": "Base", "Έληξαν, δεν τις έχεις διαβάσει": "Expired, not read yet", "Έληξε": "Expired", "Ένα κείμενο και μια ώρα": "A note and a time", "Έναρξη": "Start", "Έξοδος από την εφαρμογή;": "Exit the app?", "Έτοιμα θέματα": "Ready themes", "Όλα διαγράφηκαν.": "Everything was deleted.", "Όλες": "All", "Όλοι οι υπόλοιποι": "Everyone else", "Όνομα": "Name", "Όνομα εφαρμογής": "App name", "Όρισε σπίτι ή έδρα": "Set home or base", "Όρισε σπίτι ή έδρα στις ρυθμίσεις για να μπαίνει αυτόματα εδώ.": "Set a home or base in settings to fill this in automatically.", "Όροφος, κουδούνι": "Floor, doorbell", "Όχι": "No", "Ώρα έναρξης εργασίας": "Task start time", "Α": "A", "ΑΦΜ": "Tax number", "Ακριβής": "Exact", "Ακριβής θέση": "Exact location", "Ακριβής θέση αποθηκευμένη.": "Exact location saved.", "Αλλαγές από τότε: {n}.": "Changes since then: {n}.", "Αλλαγή": "Change", "Αλλαγή σπιτιού ή έδρας": "Change home or base", "Αλλαγή υπενθύμισης": "Edit reminder", "Αναζήτηση πελάτη": "Search clients", "Αναζήτηση…": "Searching…", "Ανεξόφλητα": "Unpaid", "Ανοιχτές": "Open", "Ανοιχτές εργασίες": "Open tasks", "Αντέγραψε όλο το κείμενο του μηνύματος με το αντίγραφο και επικόλλησέ το εδώ.": "Copy the whole text of the backup email and paste it here.", "Αντίγραφο ασφαλείας": "Backup", "Αντίγραφο ασφαλείας και επαναφορά": "Backup and restore", "Αντίγραφο τώρα": "Back up now", "Απευθείας περίπου {a}, με {s} περίπου {b}, δηλαδή {c} επιπλέον.": "Direct about {a}; with {s} about {b}, that is {c} extra.", "Απλή υπενθύμιση": "Simple reminder", "Αποθήκευση": "Save", "Αποθήκευση αρχείου στο κινητό": "Save file on phone", "Αποθηκεύτηκε.": "Saved.", "Αποστολή στο ταχυδρομείο": "Send by email", "Αποστολή τώρα": "Send now", "Αποστολή…": "Sending…", "Από": "From", "Από επαφές": "From contacts", "Αριθμός": "Number", "Αρχείο": "File", "Αρχείο ολοκληρωμένων και διαγραμμένων": "Completed and deleted archive", "Αρχείο υπενθυμίσεων": "Reminder archive", "Αυτόματη αποστολή κάθε {n} αλλαγές": "Send automatically every {n} changes", "Αυτόματη συμπλήρωση": "Fill in automatically", "Αφετηρία": "Start", "Αφετηρία η θέση σου.": "Starting from your location.", "Αφετηρία: {b}.": "Start: {b}.", "Β": "B", "Βάλ' την στη διαδρομή": "Add to route", "Βάλε τοποθεσία: διεύθυνση, σημείο στον χάρτη ή «Είμαι εκεί τώρα».": "Add a location: address, map point or “I'm here now”.", "Βρέθηκαν {c} πελάτες, {k} εργασίες και {r} υπενθυμίσεις.": "Found {c} clients, {k} tasks and {r} reminders.", "Βρες τι πιάνω στο δρόμο": "Find what's on my way", "Γλώσσα": "Language", "Γράμματα": "Text", "Γράψε ή πες πρώτα τι θες να κάνεις.": "First type or say what you want to do.", "Γράψε από πού ξεκινάς ή όρισε έδρα στις ρυθμίσεις.": "Enter where you start or set a base in settings.", "Γράψε από πού ξεκινάς.": "Enter where you start.", "Γράψε περιοχή ή πάτα το εικονίδιο για να διαλέξεις από τις δουλειές σου.": "Type an area or tap the icon to pick from your tasks.", "Γράψε πού πηγαίνεις.": "Enter where you're going.", "Γράψε πρώτα διεύθυνση.": "Enter an address first.", "Γράψε σωστό ηλεκτρονικό ταχυδρομείο.": "Enter a valid email address.", "Γράψε τι να σου θυμίσω.": "Enter what to remind you of.", "Γράψε τι πρέπει να γίνει.": "Enter what needs to be done.", "Γράψε όνομα πελάτη.": "Enter the client's name.", "Γράψε όνομα.": "Enter a name.", "Δάσος": "Forest", "Δειλινό": "Dusk", "Δεν έχει κρατηθεί ακόμα αντίγραφο από αυτή τη συσκευή.": "No backup has been made from this device yet.", "Δεν έχει οριστεί. Από εδώ ξεκινάς συνήθως τις δουλειές.": "Not set. This is where you usually start your jobs.", "Δεν έχεις εργασίες ακόμα. Πάτα + για να προσθέσεις.": "No tasks yet. Tap + to add one.", "Δεν έχεις κρατήσει ακόμα αντίγραφο ασφαλείας.": "You haven't made a backup yet.", "Δεν έχεις πελάτες ακόμα. Πάτα + για να προσθέσεις τον πρώτο ή φέρε πελάτες από τις επαφές σου.": "No clients yet. Tap + to add the first one, or bring them in from your contacts.", "Δεν ακούστηκε κάτι. Δοκίμασε ξανά.": "Nothing was heard. Try again.", "Δεν αναγνωρίστηκαν στοιχεία. Γράψε λίγο πιο αναλυτικά.": "Nothing recognised. Try adding a bit more detail.", "Δεν αναγνωρίστηκαν συντεταγμένες σε αυτό το κείμενο.": "No coordinates recognised in this text.", "Δεν βρέθηκαν δεδομένα της εφαρμογής σε αυτό το αρχείο.": "No app data found in this file.", "Δεν βρέθηκε η αφετηρία «{x}». Διάλεξε από τη λίστα.": "Start “{x}” not found. Pick one from the list.", "Δεν βρέθηκε η διεύθυνση. Δοκίμασε στους Χάρτες Google ή διάλεξε στον χάρτη.": "Address not found. Try Google Maps or pick on the map.", "Δεν βρέθηκε θέση. Έλεγξε ότι η τοποθεσία του κινητού είναι ανοιχτή.": "No location found. Check that location is on.", "Δεν βρέθηκε ο προορισμός «{x}». Διάλεξε από τη λίστα.": "Destination “{x}” not found. Pick one from the list.", "Δεν δόθηκε άδεια για το μικρόφωνο.": "Microphone permission was not given.", "Δεν δόθηκε πρόσβαση στις επαφές.": "Contacts access was not given.", "Δεν υπάρχει σύνδεση στο διαδίκτυο. Δοκίμασε ξανά ή αποθήκευσε αρχείο.": "No internet connection. Try again or save a file.", "Δεν υπάρχουν ακόμα ολοκληρωμένες δουλειές.": "No completed jobs yet.", "Δεν υπάρχουν ανοιχτές δουλειές με τοποθεσία.": "No open tasks with a location.", "Διάλεξε από τις δουλειές": "Pick from tasks", "Διάλεξε δουλειά και δες τι άλλο πιάνεις στο δρόμο": "Pick a task and see what else is on the way", "Διάλεξε ημερομηνία και ώρα.": "Pick a date and time.", "Διάλεξε τη δουλειά που πας να κάνεις. Θα δεις τι άλλο πιάνεις στο δρόμο.": "Pick the task you're heading to. You'll see what else is on the way.", "Διάλεξε το σωστό αποτέλεσμα:": "Pick the right result:", "Διαγράφηκε": "Deleted", "Διαγραφή": "Delete", "Διαγραφή όλων των δεδομένων": "Delete all data", "Διαδρομή": "Route", "Διεύθυνση": "Address", "Δικά σου χρώματα": "Your colours", "Δικές μου τοποθεσίες": "My places", "Δουλειές συνολικά": "Total jobs", "Δρομολόγιο": "Route Planner", "Είμαι εκεί τώρα": "I'm here now", "Εδώ μένουν όσες ολοκλήρωσες ή διέγραψες, για να τις επαναφέρεις αν έγινε λάθος.": "Completed or deleted reminders stay here, so you can restore them if needed.", "Εισπράχθηκαν συνολικά": "Total received", "Εκκρεμεί": "Pending", "Εκπρόθεσμες": "Overdue", "Εκπρόθεσμη": "Overdue", "Εμφάνιση εφαρμογής": "Appearance", "Εντάξει": "OK", "Εντοπισμός θέσης…": "Finding location…", "Εξοφλήθηκε": "Paid", "Επανάληψη": "Repeat", "Επαναφορά": "Restore", "Επαναφορά από αρχείο": "Restore from file", "Επαναφορά από το κείμενο": "Restore from text", "Επαναφορά αρχικής εμφάνισης": "Reset appearance", "Επαφές": "Contacts", "Επεξεργασία": "Edit", "Επεξεργασία εργασίας": "Edit task", "Επεξεργασία πελάτη": "Edit client", "Επεξεργασία τοποθεσίας": "Edit place", "Επεξεργασία…": "Working…", "Επικόλληση αντιγράφου από το ταχυδρομείο": "Paste a backup from email", "Επιλογή στον χάρτη": "Pick on map", "Επωνυμία επιχείρησης": "Company name", "Επόμενες υπενθυμίσεις": "Upcoming reminders", "Επόμενες, με σειρά ώρας": "Upcoming, by time", "Επόμενη": "Next", "Εργασίες": "Tasks", "Εύρεση διεύθυνσης": "Find address", "Η αναζήτηση χρειάζεται σύνδεση στο διαδίκτυο.": "Search needs an internet connection.", "Η αποστολή απέτυχε, κωδικός σφάλματος {c}.": "Sending failed, error code {c}.", "Η αποστολή στο ταχυδρομείο δεν έχει ενεργοποιηθεί ακόμα στην εφαρμογή.": "Email sending hasn't been enabled in the app yet.", "Η αποστολή στο ταχυδρομείο θα λειτουργήσει μόλις ενεργοποιηθεί στην εφαρμογή από τον διαχειριστή.": "Email sending will work once the administrator enables it in the app.", "Η διεύθυνση βρέθηκε. Έλεγξέ τη στον χάρτη αν θέλεις.": "Address found. Check it on the map if you like.", "Η εργασία δεν έχει τοποθεσία και δεν θα μπαίνει στις διαδρομές. Να αποθηκευτεί έτσι;": "This task has no location and won't appear in routes. Save anyway?", "Η εργασία διαγράφηκε.": "Task deleted.", "Η εργασία ξεκινάει σε {n} λεπτά": "Task starts in {n} minutes", "Η εργασία ολοκληρώθηκε.": "Task completed.", "Η εργασία προστέθηκε.": "Task added.", "Η θέση άργησε να βρεθεί. Βγες σε ανοιχτό χώρο ή δοκίμασε ξανά.": "Location took too long. Go outdoors or try again.", "Η θέση αποθηκεύτηκε στη φόρμα.": "Location added to the form.", "Η θέση λειτουργεί μόνο όταν η σελίδα ανοίγει με ασφαλή σύνδεση.": "Location only works over a secure connection.", "Η θέση μου": "My location", "Η κοινοποίηση δεν ολοκληρώθηκε.": "Sharing didn't complete.", "Η λήξη είναι πριν από την έναρξη.": "The end is before the start.", "Η συσκευή δεν δίνει θέση.": "This device doesn't provide location.", "Η υπαγόρευση δεν υποστηρίζεται εδώ. Πάτα το μικρόφωνο του πληκτρολογίου σου.": "Dictation isn't supported here. Use your keyboard's microphone.", "Η υπενθύμιση ενημερώθηκε.": "Reminder updated.", "Η υπενθύμιση επανήλθε.": "Reminder restored.", "Η υπενθύμιση προστέθηκε.": "Reminder added.", "Ηλεκτρονικό ταχυδρομείο": "Email", "Ημέρα και ώρα": "Date and time", "Θάλασσα": "Sea", "Θέση για τις διαδρομές": "Location for routes", "Θέση στις διαδρομές": "Location in routes", "Θα αλλάξουν:": "These will change:", "Θα αντικαταστήσουν τα τωρινά δεδομένα. Συνέχεια;": "They will replace the current data. Continue?", "Θα χρησιμοποιηθεί το κέντρο της περιοχής {a}. Για ακρίβεια βάλε διεύθυνση ή σημείο.": "The centre of {a} will be used. For accuracy add an address or point.", "Ιστορικό δουλειών": "Job history", "Κάθε εβδομάδα": "Every week", "Κάθε μέρα": "Every day", "Κάθε μήνα": "Every month", "Κέντρο περιοχής {a}": "Centre of {a}", "Καθαρισμός": "Clear", "Καμία άλλη εκκρεμότητα δεν πέφτει στο δρόμο με παράκαμψη έως {k}, δοκίμασε μεγαλύτερη.": "No other task is on the way within {k} detour; try a larger one.", "Καμία ανοιχτή εργασία": "No open tasks", "Καμία ανοιχτή εργασία για αυτόν τον πελάτη.": "No open tasks for this client.", "Καμία επόμενη υπενθύμιση. Γράψε μία παρακάτω.": "No upcoming reminders. Add one below.", "Καμία εργασία σε αυτή την προβολή.": "No tasks in this view.", "Καμία υπενθύμιση. Πάτα το κουδούνι στην κάτω μπάρα για να προσθέσεις.": "No reminders. Tap the bell in the bottom bar to add one.", "Κανένας πελάτης δεν ταιριάζει στην αναζήτηση.": "No client matches the search.", "Κανονικά": "Normal", "Κανονική": "Normal", "Κατάσταση": "Status", "Κείμενο": "Text", "Κεφαλίδα και κουμπιά": "Header and buttons", "Κινητό": "Mobile", "Κλήση": "Call", "Κλασικό": "Classic", "Κλείσιμο": "Close", "Κοινοποίηση σε άλλη εφαρμογή": "Share to another app", "Κωδικός εισόδου, στάθμευση, προτιμήσεις…": "Entry code, parking, preferences…", "Λήγει σύντομα": "Due soon", "Λήξη": "End", "Λήξη ή προθεσμία": "End or deadline", "Λεπτομέρειες": "Details", "Μέγεθος γραμμάτων": "Text size", "Μέγιστη παράκαμψη": "Maximum detour", "Μέσα στην προεπισκόπηση η θέση δεν επιτρέπεται. Άνοιξε την εφαρμογή από τη σελίδα της στο Chrome.": "Location isn't allowed inside the preview. Open the app from its page in Chrome.", "Μέσα στην προεπισκόπηση οι επαφές δεν ανοίγουν. Άνοιξε την εφαρμογή από τη σελίδα της στο Chrome.": "Contacts don't open inside the preview. Open the app from its page in Chrome.", "Μήνυμα": "Message", "Μία φορά": "Once", "Μίλα τώρα…": "Speak now…", "Με εκκρεμότητες": "With pending work", "Με πελάτη ή περιοχή, ώρα και υπενθύμιση": "With client or area, time and reminder", "Μεγάλα": "Large", "Μετακινήθηκε στην επόμενη φορά.": "Moved to the next time.", "Μεταφέρθηκε στο αρχείο.": "Moved to the archive.", "Νέα εργασία": "New task", "Νέα τοποθεσία": "New place", "Νέα υπενθύμιση": "New reminder", "Νέος": "New", "Νέος πελάτης": "New client", "Νέος πελάτης…": "New client…", "Να γίνει η επαναφορά;": "Restore now?", "Να διαγραφεί η εργασία;": "Delete this task?", "Να διαγραφεί η τοποθεσία;": "Delete this place?", "Να διαγραφεί ο πελάτης; Οι εργασίες του θα μείνουν χωρίς πελάτη.": "Delete this client? Their tasks will stay, without a client.", "Να διαγραφεί;": "Delete?", "Να διαγραφούν οριστικά όλες οι υπενθυμίσεις του αρχείου;": "Permanently delete all archived reminders?", "Να διαγραφούν όλοι οι πελάτες, οι εργασίες και οι υπενθυμίσεις;": "Delete all clients, tasks and reminders?", "Να κλείσει χωρίς να αποθηκευτούν οι αλλαγές;": "Close without saving changes?", "Να μεταφερθεί η υπενθύμιση στο αρχείο;": "Move this reminder to the archive?", "Ναι, έξοδος": "Yes, exit", "Ξεκίνησα": "I've started", "Ο πελάτης δεν έχει τοποθεσία και οι δουλειές του δεν θα μπαίνουν στις διαδρομές. Να αποθηκευτεί έτσι;": "This client has no location, so their jobs won't appear in routes. Save anyway?", "Ο πελάτης δεν έχει τοποθεσία. Συμπλήρωσέ τη στην καρτέλα του.": "This client has no location. Add it in their profile.", "Ο πελάτης διαγράφηκε. Οι εργασίες του κρατήθηκαν.": "Client deleted. Their tasks were kept.", "Ο πελάτης ενημερώθηκε από την επαφή.": "Client updated from the contact.", "Ο πελάτης προστέθηκε.": "Client added.", "Ο χάρτης δέχεται έως 9 ενδιάμεσες στάσεις, οπότε ανοίγουν οι πρώτες 9.": "Maps accepts up to 9 stops, so the first 9 are opened.", "Ο χάρτης χρειάζεται σύνδεση στο διαδίκτυο.": "The map needs an internet connection.", "Οδός": "Street", "Οδός και αριθμός, περιοχή": "Street and number, area", "Οι αλλαγές αποθηκεύτηκαν.": "Changes saved.", "Οι αποστάσεις είναι εκτιμήσεις με βάση το κέντρο κάθε περιοχής, εκτός αν έχεις αποθηκεύσει ακριβή θέση.": "Distances are estimates from each area's centre, unless an exact location is saved.", "Οι επαφές ανοίγουν από το Chrome του κινητού, όταν η εφαρμογή είναι ανεβασμένη στο διαδίκτυο.": "Contacts open from Chrome on your phone when the app is online.", "Οι σύντομοι σύνδεσμοι δεν διαβάζονται. Άνοιξέ τον, πάτα παρατεταμένα το σημείο και αντέγραψε τις συντεταγμένες.": "Short links can't be read. Open it, long-press the spot and copy the coordinates.", "Ολοκλήρωση": "Complete", "Ολοκληρωμένες": "Completed", "Ολοκληρώθηκε": "Completed", "Ολοκληρώθηκε. Θα τη βρεις στο αρχείο.": "Done. You'll find it in the archive.", "Ομαδοποίηση ανά περιοχή": "Group by area", "Ονοματεπώνυμο": "Full name", "Οριστική διαγραφή": "Delete permanently", "Οριστική διαγραφή όλων": "Delete all permanently", "Οριστική διαγραφή; Δεν αναιρείται.": "Delete permanently? This can't be undone.", "Πάτα για να προσθέσεις τοποθεσία": "Tap to add a location", "Πάτα ξανά το πίσω για να βγεις.": "Press back again to exit.", "Πάτα πρώτα ένα σημείο στον χάρτη.": "Tap a point on the map first.", "Πάτα στον χάρτη για να διαλέξεις σημείο": "Tap the map to pick a point", "Πίσω": "Back", "Παράλειψη στάσης": "Skip stop", "Πελάτες": "Clients", "Πελάτης": "Client", "Περιοχή": "Area", "Πες ή γράψε τι θες να κάνεις": "Say or type what you want to do", "Πλοήγηση": "Navigate", "Πολύ μεγάλα": "Extra large", "Ποσό σε ευρώ": "Amount in euros", "Πού πηγαίνεις;": "Where are you going?", "Προεπιλεγμένη μέγιστη παράκαμψη σε χιλιόμετρα": "Default maximum detour in km", "Προεπιλογή: {b}. Πάτα την πινέζα για την τρέχουσα θέση σου.": "Default: {b}. Tap the pin for your current location.", "Προορισμός": "Destination", "Προς": "To", "Προσθήκη": "Add", "Προστέθηκαν {n} πελάτες.": "{n} clients added.", "Προστέθηκε {n} πελάτης.": "{n} client added.", "Προτεραιότητα": "Priority", "Πότε": "When", "Ρυθμίσεις": "Settings", "Σήμερα": "Today", "Σίγουρα; Δεν αναιρείται.": "Are you sure? This can't be undone.", "Σε 10 λεπτά": "In 10 minutes", "Σε εξέλιξη": "In progress", "Σημεία που δεν είναι στη λίστα, π.χ. «Αποθήκη». Βάζεις διεύθυνση, σημείο στον χάρτη ή την τρέχουσα θέση.": "Places not in the list, e.g. “Warehouse”. Add an address, a map point or your current location.", "Σημείωσε εξόφληση": "Mark as paid", "Σημειώθηκε ως διαβασμένη.": "Marked as read.", "Σημειώθηκε ως εξοφλημένη.": "Marked as paid.", "Σημειώσεις": "Notes", "Σκούρο": "Dark", "Σπίτι ή έδρα": "Home or base", "Στάλθηκε αυτόματα αντίγραφο στο ταχυδρομείο σου.": "A backup was sent to your email automatically.", "Σταθερό": "Landline", "Στην ώρα της": "At the time", "Στοιχεία, διεύθυνση, σημειώσεις": "Details, address, notes", "Στους Χάρτες Google": "In Google Maps", "Συμπλήρωσε κείμενο και ώρα.": "Fill in text and time.", "Συμπλήρωση από τις επαφές": "Fill in from contacts", "Συμπληρώθηκαν: {x}. Έλεγξέ τα πριν την αποθήκευση.": "Filled in: {x}. Check before saving.", "Συνέχεια;": "Continue?", "Συντεταγμένες ή σύνδεσμος χάρτη": "Coordinates or map link", "Σύνοψη δουλειών": "Job summary", "ΤΚ": "Postcode", "Τίποτα για σήμερα. Πάτα + για νέα εργασία, πελάτη ή υπενθύμιση.": "Nothing for today. Tap + for a new task, client or reminder.", "Τα δεδομένα είναι πολλά για αποστολή. Χρησιμοποίησε την κοινοποίηση αρχείου.": "Too much data to email. Use file sharing instead.", "Τα δεδομένα επαναφέρθηκαν.": "Data restored.", "Τα δεδομένα σου μένουν αποθηκευμένα.": "Your data stays saved.", "Τα στοιχεία είναι ήδη ίδια με την επαφή.": "The details already match the contact.", "Τα στοιχεία συμπληρώθηκαν. Έλεγξέ τα και πάτα αποθήκευση.": "Details filled in. Check them and tap save.", "Τελευταίο αντίγραφο: {d}.": "Last backup: {d}.", "Τι να σου θυμίσω;": "What should I remind you of?", "Τι πρέπει να γίνει": "What needs to be done", "Το Chrome δεν έχει άδεια θέσης για αυτή τη σελίδα. Πάτα το εικονίδιο αριστερά από τη διεύθυνση, άνοιξε «Άδειες» και επίτρεψε την τοποθεσία.": "Chrome has no location permission for this page. Tap the icon left of the address, open “Permissions” and allow location.", "Το αντίγραφο κοινοποιήθηκε.": "Backup shared.", "Το αντίγραφο στάλθηκε στο {e}.": "Backup sent to {e}.", "Το αρχείο αποθηκεύτηκε στις λήψεις του κινητού.": "File saved to your downloads.", "Το αρχείο δεν διαβάστηκε.": "The file couldn't be read.", "Το αρχείο είναι άδειο.": "The archive is empty.", "Το διάβασα": "Read it", "Το ηλεκτρονικό σου ταχυδρομείο": "Your email", "Το ποσό πρέπει να είναι αριθμός.": "The amount must be a number.", "Τονισμός": "Accent", "Τοποθεσία από τον πελάτη: {a}": "Location from client: {a}", "Υπάρχει ήδη τοποθεσία με αυτό το όνομα.": "A place with this name already exists.", "Υπενθυμίσεις": "Reminders", "Υπενθύμιση": "Reminder", "Υπενθύμιση και αυτόματη αποστολή μετά από τόσες αλλαγές": "Reminder and automatic sending after this many changes", "Υψηλή": "High", "Υψηλή προτεραιότητα": "High priority", "Φωνητική υπαγόρευση": "Voice dictation", "Φόντο": "Background", "Χαμηλή": "Low", "Χρήση σημείου": "Use this point", "Χρώματα, γράμματα και όνομα": "Colours, text and name", "Χωρίς ημερομηνία": "No date", "Χωρίς θέση": "No location", "Χωρίς πελάτη": "No client", "Χωρίς τοποθεσία": "No location", "Πρόσθεσε τοποθεσία για να μπαίνει στις διαδρομές.":"Add a location so it appears in routes.","Χωρίς τοποθεσία. Δεν θα εμφανίζεται στις διαδρομές.": "No location. It won't appear in routes.", "Χωρίς υπενθύμιση": "No reminder", "Ωράριο": "Hours", "Ωράριο ή πότε βρίσκεται": "Opening hours or availability", "διεύθυνση": "address", "δουλειές και διαδρομές": "jobs and routes", "εξοφλημένο": "paid", "η διεύθυνσή σου": "your address", "π.χ. 37.9601, 23.7530": "e.g. 37.9601, 23.7530", "π.χ. Αθήνα": "e.g. Athens", "π.χ. Αύριο 9 το πρωί να πάω στον Κολωνό να πάρω ξύλο": "e.g. Tomorrow 9 am go to Kolonos to buy wood", "π.χ. Γλυφάδα": "e.g. Glyfada", "π.χ. Δευτέρα έως Παρασκευή, 9:00 έως 17:00": "e.g. Monday to Friday, 9:00 to 17:00", "π.χ. Σπίτι, Αποθήκη": "e.g. Home, Warehouse", "παράκαμψη": "detour", "πελάτης": "client", "περιοχή": "area", "ποσό": "amount", "προθεσμία": "deadline", "προτεραιότητα": "priority", "τίτλος": "title", "υπενθύμιση": "reminder", "χλμ.": "km", "ώρα": "time", "Ζητείται άδεια τοποθεσίας…": "Asking for location permission…", "Η τοποθεσία είναι μπλοκαρισμένη για αυτή τη σελίδα στο Chrome. Πάτα το εικονίδιο αριστερά από τη διεύθυνση, «Άδειες», και επίτρεψε την τοποθεσία.": "Location is blocked for this page in Chrome. Tap the icon left of the address, open “Permissions” and allow location.", "Η άδεια υπάρχει, αλλά το σύστημα δεν έδωσε θέση. Άνοιξε την Τοποθεσία του κινητού και ξαναδοκίμασε.": "Permission is granted, but the system gave no position. Turn on your phone's Location and try again.", "Δεν δόθηκε άδεια τοποθεσίας. Όταν εμφανιστεί το μήνυμα του Chrome, πάτα «Να επιτρέπεται».": "Location permission wasn't given. When Chrome asks, tap “Allow”.", "Καταχώρηση": "Save entry", "Διάλεξε επαφές και πάτα το ✓ πάνω δεξιά στη λίστα του κινητού.": "Pick contacts and tap the ✓ at the top right of your phone's list.", "Διάλεξε επαφή και πάτα το ✓ πάνω δεξιά στη λίστα του κινητού.": "Pick a contact and tap the ✓ at the top right of your phone's list.", "Τα στοιχεία συμπληρώθηκαν. Έλεγξέ τα και πάτα «Καταχώρηση» κάτω δεξιά.": "Details filled in. Check them and tap “Save entry” at the bottom right.", "Έλεγξε τα στοιχεία και πάτα «Καταχώρηση» κάτω δεξιά για να αποθηκευτεί ο πελάτης.": "Check the details and tap “Save entry” at the bottom right to save the client.", "Τοποθεσία": "Location", "Έλεγχος άδειας τοποθεσίας": "Check location permission", "Έλεγχος…": "Checking…", "Ασφαλής σύνδεση": "Secure connection", "Μέσα σε πλαίσιο άλλης σελίδας": "Inside another page's frame", "Άδεια της σελίδας": "Page permission", "ναι": "yes", "όχι": "no", "ναι, με φραγή θέσης": "yes, location blocked", "δόθηκε": "granted", "απορρίφθηκε": "denied", "θα ζητηθεί": "will be asked", "άγνωστη": "unknown", "Η θέση βρέθηκε": "Location found", "Σφάλμα": "Error", "Είσαι κοντά: {a}": "You're near {a}", "Θύμισέ μου όταν φτάσω κοντά": "Remind me when I get close", "Αργότερα": "Later", "Πάμε τώρα": "Go now", "Δες πού βρίσκεσαι στον χάρτη": "See where you are on the map", "Αφετηρία το σημείο που διάλεξες.": "Starting from the point you picked.", "Ποιος θα πάει": "Who is going", "Άτομα": "People", "Ποιοι δουλεύουν": "Who works with you", "Άτομα και χρώματα": "People and colours", "Ό,τι προσθέσεις εδώ εμφανίζεται στη νέα εργασία, με το χρώμα του.": "Whatever you add here appears on new tasks, in its colour.", "Όνομα ατόμου": "Person's name", "Άτομο": "Person", "Να αφαιρεθεί από τη λίστα;": "Remove from the list?", "Γράψε όνομα.": "Enter a name.", "Εγώ": "Me", "Ειδοποίηση όταν πλησιάσω το σημείο": "Alert me when I get close", "Χωρίς ειδοποίηση": "No alert", "{n} μέτρα": "{n} metres", "Όταν πλησιάσω": "When I'm near", "Πήγαινε εκεί": "Go there", "Νέα εργασία για τον ίδιο πελάτη": "New task for the same client", "Νέος πελάτης": "New client", "Καμπανάκι": "Chime", "Κουδούνι": "Bell", "Απαλό": "Soft", "Έντονο": "Alert", "Βαθύ": "Deep", "Χωρίς ήχο": "No sound", "Ειδοποιήσεις και ήχος": "Notifications and sound", "Ήχος, δόνηση και ειδοποιήσεις": "Sound, vibration and notifications", "Ήχος υπενθύμισης": "Reminder sound", "Δοκιμή": "Test", "Δόνηση": "Vibration", "Ειδοποιήσεις κινητού": "Phone notifications", "Εμφανίζονται στο πάνω μέρος της οθόνης, ακόμα και όταν κοιτάς άλλη εφαρμογή, όσο η εφαρμογή μένει ανοιχτή σε καρτέλα.": "They appear at the top of the screen, even while you're in another app, as long as this app stays open in a tab.", "Ειδοποιήσεις στην οθόνη του κινητού": "Notifications on the phone screen", "Δοκιμαστική ειδοποίηση": "Test notification", "Για να χτυπάει και με την εφαρμογή τελείως κλειστή χρειάζεται η έκδοση εγκατάστασης για Android. Η ιστοσελίδα μπορεί να ειδοποιεί μόνο όσο μένει ανοιχτή.": "To ring with the app fully closed you need the installable Android build. A web page can only notify while it stays open.", "Η συσκευή δεν υποστηρίζει ειδοποιήσεις.": "This device doesn't support notifications.", "Δεν δόθηκε άδεια για ειδοποιήσεις.": "Notification permission wasn't given.", "Οι ειδοποιήσεις ενεργοποιήθηκαν.": "Notifications are on.", "Έτσι θα φαίνονται οι υπενθυμίσεις σου.": "This is how your reminders will look.", "Η ειδοποίηση δεν εμφανίστηκε. Έλεγξε τις άδειες του Chrome.": "The notification didn't appear. Check Chrome's permissions.", "Στάλθηκε. Δες την επάνω στην οθόνη.": "Sent. Look at the top of your screen.", "Εμφάνιση εργασιών": "Show tasks", "Ταξινόμηση πελατών": "Sort clients", "Περίοδος": "Period", "Προκαταβολή": "Advance", "Πληρωμή": "Payment", "Άλλο έσοδο": "Other income", "Υλικά": "Materials", "Δαπάνη": "Expense", "Καύσιμα": "Fuel", "Κίνηση": "Entry", "Οικονομικά": "Money", "Ταμείο": "Money", "Χρεώσεις από εργασίες": "Charges from tasks", "Εισπράχθηκαν": "Received", "Υπόλοιπο που οφείλει": "Balance owed", "Έξοδα για αυτόν": "Spent on them", "Καθαρό κέρδος": "Net profit", "Είσπραξη": "Income", "Έξοδο": "Expense", "Στοιχεία": "Details", "Καταχώρηση νέας εργασίας": "Add a new task", "Αυτόν τον μήνα": "This month", "Φέτος": "This year", "Όλα": "All", "Έσοδα": "Income", "Έξοδα": "Expenses", "Κέρδος": "Profit", "Σου χρωστάνε": "Owed to you", "Χρεώσεις": "Charges", "Κανείς δεν σου χρωστάει αυτή τη στιγμή.": "Nobody owes you right now.", "Κινήσεις": "Entries", "Καμία κίνηση σε αυτή την περίοδο.": "No entries in this period.", "εξοφλημένη εργασία": "paid task", "Νέα κίνηση": "New entry", "Επεξεργασία κίνησης": "Edit entry", "Είδος": "Kind", "Ημερομηνία": "Date", "Σημείωση": "Note", "π.χ. προκαταβολή για υλικά": "e.g. advance for materials", "Γράψε ποσό μεγαλύτερο από μηδέν.": "Enter an amount greater than zero.", "Η κίνηση καταχωρήθηκε.": "Entry saved.", "Η κίνηση διαγράφηκε.": "Entry deleted.", "Να διαγραφεί η κίνηση;": "Delete this entry?", "Καμία επόμενη υπενθύμιση. Γράψε μία παραπάνω.": "No upcoming reminders. Add one above.", "Δικά μου σημεία": "My places", "Ανοιχτές δουλειές": "Open jobs", "Διάλεξε επαφές και πάτα «Ολοκληρώθηκε» πάνω δεξιά.": "Pick contacts and tap “Done” at the top right.", "Διάλεξε την επαφή και πάτα «Ολοκληρώθηκε» πάνω δεξιά.": "Pick the contact and tap “Done” at the top right.", "Βρέθηκαν {n} σημεία. Πάτα παρακάτω αυτό που θέλεις.": "{n} places found. Tap the one you want below.", "Δείξε διαδρομή και στάσεις": "Show route and stops", "Η τοποθεσία μπήκε και σε {n} ανοιχτή εργασία του.": "The location now also applies to {n} open task of theirs.", "Η τοποθεσία μπήκε και στις {n} ανοιχτές εργασίες του.": "The location now also applies to their {n} open tasks.", "Καταχώρηση|ώρα": "Entry time", "Θα ξαναχτυπήσει την ώρα της.": "It will ring again at its time.", "Σε {n} ώρες": "In {n} hours", "Σε {n} λεπτά": "In {n} minutes", "Κορυφαίος πελάτης": "Top client", "Κορυφαίος πελάτης 💎": "Top client 💎", "Αναζήτηση διεύθυνσης από το σημείο…": "Looking up the address for this point…", "Συμπληρώθηκαν από το σημείο: {x}.": "Filled in from the point: {x}.", "Το σημείο αποθηκεύτηκε, αλλά δεν βρέθηκε διεύθυνση για αυτό.": "The point was saved, but no address was found for it.", "Η διεύθυνση δεν βρέθηκε από το σημείο. Χρειάζεται σύνδεση στο διαδίκτυο.": "No address found for the point. An internet connection is needed.", "οδός": "street", "αριθμός": "number", "ΤΚ": "postcode", "Ο σύντομος σύνδεσμος δεν διαβάζεται. Άνοιξέ τον στους Χάρτες, πάτα παρατεταμένα το σημείο, αντέγραψε τις συντεταγμένες και επικόλλησέ τες εδώ.": "Short links can't be read. Open it in Maps, long-press the spot, copy the coordinates and paste them here.", "Άνοιγμα συνδέσμου": "Open link", "Αλφαβητικά": "Alphabetical", "Περισσότερα χρήματα": "Highest earnings", "Καλύτερη αξιολόγηση": "Best rated", "Πόσο καλός πελάτης": "How good a client", "Αξιολόγηση πελάτη": "Client rating", "Αξιολόγηση: {n} στα 5": "Rating: {n} out of 5", "Η αξιολόγηση καθαρίστηκε.": "Rating cleared.", "Διατήρηση στη λίστα": "Keep in the list", "Μένει κόκκινη στη λίστα μέχρι να την κλείσεις.": "It stays red in the list until you close it.", "Μεταφέρθηκε στα διαγραμμένα.": "Moved to deleted.", "Μεταφέρθηκε στα ολοκληρωμένα.": "Moved to completed.", "Επαναφορά στη λίστα": "Restore to list", "Άδειασμα φακέλου": "Empty this folder", "Ο φάκελος είναι άδειος.": "This folder is empty.", "Ό,τι ολοκλήρωσες ή διέγραψες μένει εδώ, σε δύο φακέλους, μέχρι να το σβήσεις εσύ.": "Whatever you complete or delete stays here, in two folders, until you delete it yourself.", "Διαγραμμένες": "Deleted", "Να σβηστούν οριστικά όλες οι διαγραμμένες;": "Permanently delete all deleted reminders?", "Να σβηστούν οριστικά όλες οι ολοκληρωμένες;": "Permanently delete all completed reminders?", "Αρχείο: ολοκληρωμένες και διαγραμμένες": "Archive: completed and deleted", "Η εφαρμογή τρέχει ως αρχείο από τις Λήψεις. Το Chrome δεν δίνει τοποθεσία σε αρχεία — ανέβασέ τη στο διαδίκτυο ή βάλε διεύθυνση και σημείο στον χάρτη.": "The app is running as a file from Downloads. Chrome gives no location to files — put it online, or use an address and a map point.", "Οι επαφές δεν ανοίγουν όταν η εφαρμογή τρέχει ως αρχείο από τις Λήψεις. Ανέβασέ τη στο διαδίκτυο.": "Contacts don't open when the app runs as a file from Downloads. Put it online first.", "Τρόπος ανοίγματος": "Opened as", "τοπικό αρχείο ({p}) — χωρίς τοποθεσία, επαφές και ασφαλή αποθήκευση": "a local file ({p}) — no location, contacts or safe storage", "κανονική ιστοσελίδα": "a normal web page", "Τρέχει ως τοπικό αρχείο.": "Running as a local file.", "Η τοποθεσία, οι επαφές και η μόνιμη αποθήκευση δεν δουλεύουν έτσι. Ανέβασε την εφαρμογή στο διαδίκτυο και άνοιξέ τη από τη διεύθυνσή της.": "Location, contacts and permanent storage don't work this way. Put the app online and open it from its address."};
 const pl=(n,one,many)=>T(n===1?one:many,{n});
 const LOC=()=>LANG==="en"?"en-GB":"el-GR";
 const fmt=s=>s?new Date(s).toLocaleString(LOC(),{weekday:"short",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}):"";
@@ -349,13 +393,17 @@ function persist(){S.meta.changes=(S.meta.changes||0)+1;write();scheduleAuto()}
 function fix(d){
   d=d&&typeof d==="object"?d:{};
   ["clients","tasks","reminders","areas"].forEach(k=>{if(!Array.isArray(d[k]))d[k]=[]});
-  d.settings=Object.assign({detour:3,backupEvery:10,backupEmail:"",autoEmail:true,lang:"el",base:null},d.settings||{});
+  d.settings=Object.assign({sound:"chime",vibrate:true,notify:false,people:[],detour:3,backupEvery:10,backupEmail:"",autoEmail:true,lang:"el",base:null},d.settings||{});
   d.settings.look=Object.assign({preset:"classic",brand:"",accent:"",paper:"",ink:"",zoom:1,title:""},d.settings.look||{});
   d.meta=Object.assign({changes:0,lastBackup:null,lastAuto:0},d.meta||{});
   d.clients.forEach(c=>{if(!c.id)c.id=uid();if(!c.name)c.name="—";c.rating=+c.rating||0});
-  d.tasks.forEach(x=>{if(!x.id)x.id=uid();if(!x.status)x.status="pending";if(x.remindBefore==null)x.remindBefore=x.notifyStart===false?-1:0;if(!x.priority)x.priority=2});
+  if(!d.settings.people||!d.settings.people.length)d.settings.people=[{id:"me",name:"Εγώ",color:"#2468B5",on:true}];
+  d.settings.people.forEach(p=>{if(!p.id)p.id=uid();if(p.on===undefined)p.on=true});
+  d.tasks.forEach(x=>{if(!x.id)x.id=uid();if(!Array.isArray(x.who))x.who=[d.settings.people[0].id];if(x.nearAlert==null)x.nearAlert=0;if(!x.status)x.status="pending";if(x.remindBefore==null)x.remindBefore=x.notifyStart===false?-1:0;if(!x.priority)x.priority=2});
   d.reminders.forEach(r=>{if(!r.id)r.id=uid();r.done=!!r.done;r.deleted=!!r.deleted;if(!r.repeat)r.repeat="none";r.remindBefore=REMB.includes(+r.remindBefore)&&+r.remindBefore>=0?+r.remindBefore:0});
   d.areas=d.areas.filter(a=>a&&a.name&&a.lat!=null);
+  if(!Array.isArray(d.ledger))d.ledger=[];
+  d.ledger.forEach(e=>{if(!e.id)e.id=uid();e.amount=+e.amount||0;if(!e.date)e.date=new Date().toISOString()});
   return d;
 }
 let S=fix(load());LANG=S.settings.lang||"el";
@@ -393,7 +441,14 @@ clients:'<circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6M16 4a4 
 tasks:'<path d="M10 6h11M10 12h11M10 18h11M3 6l1.5 1.5L7 5M3 12l1.5 1.5L7 11M3 18l1.5 1.5L7 17"/>',
 route:'<circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H16a3.5 3.5 0 000-7H8a3.5 3.5 0 010-7h7.5"/>',
 bell:'<path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9M10 21a2 2 0 004 0"/>',
-gear:'<circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>',
+gear:'<path d="M10.3 2.6h3.4l.4 2.3 2 .8 1.9-1.3 2.4 2.4-1.3 1.9.8 2 2.3.4v3.4l-2.3.4-.8 2 1.3 1.9-2.4 2.4-1.9-1.3-2 .8-.4 2.3h-3.4l-.4-2.3-2-.8-1.9 1.3-2.4-2.4 1.3-1.9-.8-2-2.3-.4v-3.4l2.3-.4.8-2L3.5 6.8l2.4-2.4 1.9 1.3 2-.8z"/><circle cx="12" cy="12" r="3"/>',
+money:'<rect x="2" y="6" width="20" height="13" rx="2"/><circle cx="12" cy="12.5" r="2.8"/><path d="M6 6V4.5h12M5 10.5h.01M19 14.5h.01"/>',
+filter:'<path d="M3 5h18l-7 8v6l-4 2v-8z"/>',
+shield:'<path d="M12 2.5l8 3.2v5.6c0 4.6-3.2 8.6-8 10.2-4.8-1.6-8-5.6-8-10.2V5.7z"/><path d="M8.6 12.2l2.4 2.4 4.4-4.6"/>',
+person:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.2 3.6-6.5 8-6.5s8 2.3 8 6.5"/>',
+near:'<circle cx="12" cy="12" r="2.6"/><path d="M7.8 7.8a6 6 0 000 8.4M16.2 16.2a6 6 0 000-8.4M4.6 4.6a10.5 10.5 0 000 14.8M19.4 19.4a10.5 10.5 0 000-14.8"/>',
+bolt:'<path d="M13 2L5 13h6l-1 9 8-11h-6z"/>',
+sound:'<path d="M11 5L6.5 9H3v6h3.5L11 19z"/><path d="M15.5 8.5a5 5 0 010 7M18.5 5.5a9 9 0 010 13"/>',
 phone:'<path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.4 1.8.7 2.7a2 2 0 01-.5 2.1L8 9.8a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.9.3 1.8.6 2.7.7a2 2 0 011.7 2z"/>',
 msg:'<path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>',
 edit:'<path d="M12 20h9M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/>',
@@ -428,6 +483,25 @@ const ic=(n,s=22)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="no
 const PINSVG='<svg viewBox="0 0 24 24" width="38" height="38"><path d="M12 22.5s7.5-6.8 7.5-12.5a7.5 7.5 0 00-15 0c0 5.7 7.5 12.5 7.5 12.5z" fill="#C8412B" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="10" r="2.8" fill="#fff"/></svg>';
 
 const getClient=id=>S.clients.find(c=>c.id===id);
+const people=()=>S.settings.people||[];
+const getPerson=id=>people().find(p=>p.id===id);
+const NEARD=[0,300,800,2000,5000];
+const nearLabel=m=>m?(m<1000?T("{n} μέτρα",{n:m}):T("{n} χλμ.",{n:(m/1000).toLocaleString(LOC(),{maximumFractionDigits:1})})):T("Χωρίς ειδοποίηση");
+function whoHTML(ids){const l=(ids||[]).map(getPerson).filter(Boolean);if(!l.length)return"";
+  return `<span class="whos">${l.map(p=>`<span class="who" style="background:${p.color}" title="${esc(p.name)}">${esc(initials(p.name))}</span>`).join("")}</span>`}
+const KINDS={advance:["Προκαταβολή","in"],payment:["Πληρωμή","in"],extra:["Άλλο έσοδο","in"],material:["Υλικά","out"],expense:["Δαπάνη","out"],fuel:["Καύσιμα","out"]};
+const isIn=k=>(KINDS[k]||["","in"])[1]==="in";
+const kindName=k=>T((KINDS[k]||["Κίνηση"])[0]);
+const cEntries=id=>S.ledger.filter(e=>e.clientId===id).sort((a,b)=>new Date(b.date)-new Date(a.date));
+function cMoney(c){
+  const tasks=S.tasks.filter(x=>x.clientId===c.id);
+  const charges=tasks.reduce((s,x)=>s+(+x.amount||0),0);
+  const paidTasks=tasks.filter(x=>x.paid).reduce((s,x)=>s+(+x.amount||0),0);
+  const ent=cEntries(c.id);
+  const received=paidTasks+ent.filter(e=>isIn(e.kind)).reduce((s,e)=>s+e.amount,0);
+  const spent=ent.filter(e=>!isIn(e.kind)).reduce((s,e)=>s+e.amount,0);
+  return{charges,received,spent,balance:charges-received,profit:received-spent,ent};
+}
 const isOpen=x=>x.status!=="done";
 const sec=(s,cls="")=>`<h2 class="sec ${cls}">${s}</h2>`;
 const panel=h=>`<div class="panel">${h}</div>`;
@@ -655,12 +729,13 @@ let route={from:"",to:"",fromGeo:null,toPlace:null,limit:null,result:null,off:ne
 
 function render(){
   refreshLists();
-  const active=remOpen()?"":(view==="client"?"clients":view);
+  const active=view==="client"?"clients":view;
   const act=S.reminders.filter(remActive).length,overN=S.reminders.filter(remOver).length;
-  $("#nav").innerHTML=[["today","Σήμερα"],["tasks","Εργασίες"],["bell","Υπενθυμίσεις"],["clients","Πελάτες"],["route","Διαδρομή"]]
-    .map(([v,l])=>v==="bell"
-      ?`<button data-act="bell" class="${remOpen()?"on":""}">${ic("bell")}${act?`<span class="ndot ${overN?"red":""}">${act}</span>`:""}${T(l)}</button>`
-      :`<button data-act="go" data-view="${v}" class="${active===v?"on":""}">${ic(v)}${T(l)}</button>`).join("");
+  $("#nav").innerHTML=[["today","Σήμερα","today"],["tasks","Εργασίες","tasks"],["reminders","Υπενθυμίσεις","bell"],["clients","Πελάτες","clients"],["money","Ταμείο","money"],["route","Διαδρομή","route"]]
+    .map(([v,l,i])=>`<button data-act="go" data-view="${v}" class="${active===v?"on":""}">${ic(i)}${v==="reminders"&&act?`<span class="ndot ${overN?"red":""}">${act}</span>`:""}${T(l)}</button>`).join("");
+  const bkAge=S.meta.changes,bkState=!S.meta.lastBackup?"bad":bkAge>=S.settings.backupEvery?"warn":"ok";
+  const bkBtn=$("#bkBtn");bkBtn.className="hbtn "+bkState;bkBtn.innerHTML=ic("shield")+'<span class="pipdot"></span>';
+  bkBtn.setAttribute("aria-label",T("Αντίγραφο ασφαλείας"));bkBtn.title=backupStatus();
   $("#gearBtn").innerHTML=ic("gear");$("#gearBtn").setAttribute("aria-label",T("Ρυθμίσεις"));
   $("#langBtn").textContent=LANG==="en"?"🇬🇧":"🇬🇷";$("#langBtn").setAttribute("aria-label",T("Γλώσσα"));
   $("#fab").innerHTML=ic("plus",28);$("#fab").setAttribute("aria-label",T("Προσθήκη"));
@@ -668,12 +743,12 @@ function render(){
   document.documentElement.style.setProperty("--hdr",$("header").getBoundingClientRect().height+"px");
   document.documentElement.style.setProperty("--navh",$("nav").getBoundingClientRect().height+"px");
   const M=$("#main");
-  M.innerHTML=view==="today"?vToday():view==="clients"?vClients():view==="client"?vClient():view==="tasks"?vTasks():vRoute();
+  M.innerHTML=view==="today"?vToday():view==="clients"?vClients():view==="client"?vClient():view==="tasks"?vTasks():view==="reminders"?vReminders():view==="money"?vMoney():vRoute();
   bindView();initHScroll();
   document.querySelectorAll("[data-stars]").forEach(el=>{const c=getClient(el.dataset.stars);if(!c)return;
     bindStars(el,()=>c.rating||0,v=>{c.rating=v;persist();toast(v>=6?T("Κορυφαίος πελάτης 💎"):v?T("Αξιολόγηση: {n} στα 5",{n:v}):T("Η αξιολόγηση καθαρίστηκε."))})});
 }
-function save(){persist();render()}
+function save(){persist();render();updateWatch()}
 
 /* ---------- Γραμμές λίστας ---------- */
 function taskRow(x,showClient=true){
@@ -685,12 +760,15 @@ function taskRow(x,showClient=true){
   if(x.start)m.push(`<span>${T("Έναρξη")} ${fmt(x.start)}</span>`);
   if(x.end)m.push(`<span>${T("Λήξη")} ${fmt(x.end)}</span>`);
   if(x.amount)m.push(`<span>${money(x.amount)}${x.paid?", "+T("εξοφλημένο"):""}</span>`);
+  if(x.nearAlert)m.push(`<span class="nearbadge">${T("Όταν πλησιάσω")}</span>`);
   const tg=[];if(tags[st])tg.push(`<span class="tag ${st}">${T(tags[st])}</span>`);
   if(!L&&isOpen(x))tg.push(`<span class="tag noloc">${T("Χωρίς τοποθεσία")}</span>`);
   return `<div class="row task p${x.priority||2} ${st}" data-act="editTask" data-id="${x.id}">
     <button class="check" data-act="toggleTask" data-id="${x.id}" aria-label="${x.status==="done"?T("Επαναφορά"):T("Ολοκλήρωση")}">${x.status==="done"?"✓":""}</button>
-    <div class="grow"><div class="title">${x.priority==3?`<span class="hi" title="${T("Υψηλή προτεραιότητα")}">!</span> `:""}${esc(x.title)}</div>
-    <div class="meta">${m.join("")}</div></div>${tg.length?`<div class="tags">${tg.join("")}</div>`:""}</div>`;
+    <div class="grow"><div class="title">${x.priority==3?`<span class="hi" title="${T("Υψηλή προτεραιότητα")}">!</span> `:""}${esc(x.title)} ${whoHTML(x.who)}</div>
+    <div class="meta">${m.join("")}</div></div>
+    ${tg.length?`<div class="tags">${tg.join("")}</div>`:""}
+    ${L&&isOpen(x)?`<button class="goto" data-act="destTask" data-id="${x.id}" aria-label="${T("Πήγαινε εκεί")}">${ic("pin",20)}</button>`:""}</div>`;
 }
 function remRow(r){
   const over=remOver(r);
@@ -729,9 +807,9 @@ function vToday(){
 
 /* ---------- Πελάτες ---------- */
 const CSORT=[["work","Με εκκρεμότητες"],["az","Αλφαβητικά"],["money","Περισσότερα χρήματα"],["stars","Καλύτερη αξιολόγηση"]];
-function vClients(){return `<div class="hs" id="hsClients"><div class="chips">${CSORT.map(([k,l])=>`<button class="chip ${clientSort===k?"on":""}" data-act="csort" data-s="${k}">${T(l)}</button>`).join("")}</div><div class="hs-track"><div class="hs-thumb"></div></div></div>
+function vClients(){return `<button class="filterbar" data-act="filterSheet" data-kind="clients">${ic("filter",18)}<span>${T(CSORT.find(x=>x[0]===clientSort)[1])}</span><i>▾</i></button>
   <div class="inrow" style="margin-bottom:12px"><input class="search" id="cSearch" type="search" placeholder="${T("Αναζήτηση πελάτη")}" value="${esc(clientSearch)}"><button class="contactsbtn small" data-act="importContacts"><span class="cicon">${ic("book",17)}</span>${T("Επαφές")}</button></div><div id="clientList">${clientListHTML()}</div>`}
-const clientEarned=c=>S.tasks.filter(x=>x.clientId===c.id&&x.amount&&x.paid).reduce((s,x)=>s+Number(x.amount),0);
+const clientEarned=c=>cMoney(c).received;
 function clientListHTML(){
   if(!S.clients.length)return panel(`<div class="empty">${T("Δεν έχεις πελάτες ακόμα. Πάτα + για να προσθέσεις τον πρώτο ή φέρε πελάτες από τις επαφές σου.")}</div>`);
   const q=norm(clientSearch);
@@ -764,42 +842,57 @@ function navUrl(c){
   const addr=clientAddress(c);if(c.street&&addr)return`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(addr)}`;
   const L=clientLoc(c);return L?`https://www.google.com/maps/dir/?api=1&destination=${L.lat},${L.lng}`:"";
 }
+function entryRow(e,showClient){
+  const c=e.clientId&&getClient(e.clientId);
+  return `<div class="row ent" data-act="editEntry" data-id="${e.id}">
+    <span class="entic ${isIn(e.kind)?"in":"out"}">${isIn(e.kind)?"+":"−"}</span>
+    <div class="grow"><div class="title">${kindName(e.kind)}${e.note?` <span style="font-weight:400;color:var(--muted)">${esc(e.note)}</span>`:""}</div>
+    <div class="meta"><span>${fmtDay(e.date)}</span>${showClient&&c?`<span>${esc(c.name)}</span>`:""}</div></div>
+    <b class="amt ${isIn(e.kind)?"in":"out"}">${isIn(e.kind)?"":"−"}${money(e.amount)}</b></div>`;
+}
 function vClient(){
   const c=getClient(clientId);if(!c){view="clients";return vClients()}
   const tasks=S.tasks.filter(x=>x.clientId===c.id);
   const open=tasks.filter(isOpen).sort(byDue),done=tasks.filter(x=>!isOpen(x)).sort((a,b)=>(b.doneAt||0)-(a.doneAt||0));
-  const earned=tasks.filter(x=>x.amount&&x.paid).reduce((s,x)=>s+Number(x.amount),0);
-  const unpaid=tasks.filter(x=>x.amount&&!x.paid).reduce((s,x)=>s+Number(x.amount),0);
+  const M=cMoney(c);
   const tel=(c.mobile||c.phone||"").replace(/\s/g,""),addr=clientAddress(c),L=clientLoc(c),nav=navUrl(c);
   let h=`<button class="back" data-act="go" data-view="clients">‹ ${T("Πελάτες")}</button>
   <div class="cl-name">${esc(c.name)}</div>${c.company?`<p class="today-sub">${esc(c.company)}</p>`:""}
-  <div class="actions">
-    ${tel?`<a class="act" data-act="noop" href="tel:${esc(tel)}">${ic("phone")}${T("Κλήση")}</a><a class="act" data-act="noop" href="sms:${esc(tel)}">${ic("msg")}${T("Μήνυμα")}</a>`:""}
-    ${nav?`<a class="act" data-act="noop" href="${nav}" target="_blank" rel="noopener">${ic("route")}${T("Πλοήγηση")}</a>`:""}
-    <button class="act" data-act="editClient" data-id="${c.id}">${ic("edit")}${T("Επεξεργασία")}</button>
-    <button class="act" data-act="syncContact" data-id="${c.id}"><span style="color:var(--green)">${ic("book")}</span>${T("Από επαφές")}</button>
-  </div>`;
+  <div class="actions four">
+    <a class="act ${tel?"":"off"}" data-act="noop" href="${tel?"tel:"+esc(tel):"#"}">${ic("phone",20)}${T("Κλήση")}</a>
+    <a class="act ${tel?"":"off"}" data-act="noop" href="${tel?"sms:"+esc(tel):"#"}">${ic("msg",20)}${T("Μήνυμα")}</a>
+    <a class="act ${nav?"":"off"}" data-act="noop" href="${nav||"#"}" target="_blank" rel="noopener">${ic("route",20)}${T("Πλοήγηση")}</a>
+    <button class="act" data-act="editClient" data-id="${c.id}">${ic("edit",20)}${T("Επεξεργασία")}</button>
+  </div>
+  <div class="panel"><div class="starwrap"><span class="lbl">${T("Πόσο καλός πελάτης")}</span>${starsHTML(c.rating,c.id,26)}</div></div>`;
+  h+=sec(T("Οικονομικά"))+panel(
+    `<div class="kv"><span>${T("Χρεώσεις από εργασίες")}</span><b>${money(M.charges)}</b></div>
+     <div class="kv"><span>${T("Εισπράχθηκαν")}</span><b class="money">${money(M.received)}</b></div>
+     <div class="kv"><span>${T("Υπόλοιπο που οφείλει")}</span><b class="${M.balance>0?"owe":"money"}">${money(M.balance)}</b></div>
+     ${M.spent?`<div class="kv"><span>${T("Έξοδα για αυτόν")}</span><b class="owe">${money(M.spent)}</b></div>
+     <div class="kv"><span>${T("Καθαρό κέρδος")}</span><b class="money">${money(M.profit)}</b></div>`:""}
+     <div class="twobtn"><button class="btn amber" data-act="newEntry" data-client="${c.id}" data-kind="advance">+ ${T("Είσπραξη")}</button>
+     <button class="btn ghost" data-act="newEntry" data-client="${c.id}" data-kind="material">+ ${T("Έξοδο")}</button></div>`);
+  if(M.ent.length)h+=panel(M.ent.map(e=>entryRow(e,false)).join(""));
   const info=[];
   if(addr)info.push([T("Διεύθυνση"),addr]);if(c.floor)info.push([T("Όροφος, κουδούνι"),c.floor]);
   if(c.hours)info.push([T("Ωράριο"),c.hours]);if(c.mobile)info.push([T("Κινητό"),c.mobile]);if(c.phone)info.push([T("Σταθερό"),c.phone]);
   if(c.email)info.push([T("Ηλεκτρονικό ταχυδρομείο"),c.email]);if(c.afm)info.push([T("ΑΦΜ"),c.afm]);
-  h+=panel(`<div class="starwrap"><span class="lbl">${T("Πόσο καλός πελάτης")}</span>${starsHTML(c.rating,c.id,26)}</div>`);
   info.push([T("Θέση στις διαδρομές"),c.lat!=null?T("Ακριβής"):L?T("Κέντρο περιοχής {a}",{a:L.label}):T("Χωρίς θέση")]);
-  h+=panel(info.map(([k,v])=>`<div class="kv"><span>${k}</span><b>${esc(v)}</b></div>`).join(""));
+  h+=sec(T("Στοιχεία"))+panel(info.map(([k,v])=>`<div class="kv"><span>${k}</span><b>${esc(v)}</b></div>`).join(""));
+  if(c.notes)h+=sec(T("Σημειώσεις"))+panel(`<div class="notes">${esc(c.notes)}</div>`);
+  h+=sec(T("Ανοιχτές εργασίες"))+
+    `<button class="btn amber wide gobtn" style="margin:0 0 8px" data-act="newTask" data-client="${c.id}">${ic("plus",20)}${T("Καταχώρηση νέας εργασίας")}</button>`+
+    panel(open.length?open.map(x=>taskRow(x,false)).join(""):`<div class="empty">${T("Καμία ανοιχτή εργασία για αυτόν τον πελάτη.")}</div>`);
+  h+=sec(T("Ιστορικό δουλειών"))+panel(done.length?done.map(x=>`<div class="row" data-act="editTask" data-id="${x.id}">
+      <div class="grow"><div class="title">${esc(x.title)}</div>
+      <div class="meta"><span>${T("Ολοκληρώθηκε")} ${fmtDay(x.doneAt||x.end||x.start)}</span>${x.amount?`<span>${money(x.amount)}</span>`:""}</div>
+      ${x.desc?`<div class="snip">${esc(x.desc.length>140?x.desc.slice(0,140)+"…":x.desc)}</div>`:""}</div>
+      ${x.amount?(x.paid?`<span class="tag paid">${T("Εξοφλήθηκε")}</span>`:`<button class="tag late" style="border:0" data-act="markPaid" data-id="${x.id}">${T("Σημείωσε εξόφληση")}</button>`):""}</div>`).join(""):`<div class="empty">${T("Δεν υπάρχουν ακόμα ολοκληρωμένες δουλειές.")}</div>`);
   h+=sec(T("Σύνοψη δουλειών"))+panel(
     `<div class="kv"><span>${T("Δουλειές συνολικά")}</span><b>${tasks.length}</b></div>
      <div class="kv"><span>${T("Ανοιχτές")}</span><b>${open.length}</b></div>
-     <div class="kv"><span>${T("Ολοκληρωμένες")}</span><b>${done.length}</b></div>
-     <div class="kv"><span>${T("Εισπράχθηκαν συνολικά")}</span><b class="money">${money(earned)}</b></div>
-     ${unpaid?`<div class="kv"><span>${T("Ανεξόφλητα")}</span><b class="owe">${money(unpaid)}</b></div>`:""}`);
-  if(c.notes)h+=sec(T("Σημειώσεις"))+panel(`<div class="notes">${esc(c.notes)}</div>`);
-  h+=`<div class="sec-row">${sec(T("Ανοιχτές εργασίες"))}<button class="btn ghost small" style="margin-bottom:8px" data-act="newTask" data-client="${c.id}">+ ${T("Νέα εργασία")}</button></div>`;
-  h+=panel(open.length?open.map(x=>taskRow(x,false)).join(""):`<div class="empty">${T("Καμία ανοιχτή εργασία για αυτόν τον πελάτη.")}</div>`);
-  h+=sec(T("Ιστορικό δουλειών"))+panel(done.length?done.map(x=>`<div class="row" data-act="editTask" data-id="${x.id}">
-      <div class="grow"><div class="title">${esc(x.title)}</div>
-      <div class="meta"><span>${T("Ολοκληρώθηκε")} ${fmtDay(x.doneAt||x.end||x.start)}</span>${x.start?`<span>${T("Έναρξη")} ${fmt(x.start)}</span>`:""}${x.amount?`<span>${money(x.amount)}</span>`:""}</div>
-      ${x.desc?`<div class="snip">${esc(x.desc.length>140?x.desc.slice(0,140)+"…":x.desc)}</div>`:""}</div>
-      ${x.amount?(x.paid?`<span class="tag paid">${T("Εξοφλήθηκε")}</span>`:`<button class="tag late" style="border:0" data-act="markPaid" data-id="${x.id}">${T("Σημείωσε εξόφληση")}</button>`):""}</div>`).join(""):`<div class="empty">${T("Δεν υπάρχουν ακόμα ολοκληρωμένες δουλειές.")}</div>`);
+     <div class="kv"><span>${T("Ολοκληρωμένες")}</span><b>${done.length}</b></div>`);
   return h;
 }
 
@@ -808,14 +901,69 @@ function vTasks(){
   const F=[["open","Ανοιχτές"],["today","Σήμερα"],["late","Εκπρόθεσμες"],["noloc","Χωρίς τοποθεσία"],["done","Ολοκληρωμένες"],["all","Όλες"]];
   const list=S.tasks.filter(x=>taskFilter==="open"?isOpen(x):taskFilter==="today"?isOpen(x)&&touchesToday(x):taskFilter==="late"?taskState(x)==="late":taskFilter==="noloc"?isOpen(x)&&!taskLoc(x):taskFilter==="done"?!isOpen(x):true)
     .sort(taskFilter==="done"?(a,b)=>(b.doneAt||0)-(a.doneAt||0):byDue);
-  let h=`<div class="hs" id="hsTasks"><div class="chips">${F.map(([k,l])=>`<button class="chip ${taskFilter===k?"on":""}" data-act="filter" data-f="${k}">${T(l)}</button>`).join("")}</div><div class="hs-track"><div class="hs-thumb"></div></div></div>
-  <label class="toggle"><input type="checkbox" id="grp" ${groupByArea?"checked":""}>${T("Ομαδοποίηση ανά περιοχή")}</label>`;
+  let h=`<button class="filterbar" data-act="filterSheet" data-kind="tasks">${ic("filter",18)}<span>${T(F.find(x=>x[0]===taskFilter)[1])}</span><i>▾</i><b class="fcnt">${list.length}</b></button>`;
   if(!list.length)return h+panel(`<div class="empty">${S.tasks.length?T("Καμία εργασία σε αυτή την προβολή."):T("Δεν έχεις εργασίες ακόμα. Πάτα + για να προσθέσεις.")}</div>`);
   if(groupByArea){
     const g=new Map();list.forEach(x=>{const L=taskLoc(x),k=L?L.label:T("Χωρίς τοποθεσία");if(!g.has(k))g.set(k,[]);g.get(k).push(x)});
     [...g.entries()].sort((a,b)=>b[1].length-a[1].length).forEach(([k,ts])=>{h+=sec(`${esc(k)} (${ts.length})`)+panel(ts.map(x=>taskRow(x)).join(""))});
   }else h+=panel(list.map(x=>taskRow(x)).join(""));
   return h;
+}
+
+/* ---------- Ταμείο ---------- */
+let moneyPeriod="month";
+const PERIODS=[["month","Αυτόν τον μήνα"],["year","Φέτος"],["all","Όλα"]];
+function periodStart(){const d=new Date();d.setHours(0,0,0,0);
+  if(moneyPeriod==="month")d.setDate(1);else if(moneyPeriod==="year"){d.setMonth(0);d.setDate(1)}else return null;return d}
+function vMoney(){
+  const from=periodStart();
+  const inRange=t=>!from||new Date(t)>=from;
+  const ent=S.ledger.filter(e=>inRange(e.date)).sort((a,b)=>new Date(b.date)-new Date(a.date));
+  const paidTasks=S.tasks.filter(x=>x.paid&&x.amount&&inRange(x.paidAt||x.doneAt||x.end||x.start||x.createdAt));
+  const income=ent.filter(e=>isIn(e.kind)).reduce((s,e)=>s+e.amount,0)+paidTasks.reduce((s,x)=>s+(+x.amount||0),0);
+  const outgo=ent.filter(e=>!isIn(e.kind)).reduce((s,e)=>s+e.amount,0);
+  const debts=S.clients.map(c=>({c,m:cMoney(c)})).filter(x=>x.m.balance>0.004).sort((a,b)=>b.m.balance-a.m.balance);
+  const owed=debts.reduce((s,x)=>s+x.m.balance,0);
+  let h=`<button class="filterbar" data-act="filterSheet" data-kind="money">${ic("filter",18)}<span>${T(PERIODS.find(x=>x[0]===moneyPeriod)[1])}</span><i>▾</i></button>
+  <div class="bigsum">
+    <div class="sumcard"><span>${T("Έσοδα")}</span><b class="in">${money(income)}</b></div>
+    <div class="sumcard"><span>${T("Έξοδα")}</span><b class="out">${money(outgo)}</b></div>
+    <div class="sumcard"><span>${T("Κέρδος")}</span><b>${money(income-outgo)}</b></div>
+    <div class="sumcard"><span>${T("Σου χρωστάνε")}</span><b class="out">${money(owed)}</b></div>
+  </div>
+  <div class="twobtn" style="padding:10px 0 0"><button class="btn amber" data-act="newEntry" data-kind="payment">+ ${T("Έσοδο")}</button>
+  <button class="btn ghost" data-act="newEntry" data-kind="expense">+ ${T("Έξοδο")}</button></div>`;
+  h+=sec(T("Σου χρωστάνε"))+panel(debts.length?debts.map(({c,m})=>`<div class="row" data-act="openClient" data-id="${c.id}" style="align-items:center">
+      <div class="avatar">${esc(initials(c.name))}</div><div class="grow"><div class="title">${esc(c.name)}</div>
+      <div class="meta"><span>${T("Χρεώσεις")} ${money(m.charges)}</span><span>${T("Εισπράχθηκαν")} ${money(m.received)}</span></div></div>
+      <b class="amt out">${money(m.balance)}</b></div>`).join(""):`<div class="empty">${T("Κανείς δεν σου χρωστάει αυτή τη στιγμή.")}</div>`);
+  const paidRows=paidTasks.sort((a,b)=>(b.paidAt||0)-(a.paidAt||0)).map(x=>{const c=x.clientId&&getClient(x.clientId);
+    return `<div class="row ent" data-act="editTask" data-id="${x.id}"><span class="entic in">+</span>
+    <div class="grow"><div class="title">${esc(x.title)}</div><div class="meta"><span>${fmtDay(x.paidAt||x.doneAt||x.end)}</span>${c?`<span>${esc(c.name)}</span>`:""}<span>${T("εξοφλημένη εργασία")}</span></div></div>
+    <b class="amt in">${money(x.amount)}</b></div>`});
+  h+=sec(T("Κινήσεις"))+panel(ent.length||paidRows.length?ent.map(e=>entryRow(e,true)).join("")+paidRows.join(""):`<div class="empty">${T("Καμία κίνηση σε αυτή την περίοδο.")}</div>`);
+  return h;
+}
+function entryForm(e,preset){
+  const isNew=!e;e=e||{kind:preset&&preset.kind||"payment",clientId:preset&&preset.client||"",date:new Date().toISOString()};
+  const opts=S.clients.slice().sort((a,b)=>a.name.localeCompare(b.name,"el")).map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join("");
+  openSheet({title:isNew?T("Νέα κίνηση"):T("Επεξεργασία κίνησης"),saveLabel:isNew?T("Καταχώρηση"):T("Αποθήκευση"),saveStyle:isNew?"amber":"primary",
+    body:`<label>${T("Είδος")}</label>
+    <div class="kinds" id="e_kind">${Object.entries(KINDS).map(([k,v])=>`<button type="button" class="kb ${isIn(k)?"in":"out"}" data-v="${k}">${T(v[0])}</button>`).join("")}</div>
+    <label for="e_amount">${T("Ποσό σε ευρώ")}</label><input id="e_amount" inputmode="decimal" value="${e.amount??""}" autocomplete="off">
+    <label for="e_date">${T("Ημερομηνία")}</label><input type="date" id="e_date" value="${new Date(e.date).toISOString().slice(0,10)}">
+    <label for="e_client">${T("Πελάτης")}</label><select id="e_client"><option value="">${T("Χωρίς πελάτη")}</option>${opts}</select>
+    <label for="e_note">${T("Σημείωση")}</label><input id="e_note" value="${esc(e.note)}" placeholder="${T("π.χ. προκαταβολή για υλικά")}" autocomplete="off">`,
+    onSave:()=>{
+      const amt=val("e_amount").replace(",",".");
+      if(!amt||isNaN(+amt)||+amt<=0){toast(T("Γράψε ποσό μεγαλύτερο από μηδέν."));$("#e_amount").focus();return false}
+      const d={kind:$("#e_kind").dataset.v,amount:+amt,date:new Date(val("e_date")||Date.now()).toISOString(),clientId:val("e_client")||null,note:val("e_note")};
+      if(isNew){d.id=uid();S.ledger.push(d)}else Object.assign(e,d);
+      save();toast(isNew?T("Η κίνηση καταχωρήθηκε."):T("Οι αλλαγές αποθηκεύτηκαν."));
+    },
+    onDelete:isNew?null:()=>{S.ledger=S.ledger.filter(x=>x.id!==e.id);save();toast(T("Η κίνηση διαγράφηκε."))},deleteMsg:T("Να διαγραφεί η κίνηση;")});
+  segBind("e_kind",e.kind);$("#e_client").value=e.clientId||"";
+  setTimeout(()=>$("#e_amount").focus(),80);
 }
 
 /* ---------- Διαδρομή ---------- */
@@ -834,6 +982,7 @@ function vRoute(){
     <label for="rLim">${T("Μέγιστη παράκαμψη")}: <b id="limV" style="color:var(--ink)">${fmtKm(lim)}</b></label>
     <input type="range" id="rLim" min="0.5" max="15" step="0.5" value="${lim}">
     <button class="btn amber wide gobtn" data-act="calcRoute">${ic("route",22)}${T("Δείξε διαδρομή και στάσεις")}</button>
+    <button class="btn ghost wide" data-act="showMe" style="margin-top:8px">${ic("near",20)} ${T("Δες πού βρίσκεσαι στον χάρτη")}</button>
   </div><div id="routeRes">${route.result?routeResultHTML():""}</div>`;
 }
 function routeStops(A,B,limit){
@@ -917,13 +1066,32 @@ function initHScroll(){
 }
 window.addEventListener("resize",()=>{document.documentElement.style.setProperty("--hdr",$("header").getBoundingClientRect().height+"px");initHScroll()});
 function bindView(){
+  if(view==="reminders")bindReminders();
   if(view==="clients")$("#cSearch").oninput=e=>{clientSearch=e.target.value;$("#clientList").innerHTML=clientListHTML()};
-  if(view==="tasks")$("#grp").onchange=e=>{groupByArea=e.target.checked;render()};
+
   if(view==="route"){
     $("#rFrom").oninput=e=>{route.from=e.target.value;if(e.target.value!==MYLOC())route.fromGeo=null};
     $("#rTo").oninput=e=>{route.to=e.target.value;route.toPlace=null};
     $("#rLim").oninput=e=>{route.limit=+e.target.value;$("#limV").textContent=fmtKm(route.limit);if(route.result)$("#routeRes").innerHTML=routeResultHTML()};
   }
+}
+
+function filterSheet(kind){
+  const TF=[["open","Ανοιχτές"],["today","Σήμερα"],["late","Εκπρόθεσμες"],["noloc","Χωρίς τοποθεσία"],["done","Ολοκληρωμένες"],["all","Όλες"]];
+  const cnt=k=>S.tasks.filter(x=>k==="open"?isOpen(x):k==="today"?isOpen(x)&&touchesToday(x):k==="late"?taskState(x)==="late":k==="noloc"?isOpen(x)&&!taskLoc(x):k==="done"?!isOpen(x):true).length;
+  let title,body;
+  if(kind==="tasks"){
+    title=T("Εμφάνιση εργασιών");
+    body=panel(TF.map(([k,l])=>`<button class="optrow ${taskFilter===k?"on":""}" data-act="filter" data-f="${k}">${T(l)}<span class="n">${cnt(k)}</span>${taskFilter===k?'<span class="tick">✓</span>':""}</button>`).join(""))+
+      `<button class="optrow" style="margin-top:12px;border:1px solid var(--line);border-radius:12px" data-act="toggleGroup">${ic("filter",18)}${T("Ομαδοποίηση ανά περιοχή")}<span class="tick">${groupByArea?"✓":""}</span></button>`;
+  }else if(kind==="clients"){
+    title=T("Ταξινόμηση πελατών");
+    body=panel(CSORT.map(([k,l])=>`<button class="optrow ${clientSort===k?"on":""}" data-act="csort" data-s="${k}">${T(l)}${clientSort===k?'<span class="tick">✓</span>':""}</button>`).join(""));
+  }else{
+    title=T("Περίοδος");
+    body=panel(PERIODS.map(([k,l])=>`<button class="optrow ${moneyPeriod===k?"on":""}" data-act="period" data-p="${k}">${T(l)}${moneyPeriod===k?'<span class="tick">✓</span>':""}</button>`).join(""));
+  }
+  openSheet({title,cancelLabel:T("Κλείσιμο"),body});
 }
 
 /* ---------- Αναδυόμενο φύλλο ---------- */
@@ -1157,12 +1325,17 @@ function taskForm(t0,presetClient,draft){
     <label for="f_title">${T("Τι πρέπει να γίνει")}</label><input id="f_title" value="${esc(v.title)}" autocomplete="off">
     <label for="f_client">${T("Πελάτης")}</label>
     <div class="inrow"><select id="f_client"><option value="">${T("Χωρίς πελάτη")}</option><option value="__new">+ ${T("Νέος πελάτης…")}</option>${opts}</select>
-    <button type="button" class="btn ghost" id="f_newClient">+ ${T("Νέος")}</button></div>
+    <button type="button" class="btn ghost" id="f_newClient">+ ${T("Νέος πελάτης")}</button></div>
     <div id="clientLoc" class="lw-status"></div>
     <div id="areaWrap"><label for="f_area">${T("Περιοχή")}</label><input id="f_area" list="areaList" autocomplete="off" value="${esc(v.area)}">${lwHTML({showAddr:true,address:v.address})}</div>
     <div class="two tw"><div><label for="f_start">${T("Ημέρα και ώρα")}</label><input type="datetime-local" id="f_start" value="${esc(v.start)}"></div>
     <div><label for="f_rb">${T("Υπενθύμιση")}</label><select id="f_rb">${REMB.map(m=>`<option value="${m}">${rbLabel(m)}</option>`).join("")}</select></div></div>
     <label for="f_end">${T("Λήξη ή προθεσμία")}</label><input type="datetime-local" id="f_end" value="${esc(v.end)}">
+    <label>${T("Ποιος θα πάει")}</label>
+    <div class="pplrow" id="f_who">${people().map(p=>`<button type="button" class="pbtn" data-p="${p.id}" style="--pc:${p.color}"><span class="dotc" style="background:${p.color}"></span>${esc(p.name)}</button>`).join("")}
+      <button type="button" class="pbtn" data-act="managePeople"><span class="dotc" style="background:var(--muted)">+</span>${T("Άτομα")}</button></div>
+    <label for="f_near">${T("Ειδοποίηση όταν πλησιάσω το σημείο")}</label>
+    <select id="f_near">${NEARD.map(m=>`<option value="${m}">${nearLabel(m)}</option>`).join("")}</select>
     <label>${T("Προτεραιότητα")}</label><div class="seg prio" id="f_prio"><button type="button" data-v="1">${T("Χαμηλή")}</button><button type="button" data-v="2">${T("Κανονική")}</button><button type="button" data-v="3">${T("Υψηλή")}</button></div>
     <div class="two"><div><label for="f_status">${T("Κατάσταση")}</label><select id="f_status"><option value="pending">${T("Εκκρεμεί")}</option><option value="progress">${T("Σε εξέλιξη")}</option><option value="done">${T("Ολοκληρώθηκε")}</option></select></div>
     <div><label for="f_amount">${T("Ποσό σε ευρώ")}</label><input id="f_amount" inputmode="decimal" value="${esc(v.amount??"")}"></div></div>
@@ -1176,7 +1349,8 @@ function taskForm(t0,presetClient,draft){
       const cid=(val("f_client")!=="__new"&&val("f_client"))||null,status=val("f_status"),rb=+val("f_rb"),loc=cid?null:LW.loc;
       const has=cid?!!clientLoc(getClient(cid)):!!(loc||findArea(val("f_area")));
       if(!has){LW.attempted=true;LW.upd();if(!confirm(T("Η εργασία δεν έχει τοποθεσία και δεν θα μπαίνει στις διαδρομές. Να αποθηκευτεί έτσι;")))return false}
-      const d={title,clientId:cid,desc:val("f_desc"),start,end,remindBefore:rb,priority:+($("#f_prio").dataset.v||2),status,amount:amt?+amt:null,paid:$("#f_paid").checked,
+      const who=[...$("#f_who").querySelectorAll(".pbtn.on")].map(b=>b.dataset.p).filter(Boolean);
+      const d={title,who:who.length?who:[people()[0].id],nearAlert:+val("f_near")||0,clientId:cid,desc:val("f_desc"),start,end,remindBefore:rb,priority:+($("#f_prio").dataset.v||2),status,amount:amt?+amt:null,paid:$("#f_paid").checked,
         area:cid?"":val("f_area"),address:cid?"":val("lw_addr"),lat:loc?loc.lat:null,lng:loc?loc.lng:null};
       if(start!==orig.start||rb!==orig.remindBefore||isNew){const at=start?+new Date(start)-Math.max(0,rb)*60000:0;d.startNotified=start&&rb>=0?at<Date.now():false;d.snoozeUntil=null}
       if(status==="done"&&orig.status!=="done")d.doneAt=Date.now();
@@ -1185,7 +1359,15 @@ function taskForm(t0,presetClient,draft){
       save();toast(isNew?T("Η εργασία προστέθηκε."):T("Οι αλλαγές αποθηκεύτηκαν."));
     },
     onDelete:isNew?null:()=>{S.tasks=S.tasks.filter(y=>y.id!==t0.id);save();toast(T("Η εργασία διαγράφηκε."))},deleteMsg:T("Να διαγραφεί η εργασία;")});
+  if(!isNew)$("#shBody").insertAdjacentHTML("beforeend",`<button type="button" class="btn ghost wide" id="f_another">${ic("plus",18)} ${T("Νέα εργασία για τον ίδιο πελάτη")}</button>`);
   $("#f_client").value=v.clientId||"";$("#f_status").value=v.status||"pending";$("#f_rb").value=String(REMB.includes(+v.remindBefore)?+v.remindBefore:0);
+  $("#f_near").value=String(NEARD.includes(+v.nearAlert)?+v.nearAlert:0);
+  const whoSel=new Set(v.who&&v.who.length?v.who:[people()[0].id]);
+  const paint=()=>$("#f_who").querySelectorAll("[data-p]").forEach(b=>{const on=whoSel.has(b.dataset.p);b.classList.toggle("on",on);
+    b.style.background=on?b.style.getPropertyValue("--pc"):"";b.style.borderColor=on?b.style.getPropertyValue("--pc"):""});
+  $("#f_who").addEventListener("click",e=>{const b=e.target.closest("[data-p]");if(!b)return;
+    whoSel.has(b.dataset.p)?whoSel.delete(b.dataset.p):whoSel.add(b.dataset.p);sheetDirty=true;paint()});
+  paint();
   segBind("f_prio",String(v.priority||2));
   lwBind({loc:loc0,addr:()=>[val("lw_addr"),val("f_area")].filter(Boolean).join(", "),area:()=>val("f_area"),markArea:true});
   const sync=()=>{const cv=$("#f_client").value,has=cv&&cv!=="__new",cl=$("#clientLoc");$("#areaWrap").style.display=has?"none":"";
@@ -1195,6 +1377,7 @@ function taskForm(t0,presetClient,draft){
   $("#f_client").onchange=()=>{if($("#f_client").value==="__new"){goNew();return}sync()};
   $("#f_newClient").onclick=goNew;sync();
   if(isNew){$("#ai_go").onclick=aiFill;$("#ai_mic").onclick=startMic}
+  if(!isNew)$("#f_another").onclick=()=>{const cid=val("f_client");closeSheet();setTimeout(()=>taskForm(null,cid&&cid!=="__new"?cid:null),80)};
   if(draft)sheetDirty=true;
 }
 
@@ -1203,43 +1386,41 @@ function nextOccurrence(r){const d=new Date(r.when),now=new Date();
   do{if(r.repeat==="day")d.setDate(d.getDate()+1);else if(r.repeat==="week")d.setDate(d.getDate()+7);else d.setMonth(d.getMonth()+1)}while(d<=now);return toLocalInput(d)}
 function completeReminder(r){r.snoozeUntil=null;r.alerted=false;r.preAlerted=false;if(r.repeat&&r.repeat!=="none")r.when=nextOccurrence(r);else{r.done=true;r.doneAt=Date.now()}}
 const repOpts=sel=>Object.entries(REPL()).map(([k,v])=>`<option value="${k}" ${k===sel?"selected":""}>${v}</option>`).join("");
-const remOpen=()=>$("#modal").classList.contains("open")&&!!$("#remList");
-function remindersSheet(focus){
-  openSheet({title:T("Υπενθυμίσεις"),noFoot:true,body:`<div id="remList"></div>`,
-    fixed:`<div class="fx-title">${T("Νέα υπενθύμιση")}</div>
+const remOpen=()=>view==="reminders";
+function vReminders(){
+  const act=S.reminders.filter(remActive),over=act.filter(remOver).sort(byWhen),next=act.filter(r=>!remOver(r)).sort(byWhen),arch=S.reminders.filter(r=>!remActive(r)).length;
+  let h=`<div class="panel pad" style="padding-top:12px">
+    <div class="fx-title">${T("Νέα υπενθύμιση")}</div>
     <input id="r_text" autocomplete="off" placeholder="${T("Τι να σου θυμίσω;")}" aria-label="${T("Τι να σου θυμίσω;")}">
-    <div class="two"><input type="datetime-local" id="r_when" aria-label="${T("Καταχώρηση|ώρα")}"><select id="r_rep" aria-label="${T("Επανάληψη")}">${repOpts("none")}</select></div>
-    <div class="two"><select id="r_rb" aria-label="${T("Υπενθύμιση")}">${REMB.filter(m=>m>=0).map(m=>`<option value="${m}">${rbLabel(m)}</option>`).join("")}</select>
-    <button class="btn amber" id="r_add">${T("Προσθήκη")}</button></div>`,overNav:true});
-  $("#r_when").value=toLocalInput(new Date(Date.now()+3600000));renderRemList();
+    <div class="two" style="margin-top:8px"><input type="datetime-local" id="r_when" aria-label="${T("Καταχώρηση|ώρα")}"><select id="r_rep" aria-label="${T("Επανάληψη")}">${repOpts("none")}</select></div>
+    <div class="two" style="margin-top:8px"><select id="r_rb" aria-label="${T("Υπενθύμιση")}">${REMB.filter(m=>m>=0).map(m=>`<option value="${m}">${rbLabel(m)}</option>`).join("")}</select>
+    <button class="btn amber" id="r_add">${T("Προσθήκη")}</button></div></div>`;
+  if(over.length)h+=sec(T("Έληξαν, δεν τις έχεις διαβάσει"),"red")+`<div class="panel overpanel">${over.map(remRow).join("")}</div>`;
+  h+=sec(T("Επόμενες, με σειρά ώρας"))+panel(next.length?next.map(remRow).join(""):`<div class="empty">${T("Καμία επόμενη υπενθύμιση. Γράψε μία παραπάνω.")}</div>`);
+  h+=`<button class="archlink" data-rem="archive">${ic("archive",20)}<span>${T("Αρχείο: ολοκληρωμένες και διαγραμμένες")}</span><span class="cnt">${arch}</span></button>`;
+  return h;
+}
+function bindReminders(){
+  $("#r_when").value=toLocalInput(new Date(Date.now()+3600000));
   $("#r_add").onclick=()=>{
     const text=val("r_text"),when=val("r_when");
-    if(!text){toast(T("Γράψε τι να σου θυμίσω."));$("#r_text").focus();return}if(!when){toast(T("Διάλεξε ημερομηνία και ώρα."));return}
+    if(!text){toast(T("Γράψε τι να σου θυμίσω."));$("#r_text").focus();return}
+    if(!when){toast(T("Διάλεξε ημερομηνία και ώρα."));return}
     S.reminders.push({id:uid(),text,when,repeat:val("r_rep"),remindBefore:+val("r_rb")||0,done:false,deleted:false,createdAt:Date.now()});
-    $("#r_text").value="";$("#r_when").value=toLocalInput(new Date(Date.now()+3600000));$("#r_rep").value="none";$("#r_rb").value="0";
-    persist();renderRemList();render();toast(T("Η υπενθύμιση προστέθηκε."));
+    persist();render();toast(T("Η υπενθύμιση προστέθηκε."));
   };
   ["r_text","r_when"].forEach(id=>$("#"+id).addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();$("#r_add").click()}}));
-  if(focus)setTimeout(()=>$("#r_text").focus(),60);
-}
-function renderRemList(){
-  const act=S.reminders.filter(remActive),over=act.filter(remOver).sort(byWhen),next=act.filter(r=>!remOver(r)).sort(byWhen),arch=S.reminders.filter(r=>!remActive(r)).length;
-  let h="";
-  if(over.length)h+=`<div class="rem-sub" style="color:var(--red)">${T("Έληξαν, δεν τις έχεις διαβάσει")}</div><div class="panel overpanel">${over.map(remRow).join("")}</div>`;
-  h+=`<div class="rem-sub">${T("Επόμενες, με σειρά ώρας")}</div>`+panel(next.length?next.map(remRow).join(""):`<div class="empty">${T("Καμία επόμενη υπενθύμιση. Γράψε μία παρακάτω.")}</div>`);
-  h+=`<button class="archlink" data-rem="archive">${ic("archive",20)}<span>${T("Αρχείο: ολοκληρωμένες και διαγραμμένες")}</span><span class="cnt">${arch}</span></button>`;
-  $("#remList").innerHTML=h;
 }
 function remEditSheet(r,back){
-  openSheet({title:T("Αλλαγή υπενθύμισης"),cancelLabel:back?T("Πίσω"):T("Άκυρο"),onCancel:back?()=>remindersSheet():null,
+  openSheet({title:T("Αλλαγή υπενθύμισης"),cancelLabel:back?T("Πίσω"):T("Άκυρο"),onCancel:null,
     body:`<label for="e_text">${T("Κείμενο")}</label><textarea id="e_text" rows="3">${esc(r.text)}</textarea>
     <div class="two tw"><div><label for="e_when">${T("Καταχώρηση|ώρα")}</label><input type="datetime-local" id="e_when" value="${esc(r.when)}"></div>
     <div><label for="e_rb">${T("Υπενθύμιση")}</label><select id="e_rb">${REMB.filter(m=>m>=0).map(m=>`<option value="${m}" ${m===(+r.remindBefore||0)?"selected":""}>${rbLabel(m)}</option>`).join("")}</select></div></div>
     <label for="e_rep">${T("Επανάληψη")}</label><select id="e_rep">${repOpts(r.repeat)}</select>`,
     onSave:()=>{const text=val("e_text"),when=val("e_when");if(!text||!when){toast(T("Συμπλήρωσε κείμενο και ώρα."));return false}
       Object.assign(r,{text,when,repeat:val("e_rep"),remindBefore:+val("e_rb")||0,snoozeUntil:null,alerted:false,preAlerted:false});persist();render();toast(T("Η υπενθύμιση ενημερώθηκε."));
-      if(back){remindersSheet();return"replaced"}},
-    onDelete:()=>{r.deleted=true;r.deletedAt=Date.now();persist();render();toast(T("Μεταφέρθηκε στα διαγραμμένα."));if(back){remindersSheet();return"replaced"}},
+      if(back)return"replaced";},
+    onDelete:()=>{r.deleted=true;r.deletedAt=Date.now();persist();render();toast(T("Μεταφέρθηκε στα διαγραμμένα."));if(back)return"replaced";},
     deleteMsg:T("Να μεταφερθεί η υπενθύμιση στο αρχείο;")});
 }
 function archiveSheet(){
@@ -1252,7 +1433,7 @@ function archiveSheet(){
   const group=(list,title,cls,kind)=>sec(`${title} (${list.length})`,cls)+
     (list.length?panel(list.map(row).join(""))+`<button class="btn danger" data-rem="purgeKind" data-kind="${kind}" style="margin-top:6px;padding-left:0">${T("Άδειασμα φακέλου")}</button>`
       :panel(`<div class="empty">${T("Ο φάκελος είναι άδειος.")}</div>`));
-  openSheet({title:T("Αρχείο υπενθυμίσεων"),cancelLabel:T("Πίσω"),onCancel:()=>remindersSheet(),
+  openSheet({title:T("Αρχείο υπενθυμίσεων"),cancelLabel:T("Πίσω"),onCancel:null,
     body:`<p class="note">${T("Ό,τι ολοκλήρωσες ή διέγραψες μένει εδώ, σε δύο φακέλους, μέχρι να το σβήσεις εσύ.")}</p>`+
       group(done,T("Ολοκληρωμένες"),"","done")+group(del,T("Διαγραμμένες"),"red","del")});
 }
@@ -1269,7 +1450,7 @@ function handleRem(act,id,kind){
   else if(act==="del"){r.deleted=true;r.deletedAt=Date.now();toast(T("Μεταφέρθηκε στα διαγραμμένα."))}
   else if(act==="restore"){r.done=false;r.deleted=false;r.snoozeUntil=null;r.alerted=true;persist();render();toast(T("Η υπενθύμιση επανήλθε."));return archiveSheet()}
   else if(act==="purge"){if(!confirm(T("Οριστική διαγραφή; Δεν αναιρείται.")))return;S.reminders=S.reminders.filter(x=>x.id!==id);persist();render();return archiveSheet()}
-  persist();render();if(remOpen())renderRemList();
+  persist();render();
 }
 document.addEventListener("click",e=>{const b=e.target.closest("[data-rem]");if(b)handleRem(b.dataset.rem,b.dataset.id,b.dataset.kind)});
 
@@ -1279,7 +1460,7 @@ const queued=id=>alertQ.some(a=>a.id===id)||alertShown?.id===id;
 const taskAlertAt=x=>x.snoozeUntil?new Date(x.snoozeUntil):new Date(+new Date(x.start)-Math.max(0,x.remindBefore||0)*60000);
 function checkDue(){
   const now=new Date(),oc=S.reminders.filter(remOver).length;
-  if(oc!==lastOver){lastOver=oc;if(!$("#modal").classList.contains("open")||remOpen()){render();if(remOpen())renderRemList()}}
+  if(oc!==lastOver){lastOver=oc;if(!$("#modal").classList.contains("open"))render()}
   S.reminders.forEach(r=>{
     if(!remActive(r)||!r.when||queued(r.id))return;
     const due=+remDue(r),rb=Math.max(0,r.remindBefore||0);
@@ -1289,11 +1470,51 @@ function checkDue(){
   S.tasks.forEach(x=>{if(isOpen(x)&&x.start&&x.remindBefore>=0&&!x.startNotified&&taskAlertAt(x)<=now&&!queued(x.id))alertQ.push({type:"task",id:x.id})});
   if(!alertShown)showNextAlert();
 }
-function beep(){try{const A=new(window.AudioContext||window.webkitAudioContext)(),o=A.createOscillator(),g=A.createGain();o.frequency.value=880;o.connect(g);g.connect(A.destination);g.gain.setValueAtTime(.2,A.currentTime);g.gain.exponentialRampToValueAtTime(.001,A.currentTime+.6);o.start();o.stop(A.currentTime+.6)}catch(e){}}
+/* ---------- Ήχοι ---------- */
+const SOUNDS={
+  chime:{name:"Καμπανάκι",notes:[[880,0,.5],[1320,.16,.6]]},
+  bell:{name:"Κουδούνι",notes:[[1568,0,.9],[1046,.1,.9]]},
+  soft:{name:"Απαλό",notes:[[523,0,.5],[659,.2,.5],[784,.4,.6]]},
+  alert:{name:"Έντονο",notes:[[440,0,.18],[440,.22,.18],[440,.44,.18],[660,.66,.4]]},
+  deep:{name:"Βαθύ",notes:[[196,0,.7],[147,.25,.8]]},
+  none:{name:"Χωρίς ήχο",notes:[]}
+};
+let AC=null;
+function playSound(kind){
+  const s=SOUNDS[kind||S.settings.sound]||SOUNDS.chime;if(!s.notes.length)return;
+  try{
+    AC=AC||new(window.AudioContext||window.webkitAudioContext)();if(AC.state==="suspended")AC.resume();
+    s.notes.forEach(([f,t,d])=>{const o=AC.createOscillator(),g=AC.createGain();o.type="sine";o.frequency.value=f;
+      o.connect(g);g.connect(AC.destination);const t0=AC.currentTime+t;
+      g.gain.setValueAtTime(.0001,t0);g.gain.exponentialRampToValueAtTime(.25,t0+.02);g.gain.exponentialRampToValueAtTime(.0001,t0+d);
+      o.start(t0);o.stop(t0+d+.05)});
+  }catch(e){}
+}
+const beep=()=>playSound();
+/* ---------- Ειδοποιήσεις κινητού ---------- */
+const canNotify=()=>"Notification" in window;
+async function askNotify(){
+  if(!canNotify()){toast(T("Η συσκευή δεν υποστηρίζει ειδοποιήσεις."));return false}
+  let p=Notification.permission;
+  if(p==="default"){try{p=await Notification.requestPermission()}catch(e){}}
+  if(p!=="granted"){toast(T("Δεν δόθηκε άδεια για ειδοποιήσεις."));return false}
+  S.settings.notify=true;write();return true;
+}
+function phoneNotify(title,body,tag){
+  if(!S.settings.notify||!canNotify()||Notification.permission!=="granted")return false;
+  try{
+    const n=new Notification(title,{body,tag,renotify:true,requireInteraction:true,silent:false,
+      icon:"data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36"><rect width="36" height="36" rx="8" fill="%23F2B632"/><path d="M18 6c-3.3 0-6 2.5-6 5.6 0 4.2 6 10.4 6 10.4s6-6.2 6-10.4C24 8.5 21.3 6 18 6z" fill="%23C8412B"/></svg>')});
+    n.onclick=()=>{window.focus();n.close()};return true;
+  }catch(e){return false}
+}
 function showNextAlert(){
   const a=alertQ.shift();if(!a){$("#alert").classList.remove("open");alertShown=null;return}
   let title,sub,kind;
-  if(a.type==="rem"){const r=S.reminders.find(x=>x.id===a.id);if(!r||!remActive(r))return showNextAlert();
+  if(a.type==="near"){const x=S.tasks.find(y=>y.id===a.id);if(!x||!isOpen(x))return showNextAlert();
+    const L=taskLoc(x),c=x.clientId&&getClient(x.clientId);
+    kind=T("Είσαι κοντά: {a}",{a:L?L.label:""});title=x.title;sub=[c?c.name:"",T("Θύμισέ μου όταν φτάσω κοντά")].filter(Boolean).join(" · ")}
+  else if(a.type==="rem"){const r=S.reminders.find(x=>x.id===a.id);if(!r||!remActive(r))return showNextAlert();
     const mins=Math.round((+remDue(r)-Date.now())/60000);
     kind=a.pre?(mins>=60?T("Σε {n} ώρες",{n:Math.round(mins/60)}):T("Σε {n} λεπτά",{n:Math.max(1,mins)})):T("Υπενθύμιση");title=r.text;sub=fmt(r.when)}
   else{const x=S.tasks.find(y=>y.id===a.id);if(!x)return showNextAlert();const c=x.clientId&&getClient(x.clientId);
@@ -1301,17 +1522,24 @@ function showNextAlert(){
     sub=[fmt(x.start),c?c.name:"",taskLoc(x)?.label||""].filter(Boolean).join(", ")}
   alertShown=a;
   $("#alertBody").innerHTML=`<div class="al-kind">${kind}</div><div class="al-title">${esc(title)}</div><div class="al-sub">${esc(sub)}</div>
-    <div class="al-btns">${a.type==="rem"
+    <div class="al-btns">${a.type==="near"
+      ?`<button class="btn ghost" data-al="keep">${T("Αργότερα")}</button><button class="btn primary" data-al="done">${T("Πάμε τώρα")}</button>`
+      :a.type==="rem"
       ?`<button class="btn ghost" data-al="keep">${T("Διατήρηση στη λίστα")}</button><button class="btn danger" data-al="del">${T("Διαγραφή")}</button><button class="btn primary" data-al="done">${T("Ολοκλήρωση")}</button>`
       :`<button class="btn ghost" data-al="snooze">${T("Σε 10 λεπτά")}</button><button class="btn ghost" data-al="start">${T("Ξεκίνησα")}</button><button class="btn primary" data-al="ok">${T("Εντάξει")}</button>`}</div>`;
   $("#alertBody").classList.toggle("urgentbox",a.type==="rem"&&!a.pre);
-  $("#alert").classList.add("open");beep();if(navigator.vibrate)navigator.vibrate([250,120,250]);
+  $("#alert").classList.add("open");beep();
+  if(S.settings.vibrate&&navigator.vibrate)navigator.vibrate([250,120,250]);
+  if(document.hidden)phoneNotify((kind?kind+": ":"")+title,sub,a.id);
 }
 $("#alert").addEventListener("click",e=>{
   const b=e.target.closest("[data-al]");if(!b||!alertShown)return;const a=alertShown,act=b.dataset.al;
   const x=a.type==="rem"?S.reminders.find(r=>r.id===a.id):S.tasks.find(y=>y.id===a.id);
   if(x){
-    if(a.type==="rem"){
+    if(a.type==="near"){
+      if(act==="done"){route.toPlace=null;const L=taskLoc(x);if(L){route.toPlace={lat:L.lat,lng:L.lng,label:x.title+" ("+L.label+")"};route.to=route.toPlace.label;
+        if(myPos){route.fromGeo={...myPos,label:MYLOC()};route.from=MYLOC()}view="route";calcRoute(true)}}
+    }else if(a.type==="rem"){
       if(act==="keep"){if(a.pre){x.preAlerted=true;toast(T("Θα ξαναχτυπήσει την ώρα της."))}else{x.alerted=true;toast(T("Μένει κόκκινη στη λίστα μέχρι να την κλείσεις."))}}
       else if(act==="del"){x.deleted=true;x.deletedAt=Date.now();toast(T("Μεταφέρθηκε στα διαγραμμένα."))}
       else{completeReminder(x);toast(x.done?T("Μεταφέρθηκε στα ολοκληρωμένα."):T("Μετακινήθηκε στην επόμενη φορά."))}
@@ -1319,7 +1547,7 @@ $("#alert").addEventListener("click",e=>{
       if(act==="snooze")x.snoozeUntil=new Date(Date.now()+600000).toISOString();
       else{x.startNotified=true;x.snoozeUntil=null;if(act==="start")x.status="progress"}
     }}
-  alertShown=null;persist();render();if(remOpen())renderRemList();showNextAlert();
+  alertShown=null;persist();render();showNextAlert();
 });
 
 /* ---------- Ρυθμίσεις ---------- */
@@ -1333,6 +1561,10 @@ function settingsSheet(){
     <h3 class="sub">${T("Δικές μου τοποθεσίες")}</h3><p class="note">${T("Σημεία που δεν είναι στη λίστα, π.χ. «Αποθήκη». Βάζεις διεύθυνση, σημείο στον χάρτη ή την τρέχουσα θέση.")}</p>
     ${S.areas.length?panel(S.areas.map((a,i)=>`<div class="row" data-act="placeEdit" data-kind="place" data-i="${i}" style="align-items:center"><span style="color:var(--loc)">${ic("pin",20)}</span><div class="grow title">${esc(a.name)}</div><span class="note">${T("Αλλαγή")}</span></div>`).join("")):""}
     <button class="btn ghost" data-act="placeEdit" data-kind="place" style="width:100%;margin-top:8px">+ ${T("Νέα τοποθεσία")}</button>
+    <h3 class="sub">${T("Ποιοι δουλεύουν")}</h3>
+    <button class="btn ghost" data-act="managePeople" style="width:100%">${ic("person",18)} ${T("Άτομα και χρώματα")}</button>
+    <h3 class="sub">${T("Ειδοποιήσεις και ήχος")}</h3>
+    <button class="btn ghost" data-act="notifs" style="width:100%">${ic("sound",18)} ${T("Ήχος, δόνηση και ειδοποιήσεις")}</button>
     <h3 class="sub">${T("Εμφάνιση εφαρμογής")}</h3>
     <button class="btn ghost" data-act="look" style="width:100%">${T("Χρώματα, γράμματα και όνομα")}</button>
     <h3 class="sub">${T("Αντίγραφο ασφαλείας")}</h3><p class="note">${backupStatus()}</p>
@@ -1376,6 +1608,50 @@ function placeSheet(kind,idx){
     onDelete:(isBase&&S.settings.base)||(!isBase&&idx!=null)?()=>{if(isBase){S.settings.base=null;route.from=""}else S.areas.splice(idx,1);persist();render();settingsSheet();return"replaced"}:null,
     deleteMsg:T("Να διαγραφεί η τοποθεσία;")});
   lwBind({loc:cur.lat!=null?{lat:cur.lat,lng:cur.lng}:null,addr:()=>[val("lw_addr"),val("p_area")].filter(Boolean).join(", "),area:()=>val("p_area")});
+}
+const PCOLORS=["#2468B5","#C8412B","#2E7D5B","#8A4FBF","#D97706","#0E7490","#BE185D","#4B5563"];
+function peopleSheet(back){
+  openSheet({title:T("Ποιοι δουλεύουν"),cancelLabel:T("Πίσω"),onCancel:back||null,body:
+    `<p class="note">${T("Ό,τι προσθέσεις εδώ εμφανίζεται στη νέα εργασία, με το χρώμα του.")}</p>`+
+    panel(people().map((p,i)=>`<div class="row" style="cursor:default;align-items:center"><span class="who" style="background:${p.color};width:26px;height:26px">${esc(initials(p.name))}</span>
+      <div class="grow"><input class="pname" data-i="${i}" value="${esc(p.name)}" style="border:0;padding:6px 0;font-weight:700;background:none"></div>
+      <input type="color" class="pcol" data-i="${i}" value="${p.color}" style="width:34px;height:30px;padding:0;border:0;background:none">
+      ${people().length>1?`<button class="x" data-pdel="${i}" aria-label="${T("Διαγραφή")}">✕</button>`:""}</div>`).join(""))+
+    `<div class="inrow" style="margin-top:10px"><input id="p_new" placeholder="${T("Όνομα ατόμου")}" autocomplete="off"><button class="btn ghost" id="p_add">${T("Προσθήκη")}</button></div>`});
+  const refresh=()=>{peopleSheet(back);render()};
+  $("#shBody").addEventListener("change",e=>{
+    const n=e.target.closest(".pname"),c=e.target.closest(".pcol");
+    if(n){people()[+n.dataset.i].name=n.value.trim()||T("Άτομο");write();render()}
+    if(c){people()[+c.dataset.i].color=c.value;write();render()}});
+  $("#shBody").addEventListener("click",e=>{const d=e.target.closest("[data-pdel]");if(!d)return;
+    const i=+d.dataset.pdel,pid=people()[i].id;
+    if(!confirm(T("Να αφαιρεθεί από τη λίστα;")))return;
+    people().splice(i,1);S.tasks.forEach(t=>{t.who=(t.who||[]).filter(w=>w!==pid);if(!t.who.length)t.who=[people()[0].id]});
+    write();refresh()});
+  $("#p_add").onclick=()=>{const n=val("p_new");if(!n){toast(T("Γράψε όνομα."));return}
+    people().push({id:uid(),name:n,color:PCOLORS[people().length%PCOLORS.length],on:true});write();refresh()};
+}
+function notifSheet(){
+  const st=S.settings;
+  openSheet({title:T("Ειδοποιήσεις και ήχος"),cancelLabel:T("Πίσω"),onCancel:settingsSheet,body:`
+    <label>${T("Ήχος υπενθύμισης")}</label>
+    <div id="soundList">${Object.entries(SOUNDS).map(([k,v])=>`<button type="button" class="optrow ${st.sound===k?"on":""}" data-snd="${k}">${T(v.name)}${st.sound===k?'<span class="tick">✓</span>':""}<span class="n">${k==="none"?"":T("Δοκιμή")} ▶</span></button>`).join("")}</div>
+    <label class="toggle" style="margin-top:16px"><input type="checkbox" id="n_vib" ${st.vibrate?"checked":""}>${T("Δόνηση")}</label>
+    <h3 class="sub">${T("Ειδοποιήσεις κινητού")}</h3>
+    <p class="note">${T("Εμφανίζονται στο πάνω μέρος της οθόνης, ακόμα και όταν κοιτάς άλλη εφαρμογή, όσο η εφαρμογή μένει ανοιχτή σε καρτέλα.")}</p>
+    <label class="toggle"><input type="checkbox" id="n_on" ${st.notify&&canNotify()&&Notification.permission==="granted"?"checked":""}>${T("Ειδοποιήσεις στην οθόνη του κινητού")}</label>
+    <button type="button" class="btn ghost wide" id="n_test">${T("Δοκιμαστική ειδοποίηση")}</button>
+    <p class="note">${T("Για να χτυπάει και με την εφαρμογή τελείως κλειστή χρειάζεται η έκδοση εγκατάστασης για Android. Η ιστοσελίδα μπορεί να ειδοποιεί μόνο όσο μένει ανοιχτή.")}</p>`});
+  $("#soundList").onclick=e=>{const b=e.target.closest("[data-snd]");if(!b)return;
+    st.sound=b.dataset.snd;write();playSound(st.sound);
+    $("#soundList").querySelectorAll("[data-snd]").forEach(x=>{const on=x.dataset.snd===st.sound;x.classList.toggle("on",on);
+      const t=x.querySelector(".tick");if(t)t.remove();if(on)x.insertAdjacentHTML("beforeend",'<span class="tick">✓</span>')})};
+  $("#n_vib").onchange=e=>{st.vibrate=e.target.checked;write();if(st.vibrate&&navigator.vibrate)navigator.vibrate(120)};
+  $("#n_on").onchange=async e=>{if(e.target.checked){const ok=await askNotify();e.target.checked=ok;if(ok)toast(T("Οι ειδοποιήσεις ενεργοποιήθηκαν."))}else{st.notify=false;write()}};
+  $("#n_test").onclick=async()=>{if(!S.settings.notify&&!await askNotify())return;
+    playSound();if(st.vibrate&&navigator.vibrate)navigator.vibrate([200,100,200]);
+    if(!phoneNotify(T("Δοκιμαστική ειδοποίηση"),T("Έτσι θα φαίνονται οι υπενθυμίσεις σου."),"test"))toast(T("Η ειδοποίηση δεν εμφανίστηκε. Έλεγξε τις άδειες του Chrome."));
+    else toast(T("Στάλθηκε. Δες την επάνω στην οθόνη."))};
 }
 function lookSheet(){
   const Lk=S.settings.look,cur=lookVals();
@@ -1470,6 +1746,7 @@ function backupSheet(){
 
 /* ---------- Κουμπί προσθήκης ---------- */
 function fabAction(){
+  if(view==="reminders"){$("#r_text")?.focus();return}
   if(view==="clients")return clientForm();
   if(view==="tasks")return taskForm();
   if(view==="client")return taskForm(null,clientId);
@@ -1493,15 +1770,21 @@ document.addEventListener("click",e=>{
     case"toggleTask":{const x=S.tasks.find(y=>y.id===id);if(!x)return;
       if(x.status==="done"){x.status="pending";x.doneAt=null}else{x.status="done";x.doneAt=Date.now();toast(T("Η εργασία ολοκληρώθηκε."))}persist();render();break}
     case"markPaid":{const x=S.tasks.find(y=>y.id===id);if(x){x.paid=true;x.paidAt=Date.now();persist();render();toast(T("Σημειώθηκε ως εξοφλημένη."))}break}
-    case"filter":taskFilter=el.dataset.f;render();break;
-    case"csort":clientSort=el.dataset.s;render();break;
-    case"bell":remindersSheet(false);break;
-    case"newRem":remindersSheet(true);break;
+    case"filter":taskFilter=el.dataset.f;closeSheet();render();break;
+    case"csort":clientSort=el.dataset.s;closeSheet();render();break;
+    case"filterSheet":filterSheet(el.dataset.kind);break;
+    case"toggleGroup":groupByArea=!groupByArea;closeSheet();render();break;
+    case"period":moneyPeriod=el.dataset.p;closeSheet();render();break;
+    case"newEntry":entryForm(null,{kind:el.dataset.kind,client:el.dataset.client});break;
+    case"editEntry":{const e=S.ledger.find(x=>x.id===id);if(e)entryForm(e);break}
+    case"newRem":view="reminders";render();setTimeout(()=>$("#r_text")?.focus(),80);break;
     case"importContacts":importContacts();break;
     case"syncContact":syncContact(id);break;
     case"settings":settingsSheet();break;
     case"lang":LANG=LANG==="en"?"el":"en";S.settings.lang=LANG;write();applyLook();render();if($("#modal").classList.contains("open")&&!sheetHasSave)closeSheet();break;
     case"look":lookSheet();break;
+    case"notifs":notifSheet();break;
+    case"managePeople":peopleSheet();break;
     case"placeEdit":placeSheet(el.dataset.kind,el.dataset.i!=null?+el.dataset.i:null);break;
     case"backup":backupSheet();break;
     case"fab":fabAction();break;
@@ -1512,6 +1795,7 @@ document.addEventListener("click",e=>{
     case"destTask":{const x=S.tasks.find(y=>y.id===id),L=x&&taskLoc(x);if(!L)return;
       route.toPlace={lat:L.lat,lng:L.lng,label:x.title+" ("+L.label+")"};route.to=route.toPlace.label;closeSheet();view="route";render();window.scrollTo(0,0);calcRoute(true);
       if(!route.result)toast(T("Γράψε από πού ξεκινάς ή όρισε έδρα στις ρυθμίσεις."));break}
+    case"showMe":getPos(p=>{myPos=p;openMapPicker(p,null,q=>{route.fromGeo={...q,label:MYLOC()};route.from=MYLOC();render();toast(T("Αφετηρία το σημείο που διάλεξες."))})});break;
     case"geoFrom":
       if(route.fromGeo&&baseLoc()){route.fromGeo=null;route.from=baseLoc().label;$("#rFrom").value=route.from;toast(T("Αφετηρία: {b}.",{b:route.from}));break}
       getPos(p=>{route.fromGeo={...p,label:MYLOC()};route.from=MYLOC();$("#rFrom").value=MYLOC();toast(T("Αφετηρία η θέση σου."))});break;
@@ -1566,7 +1850,36 @@ const _openSheet=openSheet,_closeSheet=closeSheet;
 openSheet=function(o){_openSheet(o);fitViewport()};
 closeSheet=function(){_closeSheet();fitViewport()};
 
-applyLook();render();checkDue();fitViewport();setInterval(checkDue,15000);
+/* ---------- «Θύμισέ μου όταν φτάσω κοντά» ---------- */
+let watchId=null,myPos=null;
+const nearTasks=()=>S.tasks.filter(x=>isOpen(x)&&x.nearAlert>0&&taskLoc(x));
+function updateWatch(){
+  const want=nearTasks().length>0&&navigator.geolocation&&window.isSecureContext&&!geoBlockedByFrame();
+  if(want&&watchId==null){
+    watchId=navigator.geolocation.watchPosition(p=>{
+      myPos={lat:p.coords.latitude,lng:p.coords.longitude};checkNear();
+    },()=>{},{enableHighAccuracy:false,maximumAge:60000,timeout:30000});
+  }else if(!want&&watchId!=null){navigator.geolocation.clearWatch(watchId);watchId=null}
+}
+function checkNear(){
+  if(!myPos)return;
+  nearTasks().forEach(x=>{
+    const L=taskLoc(x),d=km(myPos,L)/1.3*1000; // πραγματική ευθεία απόσταση σε μέτρα
+    if(d<=x.nearAlert){
+      if(x.nearFired&&Date.now()-x.nearFired<2*3600000)return;
+      x.nearFired=Date.now();write();
+      const c=x.clientId&&getClient(x.clientId);
+      const title=T("Είσαι κοντά: {a}",{a:L.label});
+      const body=x.title+(c?" — "+c.name:"");
+      playSound();if(S.settings.vibrate&&navigator.vibrate)navigator.vibrate([200,100,200,100,300]);
+      phoneNotify(title,body,"near-"+x.id);
+      alertQ.push({type:"near",id:x.id});if(!alertShown)showNextAlert();
+    }else if(x.nearFired&&d>x.nearAlert*1.6){x.nearFired=0;write()}
+  });
+}
+setInterval(()=>{updateWatch();checkNear()},45000);
+
+applyLook();render();checkDue();fitViewport();updateWatch();setInterval(checkDue,15000);
 </script>
 </body>
 </html>
