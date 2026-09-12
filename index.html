@@ -1,0 +1,2153 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#22303c">
+<title>Στόλος</title>
+<link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%20%22%CE%A3%CF%84%CF%8C%CE%BB%CE%BF%CF%82%20%E2%80%94%20%CE%B4%CE%B9%CE%B1%CF%87%CE%B5%CE%AF%CF%81%CE%B9%CF%83%CE%B7%20%CE%BF%CF%87%CE%B7%CE%BC%CE%AC%CF%84%CF%89%CE%BD%22%2C%20%22short_name%22%3A%20%22%CE%A3%CF%84%CF%8C%CE%BB%CE%BF%CF%82%22%2C%20%22start_url%22%3A%20%22./index.html%22%2C%20%22scope%22%3A%20%22./%22%2C%20%22display%22%3A%20%22standalone%22%2C%20%22orientation%22%3A%20%22portrait%22%2C%20%22background_color%22%3A%20%22%23eceff3%22%2C%20%22theme_color%22%3A%20%22%2322303c%22%2C%20%22lang%22%3A%20%22el%22%2C%20%22icons%22%3A%20%5B%7B%22src%22%3A%20%22data%3Aimage/png%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAMAAAADACAIAAADdvvtQAAAD1UlEQVR4nO3dzW1cVRiA4bFFJaYBs40MlEAL9MCWSJFgmx5Y0AAlIEtsXYELoIpkQZQfyyRzz5t77/H18%2BySePJ9587rGU1sZy6urm9OMOpy7wV42gREIiASAZEIiERAJAIiERCJgEgERCIgEgGRCIhEQCQCIhEQiYBIBEQiIBIBkQiIREAkAiIREImASAREIiASAZEIiERAJAIiERCJgEgERCIgEgGRCIhEQCQCIhEQiYBIBEQiIBIBkQiIREAkAiIREImASAREIiASAZF8M3zL%2B7vbr7jHUX373fd7r7Auj0AkAiIREImASAREIiASAZEIiERAJAIiERDJ%2BNfCWGryrx6OfdnOIxCJgEgERCIgEgGRCIhEQCQCIhEQiYBIBEQiIBIBkQiIREAkAiIREImASAREIiASAZEIiERAJAIiERDJFD%2BZ%2Bsdff3/8y59/%2BvE5r7GG9Y62c0APDvbxb255/02yxhrWPtqeT2GPnu3MPz3eGmvY4Gi7BXTO9hvceZOssYZtjrZPQOfvveqdN8kaa9jsaF6FkewQ0NLkV/rsn2SNNWx5NI9AJAIiGf93oOE3Mnr56vfNZk21xmZv/bTl0TwCkewQ0G%2Bvfl3145/WGmvY8mgegUj2Cej85Ff9vJ9kjTVsdrTdHoHO2XuDu22SNdawzdH2fAr7/Pab3W2TrLGGDY52cXV90/%2BW6MHLzr3us0nWWMN6R5siIJ4ur8JIBEQiIBIBkQiIREAkAiIREImASAREIiASAZEIiERAJAIiERCJgEgERCIgEgGRCIhEQCQCIhEQiYBIBEQiIBIBkQiIREAkAiIREImASAREIiASAZEIiGT83Xru726/4h7sbuwNez4J6J9fLhbd%2BN8/fzidTi9ev1l0q6VT/mPKqlPu727Hpnx4CjvMtTBlYMqYF6/fvAvoSNfClC2nXA7ffqn5r4UpA1Mun8SWpkw7ZeRl/FGvhSkDUxYHdOBrYcrAlGUBHftamDIwZUFAh78WpgxMOTeg53AtTBmYclZAu29pyrRTvhzQDFuaMu2ULwQ0yZamTDvlcwHNs6Up007534Cm2tKUaac8HtBsW5oy7ZRHAppwS1OmnfIwoDm3NGXaKZ8ENO2Wpkw75UNAm30P26KPP94Vn3PKUu%2BnvAvoSNfClC2nXMbbn8%2BUQ065fBJbmjLtlGXfD3Tsa2HKwJQFAR3%2BWpgyMOXcgJ7DtTBlYMpZAe2%2BpSnTTrm4ur4ZWOLkZ%2BMPZ%2Bxn48cDgpP/3oVIQCQCIhEQiYBIBEQiIBIBkQiIREAkAiIREImASAREIiASAZG8Bfe6WzjMY7XQAAAAAElFTkSuQmCC%22%2C%20%22sizes%22%3A%20%22192x192%22%2C%20%22type%22%3A%20%22image/png%22%7D%2C%20%7B%22src%22%3A%20%22data%3Aimage/png%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAIAAAB7GkOtAAANHklEQVR4nO3dy42cxwGF0SHBSMgExK1A2iE4BeegrQ0IsLfKwQsn4BAMAtoyAgbgKOQFCXLI293T/b%2Bqeu45W0lEza0CvumhgHnx%2Bqd3DwD0eTn6AACMIQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUOrV6AOc9enjh9FHgJHevH0/%2Bgg8cz4BAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlHo1%2BgDAWp8%2Bfhh9BJ7w5u370Uc4wScAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJR6NfoAz9%2B//vPfc//or3/585EnefZMzUptT0gAdnHhGZ37157l8zqAqVmp%2BQkJwMaufEzn/sNn87AOYGpW8oQEYDOLH1P%2BIc/gYe3K1KzkCX3mL4G3scl72ulPe2ZMzUqe0FcCsIE9XsBdv6r9mJqVPKHH/AholV0v/hl8wNyQqVnJE0o%2BASx3TPbv95uLDZmalTyhkwQAoJQALHRk6u/u24ptmZqVPKFzBGCJ4%2B/4vl7VhkzNSp7QBQJws1G3e0evaiumZiVP6DIBACglALcZG/Z7%2BbZiE6ZmJU/oSQIAUEoAbjBD0mc4wwFm%2BDJnOAOLzXB9M5zhMgEAKCUAAKUEAKCUAFxrnh/nzXOSnczzBc5zEm4yz8XNc5KTBACglAAAlBIAgFICAFBq3t8I9ubt%2B9FH%2BM7ff/3n6CN8M9s42zL1re7ikEfyhK7kEwBAKQEAKCUAAKUE4Fr/%2BPVvo4/wxTwn2ck8X%2BA8J%2BEm81zcPCc5SQAASgkAQCkBACglADeY4cd5M5zhADN8mTOcgcVmuL4ZznCZAACUEoDbjE36/N9QbMjUrOQJPUkAAEoJwM1Ghf0uvqHYlqlZyRO6TACWOP527%2BU9bc7UrOQJXSAACx15x3f0nvZgalbyhM4RAIBSArDcMam/r28odmJqVvKETnrx%2Bqd3o89w93b67RN395gOYGpW8oQe8wlgA3vc/Z2%2Bp72ZmpU8occEYBvbvoD7fU8HMDUreUJf%2BRHQxlZ%2BwLzrx3QwU7OSJyQAu1jwsJ7BYxrC1KzU/IQEYHcXntezeUaTMDUrtT0hAQAo5S%2BBAUoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAo9Wr0Ac769PHD6CMAbOPN2/ejj3DC8gD8/suLDc9x0v/%2B/acr/82ff/tj15Nc6YBNrmeTZJNkk7T5Jsu%2BnT1gk4U/Anret7WMTZJNkk2STdIxmywJgNtKNkk2STZJNkmHbXJzANxWskmySbJJskk6cpPbAuC2kk2STZJNkk3SwZvcEAC3lWySbJJskmySjt/k2gC4rWSTZJNkk2STNGSTqwLgtpJNkk2STZJN0qhNng6A20o2STZJNkk2SQM3eSIAbivZJNkk2STZJI3d5FIA3FaySbJJskmySRq%2BydkADD/ZY24r2STZJNkk2eSr0wGY4WRfua1kk2STZJNkk8dOBGCSk33mtpJNkk2STZJNfvBjAOY52YPbOsUmySbJJskm6bsATHWySUy1iRecbJJskmySfv7tj28BmO1ko4/w8GCTU2ySbJJskibc5EsAJjzZcDZJNkk2STZJc27y8mHWk41lk2STZJNkk8k93uSl20o2STZJNkk2STNvsvBXQu7BbSWbJJskmySbpNxklgC4rWSTZJNkk2STdHKTKQLgtpJNkk2STZJN0rlNxgfAbSWbJJskmySbpAubDA6A20o2STZJNkk2SZc3GRkAt5VskmySbJJskp7cZFgA3FaySbJJskmySbpmkzEBcFvJJskmySbJJunKTQYEwG0lmySbJJskm6TrNzk6AG4r2STZJNkk2STdtMmhAXBbySbJJskmySbp1k2OC4DbSjZJNkk2STZJCzY5KABuK9kk2STZJNkkLdvkiAC4rWSTZJNkk2STtHiT3QPgtpJNkk2STZJN0ppN9g2A20o2STZJNkk2SSs32TEAbivZJNkk2STZJK3fZK8AuK1kk2STZJNkk7TJJrsEwG0lmySbJJskm6StNtk%2BAG4r2STZJNkk2SRtuMnGAXBbySbJJskmySZp2022DIDbSjZJNkk2STZJm2%2ByWQDcVrJJskmySbJJ2mOTbQLgtpJNkk2STZJN0k6bbBAAt5VskmySbJJskvbbZG0A3FaySbJJskmySdp1k1UBcFvJJskmySbJJmnvTZYHwG0lmySbJJskm6QDNlkYALeVbJJskmySbJKO2WRJANxWskmySbJJskk6bJObA%2BC2kk2STZJNkk3SkZvcFgC3lWySbJJskmySDt7khgC4rWSTZJNkk2STdPwm1wbAbSWbJJskmySbpCGbXBUAt5VskmySbJJskkZt8nQA3FaySbJJskmySRq4yRMBcFvJJskmySbJJmnsJpcC4LaSTZJNkk2STdLwTc4GYPjJPnNbySbJJskmySY/OB2AGU724LZOsUmySbJJskk6EYBJTjaVSTbxgpNNkk2STdLvv7z4MQDznGz0Eb6xSbJJskmySZpqk%2B8CMNXJJmGTZJNkk2STNNsm3wIw28lmYJNkk2STZJM04SZfAjDhyYazSbJJskmySZpzk5cPs55sLJskmySbJJtMKzd56baSTZJNkk2STdLMm6z6pfBbcVvJJskmySbJJuncJuMD4LaSTZJNkk2STdKFTQYHwG0lmySbJJskm6TLm4wMgNtKNkk2STZJNklPbjIsAG4r2STZJNkk2SRds8mL1z%2B9O%2BAoC3z6%2BGH0EQC28ebt%2B9FHOGHeAACwq/H/FxAAQwgAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQ6v8X6ABP00%2BbBAAAAABJRU5ErkJggg%3D%3D%22%2C%20%22sizes%22%3A%20%22512x512%22%2C%20%22type%22%3A%20%22image/png%22%7D%2C%20%7B%22src%22%3A%20%22data%3Aimage/png%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAIAAAB7GkOtAAANAElEQVR4nO3dQW6caRWFYTvKHpgnG4inrVgsgQ0wYA89BaklmPYe2AJLgEg9zQqylmaQKOnklO1yuer/bv3neaZA5%2BPcKr1OQMrtm3fvbwDo82r1AwBYQwAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoNTr1Q%2BY6NPHD6ufwJ69vbtf/QS4ufE7AIBaAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFKvVz8AeNCnjx9WP2FX3t7dr37CLH4HAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSr1c/gOf593/%2B%2B9C/9Le//HnLlwxknH1wx80IwBV45Pvw0L%2Bt53tinH1wxyUEYLQjvxUP/Qf3/Q0xzj6440ICMNTJ34r8h%2BzvG2KcfXDH5fyPwBOd5YtxoX/acsbZB3ecQADGucRHeTdfD%2BPsgzsO4Y%2BABrnoJ/jaf6dsnH1wx1H8DmCKbX5%2BudKfkoyzD%2B44jQAAlBKAEbb8meXqfj4yzj6440ACsN72H9Yr%2BnoYZx/ccSYBWGzVx/Qqvh7G2Qd3HEsAAEoJwEprf0IZ/vORcfbBHScTAIBSArDMhJ9NJrzhoAkPm/CGazdhwwlvGEsAAEoJAEApAQAoJQBrzPlzyTkv%2BWrOk%2Ba85BrNWW/OS6YRAIBSAgBQSgAASgkAQCl/I9gBb%2B/uL/1L/OOXf136lzjeBv99n8U4Q371F3LH%2BfwOAKCUAACUEgCAUgKwxj9/%2BfvqJ3wx5yVfzXnSnJdcoznrzXnJNAIAUEoAAEoJAEApAVhmwp9LTnjDQRMeNuEN127ChhPeMJYAAJQSgJXW/mwy/Ccj4%2ByDO04mAAClBGCxVT%2BhXMVPRsbZB3ccSwDW2/5jekVfDOPsgzvOJAAjbPlhvbovhnH2wR0HEgCAUgIwxTY/s1zpT0bG2Qd3nOb2zbv3q9/Ady7012js41thnH1wxyH8DmCcS3yId/PFMM4%2BuOMQAjDReT/KO/tiGGcf3HECfwQ02gt/p7zvb4Vx9sEdFxKAK3DCN6TnW2GcfXDHJQTgyjzyPfF9MM4%2BuONmBACglP8RGKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJR6vfoBE336%2BGH1E4Dze3t3v/oJs5wegN9%2Bvj3jO17op19/P%2B8/8LQPyr43OY1Nkk3SBpv86a//O/JX6dnkxD8C8glONkk2STZJNknbbHJKAFwr2STZJNkk2SRttsmzA%2BBaySbJJskmySZpy02eFwDXSjZJNkk2STZJG2/yjAC4VrJJskmySbJJ2n6TYwPgWskmySbJJskmackmRwXAtZJNkk2STZJN0qpNng6AayWbJJskmySbpIWbPBEA10o2STZJNkk2SWs3eSwArpVskmySbJJskpZv8mAAlr/sj1wr2STZJNkk2eSrwwGY8LKvXCvZJNkk2STZ5I8OBGDIyz5zrWSTZJNkk2STH/wYgDkvu3GtQ2ySbJJsMtaoTb4LwKiX%2BQQnmySbJJskm6Sffv39WwCmvWz1E25ubHKITZJNkk3SwE2%2BBGDgy5azSbJJskmySZq5yaubqS9byybJJskmySZp7Cavxr6Mz4Zs4nOSbJJskiZvcuJfCXkJrpVskmySbJJsknKTKQFwrWSTZJNkk2STdHCTEQFwrWSTZJNkk2ST9NAm6wPgWskmySbJJskm6ZFNFgfAtZJNkk2STZJN0uObrAyAayWbJJskmySbpCc3WRYA10o2STZJNkk2ScdssiYArpVskmySbJJsko7cZEEAXCvZJNkk2STZJB2/ydYBcK1kk2STZJNkk/SsTTYNgGslmySbJJskm6TnbrJdAFwr2STZJNkk2SSdsMlGAXCtZJNkk2STZJN02iZbBMC1kk2STZJNkk3SyZtcPACulWySbJJskmySXrLJZQPgWskmySbJJskm6YWbXDAArpVskmySbJJskl6%2ByaUC4FrJJskmySbJJuksm1wkAK6VbJJskmySbJLOtcn5A%2BBaySbJJskmySbpjJucOQCulWySbJJskmySzrvJOQPgWskmySbJJskm6eybnC0ArpVskmySbJJski6xyXkC4FrJJskmySbJJulCm5whAK6VbJJskmySbJIut8lLA%2BBaySbJJskmySbpopu8KACulWySbJJskmySLr3J6QFwrWSTZJNkk2STtMEmJwbAtZJNkk2STZJN0jabnBIA10o2STZJNkk2SZtt8uwAuFaySbJJskmySdpyk%2BcFwLWSTZJNkk2STdLGmzwjAK6VbJJskmySbJK23%2BTYALhWskmySbJJsklasslRAXCtZJNkk2STZJO0apOnA%2BBaySbJJskmySZp4SZPBMC1kk2STZJNkk3S2k0eC4BrJZskmySbJJuk5Zs8GIDlL/vMtZJNkk2STZJNfnA4ABNeduNah9gk2STZZLghmxwIwJCX%2BQQnmySbJJskm6Tffr79MQBzXrb6Cd/YJNkk2STZJI3a5LsAjHrZEDZJNkk2STZJ0zb5FoBpL5vAJskmySbJJmngJl8CMPBly9kk2STZJNkkzdzk1c3Ul61lk2STZJNkkzR2k1djX8aoTXxOkk2STdLkTV70l8Kfi2slmySbJJskm6SHNlkfANdKNkk2STZJNkmPbLI4AK6VbJJskmySbJIe32RlAFwr2STZJNkk2SQ9ucmyALhWskmySbJJskk6ZpPbN%2B/eb/CU6/Lp44fVTwDO7%2B3d/eonzCIAAKXW/7%2BAAFhCAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQ6v/bmP8GsfdjjwAAAABJRU5ErkJggg%3D%3D%22%2C%20%22sizes%22%3A%20%22512x512%22%2C%20%22type%22%3A%20%22image/png%22%2C%20%22purpose%22%3A%20%22maskable%22%7D%5D%7D">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAIAAADdvvtQAAAD1UlEQVR4nO3dzW1cVRiA4bFFJaYBs40MlEAL9MCWSJFgmx5Y0AAlIEtsXYELoIpkQZQfyyRzz5t77/H18+ySePJ9587rGU1sZy6urm9OMOpy7wV42gREIiASAZEIiERAJAIiERCJgEgERCIgEgGRCIhEQCQCIhEQiYBIBEQiIBIBkQiIREAkAiIREImASAREIiASAZEIiERAJAIiERCJgEgERCIgEgGRCIhEQCQCIhEQiYBIBEQiIBIBkQiIREAkAiIREImASAREIiASAZF8M3zL+7vbr7jHUX373fd7r7Auj0AkAiIREImASAREIiASAZEIiERAJAIiERDJ+NfCWGryrx6OfdnOIxCJgEgERCIgEgGRCIhEQCQCIhEQiYBIBEQiIBIBkQiIREAkAiIREImASAREIiASAZEIiERAJAIiERDJFD+Z+sdff3/8y59/+vE5r7GG9Y62c0APDvbxb255/02yxhrWPtqeT2GPnu3MPz3eGmvY4Gi7BXTO9hvceZOssYZtjrZPQOfvveqdN8kaa9jsaF6FkewQ0NLkV/rsn2SNNWx5NI9AJAIiGf93oOE3Mnr56vfNZk21xmZv/bTl0TwCkewQ0G+vfl3145/WGmvY8mgegUj2Cej85Ff9vJ9kjTVsdrTdHoHO2XuDu22SNdawzdH2fAr7/Pab3W2TrLGGDY52cXV90/+W6MHLzr3us0nWWMN6R5siIJ4ur8JIBEQiIBIBkQiIREAkAiIREImASAREIiASAZEIiERAJAIiERCJgEgERCIgEgGRCIhEQCQCIhEQiYBIBEQiIBIBkQiIREAkAiIREImASAREIiASAZEIiGT83Xru726/4h7sbuwNez4J6J9fLhbd+N8/fzidTi9ev1l0q6VT/mPKqlPu727Hpnx4CjvMtTBlYMqYF6/fvAvoSNfClC2nXA7ffqn5r4UpA1Mun8SWpkw7ZeRl/FGvhSkDUxYHdOBrYcrAlGUBHftamDIwZUFAh78WpgxMOTeg53AtTBmYclZAu29pyrRTvhzQDFuaMu2ULwQ0yZamTDvlcwHNs6Up007534Cm2tKUaac8HtBsW5oy7ZRHAppwS1OmnfIwoDm3NGXaKZ8ENO2Wpkw75UNAm30P26KPP94Vn3PKUu+nvAvoSNfClC2nXMbbn8+UQ065fBJbmjLtlGXfD3Tsa2HKwJQFAR3+WpgyMOXcgJ7DtTBlYMpZAe2+pSnTTrm4ur4ZWOLkZ+MPZ+xn48cDgpP/3oVIQCQCIhEQiYBIBEQiIBIBkQiIREAkAiIREImASAREIiASAZG8Bfe6WzjMY7XQAAAAAElFTkSuQmCC">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAIAAADdvvtQAAAD1UlEQVR4nO3dzW1cVRiA4bFFJaYBs40MlEAL9MCWSJFgmx5Y0AAlIEtsXYELoIpkQZQfyyRzz5t77/H18+ySePJ9587rGU1sZy6urm9OMOpy7wV42gREIiASAZEIiERAJAIiERCJgEgERCIgEgGRCIhEQCQCIhEQiYBIBEQiIBIBkQiIREAkAiIREImASAREIiASAZEIiERAJAIiERCJgEgERCIgEgGRCIhEQCQCIhEQiYBIBEQiIBIBkQiIREAkAiIREImASAREIiASAZF8M3zL+7vbr7jHUX373fd7r7Auj0AkAiIREImASAREIiASAZEIiERAJAIiERDJ+NfCWGryrx6OfdnOIxCJgEgERCIgEgGRCIhEQCQCIhEQiYBIBEQiIBIBkQiIREAkAiIREImASAREIiASAZEIiERAJAIiERDJFD+Z+sdff3/8y59/+vE5r7GG9Y62c0APDvbxb255/02yxhrWPtqeT2GPnu3MPz3eGmvY4Gi7BXTO9hvceZOssYZtjrZPQOfvveqdN8kaa9jsaF6FkewQ0NLkV/rsn2SNNWx5NI9AJAIiGf93oOE3Mnr56vfNZk21xmZv/bTl0TwCkewQ0G+vfl3145/WGmvY8mgegUj2Cej85Ff9vJ9kjTVsdrTdHoHO2XuDu22SNdawzdH2fAr7/Pab3W2TrLGGDY52cXV90/+W6MHLzr3us0nWWMN6R5siIJ4ur8JIBEQiIBIBkQiIREAkAiIREImASAREIiASAZEIiERAJAIiERCJgEgERCIgEgGRCIhEQCQCIhEQiYBIBEQiIBIBkQiIREAkAiIREImASAREIiASAZEIiGT83Xru726/4h7sbuwNez4J6J9fLhbd+N8/fzidTi9ev1l0q6VT/mPKqlPu727Hpnx4CjvMtTBlYMqYF6/fvAvoSNfClC2nXA7ffqn5r4UpA1Mun8SWpkw7ZeRl/FGvhSkDUxYHdOBrYcrAlGUBHftamDIwZUFAh78WpgxMOTeg53AtTBmYclZAu29pyrRTvhzQDFuaMu2ULwQ0yZamTDvlcwHNs6Up007534Cm2tKUaac8HtBsW5oy7ZRHAppwS1OmnfIwoDm3NGXaKZ8ENO2Wpkw75UNAm30P26KPP94Vn3PKUu+nvAvoSNfClC2nXMbbn8+UQ065fBJbmjLtlGXfD3Tsa2HKwJQFAR3+WpgyMOXcgJ7DtTBlYMpZAe2+pSnTTrm4ur4ZWOLkZ+MPZ+xn48cDgpP/3oVIQCQCIhEQiYBIBEQiIBIBkQiIREAkAiIREImASAREIiASAZG8Bfe6WzjMY7XQAAAAAElFTkSuQmCC">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Στόλος">
+<meta name="mobile-web-app-capable" content="yes">
+<style>
+  :root{
+    --steel:#22303c;
+    --steel-2:#33465a;
+    --amber:#e8a33d;
+    --paper:#eceff3;
+    --panel:#ffffff;
+    --line:#d9dfe6;
+    --ink:#16191d;
+    --mute:#68737f;
+    --alert:#b5432c;
+    --ok:#2c7a52;
+    --warn:#a8781a;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+    font-size:16px;line-height:1.45;
+    padding-bottom:78px;
+  }
+  header{
+    background:var(--steel);color:#fff;
+    padding:12px 14px 10px;
+    position:sticky;top:0;z-index:40;
+  }
+  header .row{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+  header h1{margin:0;font-size:21px;font-weight:700;letter-spacing:.5px}
+  header .ver{font-size:11px;color:#9fb0c0;font-weight:500}
+  header .sub{font-size:12.5px;color:#a9bccd;margin-top:1px}
+  .stripe{height:6px;background:repeating-linear-gradient(45deg,var(--amber) 0 11px,var(--steel) 11px 22px)}
+  main{padding:12px 12px 20px;max-width:720px;margin:0 auto}
+  h2{font-size:17px;margin:2px 0 10px;font-weight:700}
+  h3{font-size:14.5px;margin:0 0 6px;font-weight:700}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:10px}
+  .card.tight{padding:10px}
+  label{display:block;font-size:12.5px;color:var(--mute);margin:8px 0 3px;font-weight:600}
+  input,select,textarea{
+    width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;
+    font-size:16px;font-family:inherit;background:#fff;color:var(--ink);
+  }
+  input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--steel-2);outline-offset:1px}
+  textarea{min-height:70px;resize:vertical}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+  button{
+    font-family:inherit;font-size:15px;font-weight:600;border-radius:8px;
+    padding:11px 14px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;
+  }
+  button.primary{background:var(--amber);border-color:#cf8d28;color:#2a1f08}
+  button.dark{background:var(--steel);border-color:var(--steel);color:#fff}
+  button.danger{background:#fff;border-color:#e0b6ae;color:var(--alert)}
+  button.small{font-size:13px;padding:7px 10px;font-weight:600}
+  button.wide{width:100%}
+  .btnrow{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .btnrow>button{flex:1;min-width:120px}
+  .muted{color:var(--mute);font-size:13px}
+  .empty{background:var(--panel);border:1px dashed var(--line);border-radius:10px;padding:22px 14px;text-align:center;color:var(--mute);font-size:14px}
+  .tag{display:inline-block;font-size:11.5px;padding:2px 7px;border-radius:20px;background:#eef2f6;color:var(--steel-2);border:1px solid var(--line);font-weight:600;margin:0 4px 4px 0}
+  .plate{
+    display:inline-block;font-weight:700;letter-spacing:1.2px;font-size:14px;
+    background:#fff;border:2px solid var(--steel);border-radius:5px;padding:1px 7px;
+    border-left:9px solid #1d4ea8;
+  }
+  .plate.bad{border-color:var(--alert);color:var(--alert);border-left-color:var(--alert)}
+  .redbox{
+    background:var(--alert);color:#fff;border-radius:10px;padding:12px 14px;margin-bottom:10px;
+    display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer;
+    border:none;width:100%;font-size:15px;font-weight:700;text-align:left;
+  }
+  .amberbox{background:#fdf8ec;color:var(--warn);border:1px solid #e6d0a3}
+  .overlay{
+    position:fixed;inset:0;z-index:80;background:rgba(20,26,32,.55);
+    display:flex;align-items:flex-end;justify-content:center;padding:0;
+  }
+  .sheet{
+    background:var(--panel);width:100%;max-width:720px;max-height:82vh;overflow:auto;
+    border-radius:14px 14px 0 0;padding:14px 14px 18px;
+  }
+  .sheet h3{font-size:17px;margin-bottom:10px}
+  .alertbox{border-left:4px solid var(--alert);background:#fdf3f1;border-radius:8px;padding:9px 11px;margin-bottom:8px;font-size:13.5px}
+  .alertbox.soon{border-left-color:var(--warn);background:#fdf8ec}
+  .rowline{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid #eef1f4;font-size:14px}
+  .rowline:last-child{border-bottom:none}
+  .rowline b{font-weight:700}
+  .big{font-size:26px;font-weight:700;line-height:1.1}
+  .statgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:11px}
+  .stat .lab{font-size:12px;color:var(--mute);font-weight:600;margin-top:2px}
+  .chk{display:flex;align-items:flex-start;gap:8px;padding:6px 0;font-size:14.5px}
+  .chk input{width:20px;height:20px;flex:0 0 auto;margin-top:2px}
+  .subtabs{display:flex;gap:6px;margin-bottom:10px}
+  .subtabs button{flex:1;background:#e2e7ed;border-color:#e2e7ed;font-size:14px;padding:9px}
+  .subtabs button.on{background:var(--steel);border-color:var(--steel);color:#fff}
+  nav{
+    position:fixed;left:0;right:0;bottom:0;z-index:50;
+    background:var(--steel);display:grid;grid-template-columns:repeat(6,1fr);
+    border-top:3px solid var(--amber);padding-bottom:env(safe-area-inset-bottom);
+  }
+  nav button{
+    background:none;border:none;border-radius:0;color:#9fb0c0;
+    font-size:10px;font-weight:600;padding:9px 1px 10px;line-height:1.2;
+  }
+  nav button.on{color:#fff;box-shadow:inset 0 3px 0 var(--amber)}
+  .head-actions{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px}
+  details.veh{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin-bottom:10px}
+  details.veh>summary{padding:12px;cursor:pointer;font-weight:700;list-style:none}
+  details.veh>summary::-webkit-details-marker{display:none}
+  details.veh .body{padding:0 12px 12px}
+  @media (prefers-reduced-motion:no-preference){
+    button{transition:filter .12s ease}
+    button:active{filter:brightness(.93)}
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+
+<script type="text/babel">
+const {useState,useEffect,useMemo} = React;
+
+const VERSION = "v2026-09-07.1";
+const KEY = "stolos_v1";
+
+const KATIGORIES = ["Καλαθοφόρο","Γερανοφόρο (παπαγάλος)","Φορτηγό μεταφοράς μπομπίνων","Ανατρεπόμενο","Φορτηγό με υδραυλικό γερανό","Βαν συνεργείου","Ημιφορτηγό","Φορτηγό έως 3,5 τόνους","Φορτηγό άνω των 3,5 τόνων","Ρυμουλκό / νταλίκα","Ψυγείο","Βυτιοφόρο","Κλούβα","Άλλο"];
+const TOPOI_ARXIKA = [
+  "Ασπρόπυργος - Κέντρο Αποθηκών",
+  "Διεύθυνση Περιφέρειας Αττικής - Αγησιλάου 56-58",
+  "Περιοχή Αθήνας",
+  "Περιοχή Ελευσίνας",
+  "Περιοχή Καλλιθέας",
+  "Περιοχή Μεσογείων",
+  "Περιοχή Πειραιά",
+  "Περιοχή Φιλοθέης - Κηφισιάς",
+  "Περιοχή Θεσσαλονίκης",
+  "Περιοχή Λάρισας",
+  "Περιοχή Πατρών",
+  "Υποσταθμός",
+  "Εργοτάξιο δικτύου"
+];
+const MONADES = ["τόνοι","κιλά","τεμάχια","παλέτες","κιβώτια","μέτρα","κυβικά"];
+const MARKES_ARXIKA = ["Mercedes-Benz","MAN","Iveco","Volvo","Scania","DAF","Renault Trucks","Ford","Fiat","Nissan","Isuzu","Mitsubishi Fuso","Toyota","Piaggio"];
+const MONTELA_ARXIKA = ["Atego","Actros","Arocs","Sprinter","Vito","Eurocargo","Daily","TGM","TGL","TGS","FL","FE","FH","P 280","G 410","LF","CF","Master","Transit","Ducato","Cabstar","NPR","Canter","Hilux","Porter"];
+const PRATIRIA_ARXIKA = ["Πρατήριο εγκατάστασης Ασπροπύργου","ΕΚΟ","Shell","BP","Avin","Coral","Revoil","Άλλο πρατήριο"];
+const SYNERGEIA_ARXIKA = ["Συνεργείο Ασπροπύργου","Συνεργείο Περιοχής Αθήνας","Συνεργείο Περιοχής Ελευσίνας","Συνεργείο Περιοχής Πειραιά","Εξωτερικό συνεργείο ανυψωτικών","Αντιπροσωπεία","Βουλκανιζατέρ","Ηλεκτρολογείο αυτοκινήτων"];
+const EMPOREUMATA_ARXIKA = [
+  "Τσιμεντοκολώνες","Ξύλινοι στύλοι","Μεταλλικοί πυλώνες","Μετασχηματιστές διανομής",
+  "Ηλεκτροπαραγωγά ζεύγη (γεννήτριες)","Μπομπίνες καλωδίου μέσης τάσης","Μπομπίνες καλωδίου χαμηλής τάσης",
+  "Αγωγοί εναέριου δικτύου","Πίλαρ διανομής","Μετρητές και μετρητικές διατάξεις","Μονωτήρες",
+  "Αλεξικέραυνα","Ασφαλειοαποζεύκτες","Υπόγειο καλώδιο σε τύμπανα","Βάσεις και ικριώματα στύλων",
+  "Υλικά δικτύου (μικροϋλικά)","Αδρανή υλικά","Εργαλεία και εξοπλισμός συνεργείου",
+  "Απόσυρση παλαιού εξοπλισμού","Κενή διαδρομή"
+];
+const PROVLIMATA = ["Βλάβη οχήματος","Λάστιχο","Καθυστέρηση στη φόρτωση","Καθυστέρηση στην εκφόρτωση","Κυκλοφοριακό","Καιρικές συνθήκες","Ζημιά στο εμπόρευμα","Λάθος παραγγελία","Έλεγχος αρχών","Ατύχημα","Άλλο"];
+const ERGASIES = ["Λάδια και φίλτρο λαδιού","Φίλτρο αέρα","Φίλτρο καυσίμου","Φίλτρο καμπίνας","Τακάκια","Δισκόπλακες","Ελαστικά","Αμορτισέρ","Συμπλέκτης","Ιμάντας χρονισμού","Μπαταρία","Ψυκτικό υγρό","Φρένα - γενικός έλεγχος","Ηλεκτρολογικά","Ψυκτικός θάλαμος","Υδραυλικά","Άλλο"];
+const EGGRAFA = [
+  {k:"kteo", n:"ΚΤΕΟ"},
+  {k:"asfaleia", n:"Ασφάλεια"},
+  {k:"tachografos", n:"Ταχογράφος"},
+  {k:"kaysaeria", n:"Κάρτα καυσαερίων"},
+  {k:"adeia", n:"Άδεια κυκλοφορίας / τέλη"}
+];
+const EGGRAFA_ODIGOU = [
+  {k:"diploma", n:"Δίπλωμα"},
+  {k:"pei", n:"ΠΕΙ"},
+  {k:"karta", n:"Κάρτα ταχογράφου"},
+  {k:"adr", n:"Πιστοποιητικό ΑΔΡ"},
+  {k:"xeiristis", n:"Άδεια χειριστή μηχανημάτων έργου (θεώρηση)"},
+  {k:"ypotasi", n:"Εκπαίδευση εργασιών υπό τάση"},
+  {k:"ypsos", n:"Εργασία σε ύψος"},
+  {k:"protes", n:"Πρώτες βοήθειες"},
+  {k:"iatriko", n:"Ιατρική βεβαίωση"}
+];
+const KAT_DIPLOMATOS = ["Γ (C)","Γ+Ε (CE)","Γ1 (C1)","Δ (D)","Β (B)"];
+
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+const today = () => new Date().toISOString().slice(0,10);
+
+function fmtDate(d){
+  if(!d) return "—";
+  const p = d.split("-");
+  if(p.length !== 3) return d;
+  return p[2] + "/" + p[1] + "/" + p[0];
+}
+function daysLeft(d){
+  if(!d) return null;
+  const t = new Date(today()+"T00:00:00");
+  const x = new Date(d+"T00:00:00");
+  return Math.round((x - t) / 86400000);
+}
+function dur(a,b){
+  if(!a || !b) return 0;
+  const pa = a.split(":"), pb = b.split(":");
+  let m = (+pb[0]*60 + +pb[1]) - (+pa[0]*60 + +pa[1]);
+  if(m < 0) m += 1440;
+  return m;
+}
+function hhmm(mins){
+  if(!mins) return "0:00";
+  const h = Math.floor(mins/60), m = mins%60;
+  return h + ":" + String(m).padStart(2,"0");
+}
+function num(v){ const n = parseFloat(String(v).replace(",",".")); return isNaN(n) ? 0 : n; }
+function tripKm(t){
+  if(t.kmEnd && t.kmStart) return Math.max(0, num(t.kmEnd) - num(t.kmStart));
+  return num(t.km);
+}
+function tripTons(t){
+  const q = num(t.qty);
+  if(!q) return 0;
+  if(t.unit === "τόνοι") return q;
+  if(t.unit === "κιλά") return q/1000;
+  return 0;
+}
+function tripTonneKm(t){ return tripTons(t) * tripKm(t); }
+function emptyDb(){ return {vehicles:[], drivers:[], trips:[], services:[], places:TOPOI_ARXIKA.slice(), cargos:EMPOREUMATA_ARXIKA.slice(), shops:SYNERGEIA_ARXIKA.slice(), brands:MARKES_ARXIKA.slice(), models:MONTELA_ARXIKA.slice(), fuels:[], stations:PRATIRIA_ARXIKA.slice(), pin:"1234", assum:{years:"8", resid:"20", fuelGain:"15", maintNew:"25", escal:"15"}}; }
+function load(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(!raw) return emptyDb();
+    const d = JSON.parse(raw);
+    return Object.assign(emptyDb(), d);
+  }catch(e){ return emptyDb(); }
+}
+
+/* ---------- κοινά μικρά κομμάτια ---------- */
+
+function Field({label, children}){
+  return <div><label>{label}</label>{children}</div>;
+}
+function Sheet({title, onClose, children}){
+  return (
+    <div className="overlay" onClick={onClose}>
+      <div className="sheet" onClick={e=>e.stopPropagation()}>
+        <h3>{title}</h3>
+        {children}
+        <button className="dark wide" style={{marginTop:10}} onClick={onClose}>Κλείσιμο</button>
+      </div>
+    </div>
+  );
+}
+function Plate({v}){ return <span className="plate">{v}</span>; }
+function Empty({t}){ return <div className="empty">{t}</div>; }
+
+function ListSelect({value, onChange, items, onAdd, addLabel}){
+  return (
+    <select value={value||""} onChange={e=>{
+      const val = e.target.value;
+      if(val === "__new"){
+        const n = prompt(addLabel + " (αποθηκεύεται μόνιμα στη λίστα):");
+        if(n && n.trim()){ onAdd(n.trim()); onChange(n.trim()); }
+        return;
+      }
+      onChange(val);
+    }}>
+      <option value="">— διάλεξε —</option>
+      {items.map(p=><option key={p} value={p}>{p}</option>)}
+      {value && items.indexOf(value) < 0 ? <option value={value}>{value}</option> : null}
+      <option value="__new">+ {addLabel}…</option>
+    </select>
+  );
+}
+
+/* ---------- ΔΡΟΜΟΛΟΓΙΑ ---------- */
+
+function TripForm({db, init, onSave, onCancel, onAddPlace, onAddCargo}){
+  const [f,setF] = useState(init || {
+    id:null, date:today(), vehicleId:"", driverId:"",
+    from:"", to:"", timeStart:"", timeEnd:"", kmStart:"", kmEnd:"",
+    cargo:"", qty:"", unit:"τόνοι", recipient:"", revenue:"", problems:[], note:""
+  });
+  const set = (k,v) => setF(p => Object.assign({}, p, {[k]:v}));
+  const toggle = (p) => setF(prev => {
+    const has = prev.problems.indexOf(p) >= 0;
+    return Object.assign({}, prev, {problems: has ? prev.problems.filter(x=>x!==p) : prev.problems.concat([p])});
+  });
+
+  const save = () => {
+    if(!f.vehicleId){ alert("Διάλεξε όχημα. Αν δεν έχεις καταχωρήσει κανένα, πήγαινε στον Στόλο."); return; }
+    if(!f.driverId){ alert("Διάλεξε οδηγό. Αν δεν έχεις καταχωρήσει κανέναν, πήγαινε στον Στόλο."); return; }
+    onSave(Object.assign({}, f, {id: f.id || uid()}));
+  };
+
+  return (
+    <div className="card">
+      <h3>{f.id ? "Επεξεργασία δρομολογίου" : "Νέο δρομολόγιο"}</h3>
+      <div className="grid2">
+        <Field label="Ημερομηνία"><input type="date" value={f.date} onChange={e=>set("date",e.target.value)} /></Field>
+        <Field label="Όχημα">
+          <select value={f.vehicleId} onChange={e=>set("vehicleId",e.target.value)}>
+            <option value="">— διάλεξε —</option>
+            {db.vehicles.map(v=><option key={v.id} value={v.id}>{v.plate} · {v.brand}</option>)}
+          </select>
+        </Field>
+      </div>
+      <Field label="Οδηγός">
+        <select value={f.driverId} onChange={e=>set("driverId",e.target.value)}>
+          <option value="">— διάλεξε —</option>
+          {db.drivers.filter(d=>!d.left).map(d=><option key={d.id} value={d.id}>{d.name}</option>)}
+        </select>
+      </Field>
+      <Field label="Από"><ListSelect value={f.from} onChange={v=>set("from",v)} items={db.places||[]} onAdd={onAddPlace} addLabel="Νέος τόπος" /></Field>
+      <Field label="Προς"><ListSelect value={f.to} onChange={v=>set("to",v)} items={db.places||[]} onAdd={onAddPlace} addLabel="Νέος τόπος" /></Field>
+      <div className="grid2">
+        <Field label="Ώρα αναχώρησης"><input type="time" value={f.timeStart} onChange={e=>set("timeStart",e.target.value)} /></Field>
+        <Field label="Ώρα επιστροφής"><input type="time" value={f.timeEnd} onChange={e=>set("timeEnd",e.target.value)} /></Field>
+        <Field label="Χιλιόμετρα αναχώρησης"><input type="number" inputMode="numeric" value={f.kmStart} onChange={e=>set("kmStart",e.target.value)} /></Field>
+        <Field label="Χιλιόμετρα επιστροφής"><input type="number" inputMode="numeric" value={f.kmEnd} onChange={e=>set("kmEnd",e.target.value)} /></Field>
+      </div>
+      {f.kmStart && f.kmEnd ? <div className="muted">Διαδρομή: {Math.max(0,num(f.kmEnd)-num(f.kmStart))} χλμ{f.timeStart&&f.timeEnd?" · Διάρκεια "+hhmm(dur(f.timeStart,f.timeEnd)):""}</div> : null}
+
+      <Field label="Εμπόρευμα"><ListSelect value={f.cargo} onChange={v=>set("cargo",v)} items={db.cargos||[]} onAdd={onAddCargo} addLabel="Νέο είδος" /></Field>
+      <div className="grid2">
+        <Field label="Ποσότητα"><input type="number" inputMode="decimal" value={f.qty} onChange={e=>set("qty",e.target.value)} /></Field>
+        <Field label="Μονάδα">
+          <select value={f.unit} onChange={e=>set("unit",e.target.value)}>{MONADES.map(m=><option key={m}>{m}</option>)}</select>
+        </Field>
+      </div>
+      {tripTonneKm(f) ? <div className="muted">Μεταφορικό έργο: {Math.round(tripTonneKm(f)).toLocaleString("el-GR")} τονοχιλιόμετρα</div> : null}
+      <div className="grid2">
+        <Field label="Παραλήπτης / πελάτης"><input value={f.recipient} onChange={e=>set("recipient",e.target.value)} /></Field>
+        <Field label="Έσοδα δρομολογίου (€)"><input type="number" inputMode="decimal" value={f.revenue||""} onChange={e=>set("revenue",e.target.value)} /></Field>
+      </div>
+
+      <label>Προβλήματα που συναντήθηκαν</label>
+      {PROVLIMATA.map((p,i)=>(
+        <div className="chk" key={p}>
+          <input type="checkbox" id={"p_"+i} checked={f.problems.indexOf(p)>=0} onChange={()=>toggle(p)} />
+          <label htmlFor={"p_"+i} style={{margin:0,color:"var(--ink)",fontWeight:400,fontSize:"14.5px"}}>{p}</label>
+        </div>
+      ))}
+      <Field label="Σημείωση"><textarea value={f.note} onChange={e=>set("note",e.target.value)} placeholder="Λεπτομέρειες, καθυστερήσεις, ό,τι χρειάζεται" /></Field>
+
+      <div className="btnrow">
+        <button className="primary" onClick={save}>Αποθήκευση</button>
+        <button onClick={onCancel}>Ακύρωση</button>
+      </div>
+    </div>
+  );
+}
+
+function TripCard({t, db, onEdit, onDel}){
+  const v = db.vehicles.find(x=>x.id===t.vehicleId);
+  const d = db.drivers.find(x=>x.id===t.driverId);
+  const km = tripKm(t), mins = dur(t.timeStart,t.timeEnd);
+  return (
+    <div className="card tight">
+      <div className="head-actions" style={{marginBottom:6}}>
+        <div><b>{fmtDate(t.date)}</b> <span className="muted">{d?d.name:"—"}</span></div>
+        {v ? <Plate v={v.plate} /> : null}
+      </div>
+      <div style={{fontSize:15,fontWeight:600}}>{t.from||"—"} → {t.to||"—"}</div>
+      <div className="muted" style={{marginTop:2}}>
+        {t.cargo||"Χωρίς εμπόρευμα"}{t.qty?" · "+t.qty+" "+t.unit:""}{t.recipient?" · "+t.recipient:""}
+      </div>
+      <div style={{marginTop:6}}>
+        {mins?<span className="tag">Διάρκεια {hhmm(mins)}</span>:null}
+        {km?<span className="tag">{km} χλμ</span>:null}
+        {tripTonneKm(t)?<span className="tag">{Math.round(tripTonneKm(t)).toLocaleString("el-GR")} τχλμ</span>:null}
+        {(t.timeStart&&t.timeEnd)?<span className="tag">{t.timeStart}–{t.timeEnd}</span>:null}
+      </div>
+      {t.problems && t.problems.length ? (
+        <div className="alertbox" style={{marginTop:8}}>
+          <b>Προβλήματα:</b> {t.problems.join(", ")}{t.note?" — "+t.note:""}
+        </div>
+      ) : (t.note ? <div className="muted" style={{marginTop:6}}>{t.note}</div> : null)}
+      <div className="btnrow" style={{marginTop:8}}>
+        <button className="small" onClick={onEdit}>Επεξεργασία</button>
+        <button className="small danger" onClick={onDel}>Διαγραφή</button>
+      </div>
+    </div>
+  );
+}
+
+function TripsTab({db, setDb}){
+  const [form,setForm] = useState(null);
+  const [fVeh,setFVeh] = useState("");
+  const list = useMemo(()=>{
+    let l = db.trips.slice().sort((a,b)=> (b.date+ (b.timeStart||"")).localeCompare(a.date+(a.timeStart||"")));
+    if(fVeh) l = l.filter(t=>t.vehicleId===fVeh);
+    return l;
+  },[db.trips,fVeh]);
+
+  const save = (t) => {
+    setDb(d=>{
+      const trips = t.id && d.trips.some(x=>x.id===t.id) ? d.trips.map(x=>x.id===t.id?t:x) : d.trips.concat([t]);
+      const vehicles = d.vehicles.map(v=>{
+        if(v.id!==t.vehicleId) return v;
+        const k = num(t.kmEnd);
+        return k > num(v.km) ? Object.assign({},v,{km:String(k)}) : v;
+      });
+      return Object.assign({},d,{trips,vehicles});
+    });
+    setForm(null);
+  };
+
+  const addPlace = (n) => setDb(d => (d.places||[]).indexOf(n)>=0 ? d : Object.assign({},d,{places:(d.places||[]).concat([n])}));
+  const addCargo = (n) => setDb(d => (d.cargos||[]).indexOf(n)>=0 ? d : Object.assign({},d,{cargos:(d.cargos||[]).concat([n])}));
+
+  if(form) return <TripForm db={db} init={form.id?form:null} onSave={save} onCancel={()=>setForm(null)} onAddPlace={addPlace} onAddCargo={addCargo} />;
+
+  return (
+    <div>
+      <div className="head-actions">
+        <h2 style={{margin:0}}>Δρομολόγια</h2>
+        <button className="primary small" onClick={()=>setForm({})}>+ Νέο</button>
+      </div>
+      {db.vehicles.length ? (
+        <select value={fVeh} onChange={e=>setFVeh(e.target.value)} style={{marginBottom:10}}>
+          <option value="">Όλα τα οχήματα</option>
+          {db.vehicles.map(v=><option key={v.id} value={v.id}>{v.plate}</option>)}
+        </select>
+      ) : null}
+      {list.length===0 ? <Empty t="Δεν υπάρχουν καταχωρημένα δρομολόγια. Πάτησε «+ Νέο» για το πρώτο." /> :
+        list.map(t=>(
+          <TripCard key={t.id} t={t} db={db}
+            onEdit={()=>setForm(t)}
+            onDel={()=>{ if(confirm("Διαγραφή δρομολογίου;")) setDb(d=>Object.assign({},d,{trips:d.trips.filter(x=>x.id!==t.id)})); }} />
+        ))
+      }
+    </div>
+  );
+}
+
+/* ---------- ΣΤΟΛΟΣ: οχήματα + οδηγοί ---------- */
+
+function VehicleForm({db, init, onSave, onCancel, onAdd}){
+  const [f,setF] = useState(init || {id:null,plate:"",brand:"",model:"",category:KATIGORIES[0],payload:"",year:"",firstReg:"",km:"",notes:"",docs:{},oil:{lastDate:"",lastKm:"",everyKm:"15000",everyDays:"365"}});
+  const set = (k,v)=>setF(p=>Object.assign({},p,{[k]:v}));
+  return (
+    <div className="card">
+      <h3>{f.id?"Επεξεργασία οχήματος":"Νέο όχημα"}</h3>
+      <Field label="Πινακίδα"><input value={f.plate} onChange={e=>set("plate",e.target.value.toUpperCase())} placeholder="ΑΒΧ 1234" /></Field>
+      <Field label="Μάρκα"><ListSelect value={f.brand} onChange={v=>set("brand",v)} items={db.brands||[]} onAdd={n=>onAdd("brands",n)} addLabel="Νέα μάρκα" /></Field>
+      <Field label="Μοντέλο / τύπος"><ListSelect value={f.model} onChange={v=>set("model",v)} items={db.models||[]} onAdd={n=>onAdd("models",n)} addLabel="Νέο μοντέλο" /></Field>
+      <Field label="Κατηγορία">
+        <select value={f.category} onChange={e=>set("category",e.target.value)}>{KATIGORIES.map(k=><option key={k}>{k}</option>)}</select>
+      </Field>
+      <div className="grid2">
+        <Field label="Ωφέλιμο φορτίο (κιλά)"><input type="number" inputMode="numeric" value={f.payload} onChange={e=>set("payload",e.target.value)} /></Field>
+        <Field label="Έτος κατασκευής"><input type="number" inputMode="numeric" value={f.year} onChange={e=>set("year",e.target.value)} /></Field>
+      </div>
+      <Field label="Ημερομηνία πρώτης άδειας κυκλοφορίας"><input type="date" value={f.firstReg||""} onChange={e=>set("firstReg",e.target.value)} /></Field>
+      <div className="grid2">
+        <Field label="Τρέχοντα χιλιόμετρα"><input type="number" inputMode="numeric" value={f.km} onChange={e=>set("km",e.target.value)} /></Field>
+        <Field label="Κόστος αντικατάστασης (€)"><input type="number" inputMode="numeric" value={f.replCost||""} onChange={e=>set("replCost",e.target.value)} placeholder="τιμή αντίστοιχου νεότερου" /></Field>
+      </div>
+      <Field label="Σημειώσεις"><textarea value={f.notes} onChange={e=>set("notes",e.target.value)} /></Field>
+      <div className="btnrow">
+        <button className="primary" onClick={()=>{ if(!f.plate.trim()){alert("Συμπλήρωσε πινακίδα.");return;} onSave(Object.assign({},f,{id:f.id||uid()})); }}>Αποθήκευση</button>
+        <button onClick={onCancel}>Ακύρωση</button>
+      </div>
+    </div>
+  );
+}
+
+function DriverForm({init, onSave, onCancel}){
+  const [f,setF] = useState(init || {id:null,name:"",phone:"",cat:"",birth:"",hired:"",proSince:"",docs:{},left:false,notes:""});
+  const set = (k,v)=>setF(p=>Object.assign({},p,{[k]:v}));
+  const setDoc = (k,v)=>setF(p=>Object.assign({},p,{docs:Object.assign({},p.docs,{[k]:v})}));
+  return (
+    <div className="card">
+      <h3>{f.id?"Επεξεργασία οδηγού":"Νέος οδηγός"}</h3>
+      <Field label="Ονοματεπώνυμο"><input value={f.name} onChange={e=>set("name",e.target.value)} /></Field>
+      <div className="grid2">
+        <Field label="Τηλέφωνο"><input type="tel" value={f.phone} onChange={e=>set("phone",e.target.value)} /></Field>
+        <Field label="Κατηγορία διπλώματος">
+          <select value={f.cat||""} onChange={e=>set("cat",e.target.value)}>
+            <option value="">—</option>
+            {KAT_DIPLOMATOS.map(k=><option key={k}>{k}</option>)}
+          </select>
+        </Field>
+      </div>
+      <div className="grid2">
+        <Field label="Ημερομηνία γέννησης"><input type="date" value={f.birth||""} onChange={e=>set("birth",e.target.value)} /></Field>
+        <Field label="Έναρξη εργασίας εδώ"><input type="date" value={f.hired||""} onChange={e=>set("hired",e.target.value)} /></Field>
+      </div>
+      <Field label="Πρώτη επαγγελματική άδεια (έναρξη επαγγέλματος)"><input type="date" value={f.proSince||""} onChange={e=>set("proSince",e.target.value)} /></Field>
+      {EGGRAFA_ODIGOU.map(d=>(
+        <Field key={d.k} label={"Λήξη: "+d.n}>
+          <input type="date" value={(f.docs||{})[d.k]||""} onChange={e=>setDoc(d.k,e.target.value)} />
+        </Field>
+      ))}
+      <Field label="Σημειώσεις"><textarea value={f.notes} onChange={e=>set("notes",e.target.value)} /></Field>
+      <div className="chk" style={{marginTop:8}}>
+        <input type="checkbox" id="left" checked={!!f.left} onChange={e=>set("left",e.target.checked)} />
+        <label htmlFor="left" style={{margin:0,color:"var(--ink)",fontWeight:400}}>Δεν εργάζεται πλέον</label>
+      </div>
+      <div className="btnrow">
+        <button className="primary" onClick={()=>{ if(!f.name.trim()){alert("Συμπλήρωσε όνομα.");return;} onSave(Object.assign({},f,{id:f.id||uid()})); }}>Αποθήκευση</button>
+        <button onClick={onCancel}>Ακύρωση</button>
+      </div>
+    </div>
+  );
+}
+
+function VehicleSheet({v, db, onClose}){
+  const epi = epikindynotita(v, db.trips);
+  const trips = db.trips.filter(t=>t.vehicleId===v.id).sort((a,b)=>b.date.localeCompare(a.date));
+  const servs = db.services.filter(x=>x.vehicleId===v.id).sort((a,b)=>b.date.localeCompare(a.date));
+  return (
+    <Sheet title={v.plate + " — " + v.brand + " " + v.model} onClose={onClose}>
+      <StopBanner s={epi} />
+      <div style={{marginBottom:8}}>
+        <Score title="Αντικατάσταση" s={replacementScore(db, v)} onClick={()=>{}} />
+        <Score title="Επικινδυνότητα" s={epi} onClick={()=>{}} />
+      </div>
+      <div className="rowline"><span>Κατηγορία</span><b>{v.category}</b></div>
+      {v.payload ? <div className="rowline"><span>Ωφέλιμο φορτίο</span><b>{num(v.payload).toLocaleString("el-GR")} κιλά</b></div> : null}
+      {v.firstReg ? <div className="rowline"><span>Πρώτη άδεια κυκλοφορίας</span><b>{fmtDate(v.firstReg)}</b></div> : null}
+      {v.year ? <div className="rowline"><span>Έτος</span><b>{v.year}</b></div> : null}
+      <div className="rowline"><span>Χιλιόμετρα</span><b>{num(v.km).toLocaleString("el-GR")}</b></div>
+
+      <h3 style={{marginTop:14}}>Ανά τονοχιλιόμετρο</h3>
+      <EconRows e={vehicleEconomy(db, v)} />
+
+      <h3 style={{marginTop:14}}>Έγγραφα</h3>
+      {EGGRAFA.map(d=>{
+        const val = (v.docs||{})[d.k];
+        const dl = val ? daysLeft(val) : null;
+        return (
+          <div className="rowline" key={d.k}>
+            <span>{d.n}</span>
+            <b style={val ? (dl<0?{color:"var(--alert)"}:(dl<=30?{color:"var(--warn)"}:null)) : {color:"var(--mute)"}}>
+              {val ? fmtDate(val) + (dl<0 ? " — έληξε" : " — " + dl + " ημ.") : "δεν έχει δηλωθεί"}
+            </b>
+          </div>
+        );
+      })}
+
+      <h3 style={{marginTop:14}}>Λάδια</h3>
+      {oilStatus(v).length===0 ? <div className="muted">Δεν έχει οριστεί πρόγραμμα.</div> :
+        oilStatus(v).map((o,i)=>(
+          <div className="rowline" key={i}>
+            <span>Επόμενη αλλαγή</span>
+            <b style={o.left<0?{color:"var(--alert)"}:null}>{o.next}{o.left<0?" — πέρασε":" — απομένουν "+o.left+" "+o.unit}</b>
+          </div>
+        ))
+      }
+
+      <h3 style={{marginTop:14}}>Τελευταίες εργασίες</h3>
+      {servs.length===0 ? <div className="muted">Καμία καταχώρηση.</div> :
+        servs.slice(0,4).map(x=>(
+          <div className="rowline" key={x.id}>
+            <span>{fmtDate(x.date)}<div className="muted" style={{fontSize:12}}>{(x.items||[]).join(", ")}</div></span>
+            <b>{x.cost?num(x.cost).toLocaleString("el-GR")+" €":""}</b>
+          </div>
+        ))
+      }
+
+      <h3 style={{marginTop:14}}>Τελευταία δρομολόγια</h3>
+      {trips.length===0 ? <div className="muted">Κανένα δρομολόγιο.</div> :
+        trips.slice(0,5).map(t=>{
+          const dr = db.drivers.find(x=>x.id===t.driverId);
+          return (
+            <div className="rowline" key={t.id}>
+              <span>{fmtDate(t.date)} · {t.to}
+                <div className="muted" style={{fontSize:12}}>{t.cargo}{dr?" · "+dr.name:""}</div>
+              </span>
+              <b>{tripKm(t)?tripKm(t)+" χλμ":""}</b>
+            </div>
+          );
+        })
+      }
+    </Sheet>
+  );
+}
+
+function ScoreSheet({title, s, expl, onClose}){
+  return (
+    <Sheet title={title} onClose={onClose}>
+      <div className="big" style={{color:s.lvl==="bad"||s.lvl==="stop"?"var(--alert)":"var(--ink)"}}>{s.p}% — {s.lab}</div>
+      <h3 style={{marginTop:12}}>Από τι προκύπτει</h3>
+      {(s.why||[]).length===0 ? <div className="muted">Καμία επιβάρυνση.</div> :
+        (s.why||[]).map((w,i)=><div className="rowline" key={i}><span>{w}</span></div>)}
+      <h3 style={{marginTop:14}}>Πώς υπολογίζεται</h3>
+      <p className="muted" style={{marginTop:0}}>{expl}</p>
+    </Sheet>
+  );
+}
+
+const AXONES = [
+  {k:"safe", n:"Ασφαλής οδήγηση και συμπεριφορά"},
+  {k:"time", n:"Τήρηση προγράμματος και ωραρίου"},
+  {k:"care", n:"Φροντίδα και καθαριότητα οχήματος"},
+  {k:"proc", n:"Τήρηση διαδικασιών και μέσων ατομικής προστασίας"},
+  {k:"team", n:"Συνεργασία και επικοινωνία"},
+  {k:"doc", n:"Πληρότητα καταγραφών και παραστατικών"}
+];
+
+function DriverConfSheet({dr, db, onSave, onClose}){
+  const [c,setC] = useState(Object.assign({notes:"", scores:{}, updated:""}, dr.conf||{}));
+  const setScore = (k,v)=>setC(p=>Object.assign({},p,{scores:Object.assign({},p.scores,{[k]:v})}));
+  const vals = AXONES.map(a=>num(c.scores[a.k])).filter(x=>x>0);
+  const avg = vals.length ? Math.round(vals.reduce((a,b)=>a+b,0)/vals.length*20) : null;
+  return (
+    <Sheet title={"Εμπιστευτικό — " + dr.name} onClose={onClose}>
+      <p className="muted" style={{marginTop:0}}>Ορατό μόνο σε όποιον ξέρει τον κωδικό διαχειριστή. Δεν εμφανίζεται πουθενά αλλού στην εφαρμογή.</p>
+      {avg !== null ? <div className="big" style={{marginBottom:8}}>{avg}/100 <span style={{fontSize:13,fontWeight:600,color:"var(--mute)"}}>συνολική αξιολόγηση</span></div> : null}
+      {AXONES.map(a=>(
+        <div key={a.k} style={{margin:"8px 0"}}>
+          <div style={{fontSize:14,fontWeight:600}}>{a.n}</div>
+          <div style={{display:"flex",gap:6,marginTop:4}}>
+            {[1,2,3,4,5].map(n=>(
+              <button key={n} className="small" style={num(c.scores[a.k])===n?{background:"var(--steel)",color:"#fff",borderColor:"var(--steel)",flex:1}:{flex:1}}
+                onClick={()=>setScore(a.k,n)}>{n}</button>
+            ))}
+          </div>
+        </div>
+      ))}
+      <div className="muted" style={{fontSize:12}}>1 = χρειάζεται άμεση παρέμβαση, 3 = ανταποκρίνεται, 5 = υποδειγματικός.</div>
+      <label>Εμπιστευτικές σημειώσεις</label>
+      <textarea value={c.notes} onChange={e=>setC(p=>Object.assign({},p,{notes:e.target.value}))} placeholder="Παρατηρήσεις, συμβάντα, συζητήσεις" />
+      {c.updated ? <div className="muted" style={{marginTop:6}}>Τελευταία ενημέρωση: {fmtDate(c.updated)}</div> : null}
+      <div className="btnrow">
+        <button className="primary" onClick={()=>{ onSave(Object.assign({},c,{updated:today()})); }}>Αποθήκευση</button>
+      </div>
+    </Sheet>
+  );
+}
+
+function FleetTab({db,setDb}){
+  const [sub,setSub] = useState("v");
+  const [vf,setVf] = useState(null);
+  const [df,setDf] = useState(null);
+  const [vFil,setVFil] = useState("all");
+  const [vSort,setVSort] = useState("risk");
+  const [dFil,setDFil] = useState("active");
+  const [sheet,setSheet] = useState(null);
+  const [dSort,setDSort] = useState("name");
+
+  const saveV = (v)=>{ setDb(d=>Object.assign({},d,{vehicles: d.vehicles.some(x=>x.id===v.id)? d.vehicles.map(x=>x.id===v.id?v:x) : d.vehicles.concat([v])})); setVf(null); };
+  const saveD = (v)=>{ setDb(d=>Object.assign({},d,{drivers: d.drivers.some(x=>x.id===v.id)? d.drivers.map(x=>x.id===v.id?v:x) : d.drivers.concat([v])})); setDf(null); };
+
+  const addToList = (key, n) => setDb(d => (d[key]||[]).indexOf(n)>=0 ? d : Object.assign({},d,{[key]:(d[key]||[]).concat([n])}));
+
+  if(vf) return <VehicleForm db={db} init={vf.id?vf:null} onSave={saveV} onCancel={()=>setVf(null)} onAdd={addToList} />;
+  if(df) return <DriverForm init={df.id?df:null} onSave={saveD} onCancel={()=>setDf(null)} />;
+
+  return (
+    <div>
+      {sheet && sheet.t==="conf" ? <DriverConfSheet dr={sheet.dr} db={db}
+        onSave={(c)=>{ setDb(d=>Object.assign({},d,{drivers:d.drivers.map(x=>x.id===sheet.dr.id?Object.assign({},x,{conf:c}):x)})); setSheet(null); }}
+        onClose={()=>setSheet(null)} /> : null}
+      {sheet && sheet.t==="veh" ? <VehicleSheet v={sheet.v} db={db} onClose={()=>setSheet(null)} /> : null}
+      {sheet && sheet.t==="repl" ? <ReplSheet v={sheet.v} db={db} onClose={()=>setSheet(null)} /> : null}
+      {sheet && sheet.t==="econ" ? <EconSheet subj={sheet.subj} kind={sheet.kind} db={db} onClose={()=>setSheet(null)} /> : null}
+      {sheet && sheet.t==="epi" ? <ScoreSheet title={"Επικινδυνότητα — " + sheet.v.plate} s={epikindynotita(sheet.v, db.trips)} expl={EXPL_EPI} onClose={()=>setSheet(null)} /> : null}
+      <h2>Στόλος</h2>
+      <div className="subtabs">
+        <button className={sub==="v"?"on":""} onClick={()=>setSub("v")}>Οχήματα</button>
+        <button className={sub==="d"?"on":""} onClick={()=>setSub("d")}>Οδηγοί</button>
+      </div>
+
+      {sub==="v" ? (
+        <div>
+          <button className="primary wide" onClick={()=>setVf({})} style={{marginBottom:10}}>+ Νέο όχημα</button>
+          {db.vehicles.length ? (
+            <div className="card tight">
+              <div className="grid2">
+                <Field label="Δείξε">
+                  <select value={vFil} onChange={e=>setVFil(e.target.value)}>
+                    <option value="all">Όλα τα οχήματα</option>
+                    <option value="expired">Με ληγμένα χαρτιά</option>
+                    <option value="soon">Λήξεις μέσα σε 30 ημέρες</option>
+                    <option value="risk">Υψηλή επικινδυνότητα</option>
+                    <option value="old">Ώριμα για αντικατάσταση</option>
+                    <option value="oil">Λάδια που πέρασαν</option>
+                    <option value="km">Πάνω από 300.000 χλμ</option>
+                  </select>
+                </Field>
+                <Field label="Ταξινόμηση">
+                  <select value={vSort} onChange={e=>setVSort(e.target.value)}>
+                    <option value="risk">Επικινδυνότητα</option>
+                    <option value="age">Δείκτης αντικατάστασης</option>
+                    <option value="km">Χιλιόμετρα</option>
+                    <option value="expiry">Πλησιέστερη λήξη</option>
+                    <option value="plate">Πινακίδα</option>
+                  </select>
+                </Field>
+              </div>
+            </div>
+          ) : null}
+          {db.vehicles.length===0 ? <Empty t="Καταχώρησε το πρώτο όχημα με πινακίδα, μάρκα και κατηγορία." /> :
+            (function(){
+              let list = db.vehicles.slice();
+              list = list.filter(v=>{
+                const st = docState(v, EGGRAFA);
+                if(vFil==="expired") return st.expired>0;
+                if(vFil==="soon") return st.soon>0;
+                if(vFil==="risk") return epikindynotita(v, db.trips).p >= 50;
+                if(vFil==="old") return replacementScore(db, v).p >= 55;
+                if(vFil==="oil") return oilStatus(v).some(o=>o.left<0);
+                if(vFil==="km") return num(v.km) > 300000;
+                return true;
+              });
+              list.sort((a,b)=>{
+                if(vSort==="risk") return epikindynotita(b,db.trips).p - epikindynotita(a,db.trips).p;
+                if(vSort==="age") return replacementScore(db,b).p - replacementScore(db,a).p;
+                if(vSort==="km") return num(b.km) - num(a.km);
+                if(vSort==="expiry"){
+                  const na = docState(a,EGGRAFA).nearest, nb = docState(b,EGGRAFA).nearest;
+                  return (na===null?99999:na) - (nb===null?99999:nb);
+                }
+                return String(a.plate).localeCompare(String(b.plate));
+              });
+              if(!list.length) return <Empty t="Κανένα όχημα δεν ταιριάζει με αυτό το φίλτρο." />;
+              return list.map(v=>{
+              const trips = db.trips.filter(t=>t.vehicleId===v.id);
+              return (
+                <div className="card tight" key={v.id}>
+                  <div className="head-actions" style={{marginBottom:6}}>
+                    <span className={docState(v,EGGRAFA).expired ? "plate bad" : "plate"}>{v.plate}</span>
+                    {epikindynotita(v,db.trips).stop
+                      ? <span style={{color:"var(--alert)",fontWeight:700,fontSize:13,textAlign:"right"}}>{(epikindynotita(v,db.trips).lixmena||[]).join(", ")} — έληξε</span>
+                      : <span className="muted">{v.year||""}</span>}
+                  </div>
+                  <div style={{fontWeight:700}}>{v.brand} {v.model}</div>
+                  <div className="muted">{v.category}{v.payload?" · ωφέλιμο "+v.payload+" κιλά":""}</div>
+                  <div style={{marginTop:6}}>
+                    <span className="tag">{num(v.km).toLocaleString("el-GR")} χλμ</span>
+                    <span className="tag">{trips.length} δρομολόγια</span>
+                  </div>
+                  <div>
+                    <Score title="Αντικατάσταση" s={replacementScore(db, v)} onClick={()=>setSheet({t:"repl", v:v})} />
+                    <Score title="Επικινδυνότητα" s={epikindynotita(v, db.trips)} onClick={()=>setSheet({t:"epi", v:v})} />
+                  </div>
+                  <StopBanner s={epikindynotita(v, db.trips)} />
+                  {v.notes?<div className="muted" style={{marginTop:6}}>{v.notes}</div>:null}
+                  <div className="btnrow" style={{marginTop:8}}>
+                    <button className="small dark" onClick={()=>setSheet({t:"veh", v:v})}>Δες τα πάντα</button>
+                    <button className="small" onClick={()=>setSheet({t:"econ", kind:"v", subj:v})}>Οικονομικά</button>
+                    <button className="small" onClick={()=>setVf(v)}>Επεξεργασία</button>
+                    <button className="small danger" onClick={()=>{
+                      if(trips.length){ alert("Το όχημα έχει "+trips.length+" δρομολόγια. Διάγραψε πρώτα τα δρομολόγια αν θέλεις να το αφαιρέσεις."); return; }
+                      if(confirm("Διαγραφή οχήματος;")) setDb(d=>Object.assign({},d,{vehicles:d.vehicles.filter(x=>x.id!==v.id)}));
+                    }}>Διαγραφή</button>
+                  </div>
+                </div>
+              );
+              });
+            })()
+          }
+        </div>
+      ) : (
+        <div>
+          <button className="primary wide" onClick={()=>setDf({})} style={{marginBottom:10}}>+ Νέος οδηγός</button>
+          {db.drivers.length ? (
+            <div className="card tight">
+              <div className="grid2">
+                <Field label="Δείξε">
+                  <select value={dFil} onChange={e=>setDFil(e.target.value)}>
+                    <option value="active">Ενεργοί</option>
+                    <option value="all">Όλοι</option>
+                    <option value="expired">Με ληγμένα πιστοποιητικά</option>
+                    <option value="soon">Λήξεις μέσα σε 30 ημέρες</option>
+                    <option value="adr">Με ισχύον ΑΔΡ</option>
+                    <option value="xeiristis">Χειριστές μηχανημάτων έργου</option>
+                    <option value="left">Αποχωρήσαντες</option>
+                  </select>
+                </Field>
+                <Field label="Ταξινόμηση">
+                  <select value={dSort} onChange={e=>setDSort(e.target.value)}>
+                    <option value="name">Όνομα</option>
+                    <option value="expiry">Πλησιέστερη λήξη</option>
+                    <option value="exp">Χρόνια στο επάγγελμα</option>
+                    <option value="age">Ηλικία</option>
+                    <option value="trips">Δρομολόγια</option>
+                  </select>
+                </Field>
+              </div>
+            </div>
+          ) : null}
+          {db.drivers.length===0 ? <Empty t="Καταχώρησε τους οδηγούς σου για να τους διαλέγεις στα δρομολόγια." /> :
+            (function(){
+              let list = db.drivers.slice();
+              list = list.filter(dr=>{
+                const st = docState(dr, EGGRAFA_ODIGOU);
+                if(dFil==="active") return !dr.left;
+                if(dFil==="left") return !!dr.left;
+                if(dFil==="expired") return st.expired>0;
+                if(dFil==="soon") return st.soon>0;
+                if(dFil==="adr") return (dr.docs||{}).adr && daysLeft(dr.docs.adr)>=0;
+                if(dFil==="xeiristis") return !!(dr.docs||{}).xeiristis;
+                return true;
+              });
+              const tripsOf = (id)=>db.trips.filter(t=>t.driverId===id).length;
+              list.sort((a,b)=>{
+                if(dSort==="expiry"){
+                  const na = docState(a,EGGRAFA_ODIGOU).nearest, nb = docState(b,EGGRAFA_ODIGOU).nearest;
+                  return (na===null?99999:na) - (nb===null?99999:nb);
+                }
+                if(dSort==="exp") return (yearsSince(b.proSince)||0) - (yearsSince(a.proSince)||0);
+                if(dSort==="age") return (yearsSince(b.birth)||0) - (yearsSince(a.birth)||0);
+                if(dSort==="trips") return tripsOf(b.id) - tripsOf(a.id);
+                return String(a.name).localeCompare(String(b.name),"el");
+              });
+              if(!list.length) return <Empty t="Κανένας οδηγός δεν ταιριάζει με αυτό το φίλτρο." />;
+              return list.map(dr=>{
+              const trips = db.trips.filter(t=>t.driverId===dr.id);
+              return (
+                <div className="card tight" key={dr.id} style={dr.left?{opacity:.6}:null}>
+                  <div style={{fontWeight:700,color:docState(dr,EGGRAFA_ODIGOU).expired?"var(--alert)":"inherit"}}>{dr.name}{dr.left?" (αποχώρησε)":""}</div>
+                  <div className="muted">{[
+                    dr.cat?"Δίπλωμα "+dr.cat:"",
+                    yearsSince(dr.birth)!==null?yearsSince(dr.birth)+" ετών":"",
+                    yearsSince(dr.proSince)!==null?yearsSince(dr.proSince)+" χρόνια στο επάγγελμα":"",
+                    yearsSince(dr.hired)!==null?yearsSince(dr.hired)+" χρόνια εδώ":"",
+                    dr.phone
+                  ].filter(Boolean).join(" · ")}</div>
+                  <div style={{marginTop:6}}>
+                    <span className="tag">{trips.length} δρομολόγια</span>
+                    {EGGRAFA_ODIGOU.map(d=>{
+                      const val = (dr.docs||{})[d.k];
+                      if(!val) return null;
+                      const dl = daysLeft(val);
+                      return <span className="tag" key={d.k} style={dl<30?{borderColor:"#e0b6ae",color:"var(--alert)"}:null}>{d.n}: {fmtDate(val)}</span>;
+                    })}
+                  </div>
+                  {dr.notes?<div className="muted" style={{marginTop:6}}>{dr.notes}</div>:null}
+                  <div className="btnrow" style={{marginTop:8}}>
+                    <button className="small" style={{flex:"0 0 auto",minWidth:0,color:"var(--mute)",padding:"7px 12px"}} title="Εμπιστευτικά" onClick={()=>{
+                      const code = prompt("Κωδικός διαχειριστή:");
+                      if(code === null) return;
+                      if(code !== (db.pin || "1234")){ alert("Λάθος κωδικός."); return; }
+                      setSheet({t:"conf", dr:dr});
+                    }}>•••</button>
+                    <button className="small" onClick={()=>setSheet({t:"econ", kind:"d", subj:dr})}>Οικονομικά</button>
+                    <button className="small" onClick={()=>setDf(dr)}>Επεξεργασία</button>
+                    <button className="small danger" onClick={()=>{
+                      if(trips.length){ alert("Ο οδηγός έχει "+trips.length+" δρομολόγια. Σημείωσέ τον ως «δεν εργάζεται πλέον» αντί να τον διαγράψεις."); return; }
+                      if(confirm("Διαγραφή οδηγού;")) setDb(d=>Object.assign({},d,{drivers:d.drivers.filter(x=>x.id!==dr.id)}));
+                    }}>Διαγραφή</button>
+                  </div>
+                </div>
+              );
+              });
+            })()
+          }
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ---------- ΣΥΝΤΗΡΗΣΗ ---------- */
+
+function oilStatus(v){
+  const o = v.oil||{};
+  const res = [];
+  if(o.lastKm && o.everyKm){
+    const next = num(o.lastKm) + num(o.everyKm);
+    res.push({left: next - num(v.km), unit:"χλμ", next: next.toLocaleString("el-GR")+" χλμ"});
+  }
+  if(o.lastDate && o.everyDays){
+    const dt = new Date(o.lastDate+"T00:00:00");
+    dt.setDate(dt.getDate() + num(o.everyDays));
+    const iso = dt.toISOString().slice(0,10);
+    res.push({left: daysLeft(iso), unit:"ημέρες", next: fmtDate(iso)});
+  }
+  return res;
+}
+
+function yearsSince(d){
+  if(!d) return null;
+  return Math.floor(-daysLeft(d)/365.25);
+}
+function docState(obj, defs){
+  let expired = 0, soon = 0, nearest = null;
+  defs.forEach(dc=>{
+    const val = (obj.docs||{})[dc.k];
+    if(!val) return;
+    const dl = daysLeft(val);
+    if(dl < 0) expired++;
+    else if(dl <= 30) soon++;
+    if(nearest === null || dl < nearest) nearest = dl;
+  });
+  return {expired, soon, nearest};
+}
+function shortReason(v){
+  const l = [];
+  EGGRAFA.forEach(d=>{
+    const val = (v.docs||{})[d.k];
+    if(val && daysLeft(val) < 0) l.push(d.n);
+  });
+  if(!l.length) return "";
+  return l.length === 1 ? l[0] + " έληξε" : l[0] + " +" + (l.length-1) + " ακόμα";
+}
+function palaiotita(v){
+  let p = 0; const why = [];
+  const fr = yearsSince(v.firstReg);
+  const y = num(v.year);
+  if(fr !== null || y){
+    const age = fr !== null ? fr : (new Date().getFullYear() - y);
+    p += Math.min(50, age*3.5);
+    why.push(age + (age===1?" έτος":" έτη"));
+  }
+  const km = num(v.km);
+  if(km){
+    p += Math.min(50, km/16000);
+    why.push(km.toLocaleString("el-GR") + " χλμ");
+  }
+  p = Math.round(p);
+  const lab = p<25 ? "Νέο" : p<50 ? "Μεσαίας ηλικίας" : p<75 ? "Παλαιό" : "Πολύ παλαιό";
+  return {p, lab, why, lvl: p<25?"ok":p<50?"mid":p<75?"warn":"bad"};
+}
+
+function epikindynotita(v, trips){
+  let p = 0; const why = [];
+  const lixmena = [];
+  EGGRAFA.forEach(d=>{
+    const val = (v.docs||{})[d.k];
+    if(!val) return;
+    const dl = daysLeft(val);
+    if(dl < 0){ lixmena.push(d.n); why.push(d.n + ": έχει λήξει"); }
+    else if(dl <= 30){ p += 8; why.push(d.n + ": λήγει σε " + dl + " ημέρες"); }
+  });
+  if(lixmena.length){
+    return {p:100, lab:"Ακινητοποίηση", lvl:"stop", stop:true, lixmena:lixmena,
+      why:["Δεν επιτρέπεται να κινηθεί: " + lixmena.join(", ")].concat(why.filter(w=>w.indexOf("έχει λήξει")<0))};
+  }
+  if(oilStatus(v).some(o=>o.left<0)){ p += 18; why.push("Καθυστερημένη αλλαγή λαδιών"); }
+  const vlaves = trips.filter(t=>
+    t.vehicleId===v.id && daysLeft(t.date) > -180 &&
+    (t.problems||[]).some(x=>["Βλάβη οχήματος","Λάστιχο","Ατύχημα"].indexOf(x)>=0)
+  ).length;
+  if(vlaves){ p += vlaves*8; why.push(vlaves + " περιστατικά βλάβης το τελευταίο εξάμηνο"); }
+  const pal = palaiotita(v);
+  if(pal.p > 50){ p += Math.round(pal.p*0.15); why.push("Παλαιότητα οχήματος"); }
+  p = Math.min(99, Math.round(p));
+  const lab = p<20 ? "Χαμηλή" : p<50 ? "Μεσαία" : "Υψηλή";
+  return {p, lab, why, stop:false, lvl: p<20?"ok":p<50?"warn":"bad"};
+}
+
+const LVL_STYLE = {
+  ok:{borderColor:"#b6d8c3",color:"var(--ok)",background:"#f1f8f4"},
+  mid:{borderColor:"#c9d4de",color:"var(--steel-2)",background:"#f2f5f8"},
+  warn:{borderColor:"#e6d0a3",color:"var(--warn)",background:"#fdf8ec"},
+  bad:{borderColor:"#e0b6ae",color:"var(--alert)",background:"#fdf3f1"},
+  stop:{borderColor:"var(--alert)",color:"#fff",background:"var(--alert)"}
+};
+const EXPL_PAL = "Πώς βγαίνει ο αριθμός: η ηλικία μετράει 3,5 μονάδες ανά έτος, με ανώτατο τις 50 μονάδες, και μετριέται από την ημερομηνία πρώτης άδειας κυκλοφορίας όταν υπάρχει, αλλιώς από το έτος. Τα χιλιόμετρα δίνουν 1 μονάδα ανά 16.000 χλμ, επίσης με ανώτατο τις 50. Σύνολο 100. Έως 25 «Νέο», έως 50 «Μεσαίας ηλικίας», έως 75 «Παλαιό», πάνω από 75 «Πολύ παλαιό».";
+const EXPL_EPI = "Πώς βγαίνει ο αριθμός: κάθε έγγραφο που λήγει μέσα στις επόμενες 30 ημέρες προσθέτει 8 μονάδες. Καθυστερημένη αλλαγή λαδιών προσθέτει 18. Κάθε δρομολόγιο του τελευταίου εξαμήνου με βλάβη, λάστιχο ή ατύχημα προσθέτει 8. Αν η παλαιότητα ξεπερνά το 50, προστίθεται και το 15% της. Έως 20 «Χαμηλή», έως 50 «Μεσαία», πάνω «Υψηλή». Αν έχει λήξει έστω ένα έγγραφο, ο βαθμός γίνεται αυτόματα 100% και το όχημα ακινητοποιείται — δεν επιτρέπεται να κινηθεί μέχρι να ανανεωθεί.";
+
+function Score({title, s, onClick}){
+  return <button className="tag" style={Object.assign({cursor:"pointer",font:"inherit",fontSize:"11.5px",fontWeight:600,padding:"3px 8px"},LVL_STYLE[s.lvl])} onClick={onClick}>{title}: {s.lab} {s.p}%</button>;
+}
+function StopBanner({s}){
+  if(!s.stop) return null;
+  return (
+    <div className="alertbox" style={{borderLeftWidth:6,fontWeight:600}}>
+      Ακινητοποίηση — 100% επικινδυνότητα. Δεν επιτρέπεται να κινηθεί: {s.lixmena.join(", ")}.
+    </div>
+  );
+}
+
+function ServiceTab({db,setDb}){
+  const [add,setAdd] = useState(null);
+
+  const setVeh = (id, patch) => setDb(d=>Object.assign({},d,{vehicles:d.vehicles.map(v=>v.id===id?Object.assign({},v,patch):v)}));
+  const setDoc = (v,k,val) => setVeh(v.id, {docs: Object.assign({}, v.docs||{}, {[k]:val})});
+  const setOil = (v,k,val) => setVeh(v.id, {oil: Object.assign({lastDate:"",lastKm:"",everyKm:"",everyDays:""}, v.oil||{}, {[k]:val})});
+
+  if(add){
+    const v = db.vehicles.find(x=>x.id===add.vehicleId);
+    return <ServiceForm v={v} db={db} onAdd={(key,n)=>setDb(d => (d[key]||[]).indexOf(n)>=0 ? d : Object.assign({},d,{[key]:(d[key]||[]).concat([n])}))} init={add.id?add:null}
+      onSave={(s)=>{ setDb(d=>Object.assign({},d,{services: d.services.some(x=>x.id===s.id)? d.services.map(x=>x.id===s.id?s:x) : d.services.concat([s])})); setAdd(null); }}
+      onCancel={()=>setAdd(null)} />;
+  }
+
+  return (
+    <div>
+      <h2>Συντήρηση</h2>
+      {db.vehicles.length===0 ? <Empty t="Πρώτα καταχώρησε οχήματα στον Στόλο." /> : null}
+      {db.vehicles.map(v=>{
+        const hist = db.services.filter(s=>s.vehicleId===v.id).sort((a,b)=>b.date.localeCompare(a.date));
+        return (
+          <details className="veh" key={v.id}>
+            <summary>
+              <span className="plate">{v.plate}</span>
+              <span style={{marginLeft:8,fontWeight:400}} className="muted">{v.brand} {v.model}</span>
+            </summary>
+            <div className="body">
+              {(function(){
+                const rep2 = replacementScore(db, v), epi = epikindynotita(v, db.trips);
+                return (
+                  <div style={{marginBottom:10}}>
+                    <Score title="Αντικατάσταση" s={rep2} onClick={()=>alert("Δείκτης αντικατάστασης " + rep2.p + "% — " + rep2.lab + ".\n\n" + rep2.parts.map(x=>x.n+" ("+x.w+"%): "+(x.sub===null?"χωρίς στοιχεία":x.sub+"/100")).join("\n") + "\n\n" + EXPL_REPL)} />
+                    <Score title="Επικινδυνότητα" s={epi} onClick={()=>alert("Επικινδυνότητα " + epi.p + "% — " + epi.lab + ".\n\n" + (epi.why.join("\n") || "καμία επιβάρυνση") + "\n\n" + EXPL_EPI)} />
+                    <StopBanner s={epi} />
+                    <div className="muted" style={{marginTop:4}}>
+                      {rep2.why.length ? "Αντικατάσταση: " + rep2.why.join(", ") + ". " : ""}
+                      {epi.why.length ? "Επικινδυνότητα: " + epi.why.join(", ") + "." : "Καμία εκκρεμότητα που να ανεβάζει την επικινδυνότητα."}
+                    </div>
+                  </div>
+                );
+              })()}
+              <h3 style={{marginTop:4}}>Έγγραφα και έλεγχοι</h3>
+              {EGGRAFA.map(dcm=>{
+                const val = (v.docs||{})[dcm.k]||"";
+                const dl = val ? daysLeft(val) : null;
+                return (
+                  <div key={dcm.k} style={{display:"flex",gap:8,alignItems:"center",margin:"6px 0"}}>
+                    <div style={{flex:"0 0 42%",fontSize:14,fontWeight:600}}>{dcm.n}</div>
+                    <input type="date" value={val} onChange={e=>setDoc(v,dcm.k,e.target.value)} />
+                    {val ? <span className="tag" style={dl<0?{borderColor:"#e0b6ae",color:"var(--alert)"}:(dl<30?{borderColor:"#e6d0a3",color:"var(--warn)"}:null)}>{dl<0?"έληξε":dl+" ημ."}</span> : null}
+                  </div>
+                );
+              })}
+
+              <h3 style={{marginTop:14}}>Αλλαγή λαδιών</h3>
+              <div className="grid2">
+                <Field label="Τελευταία αλλαγή"><input type="date" value={(v.oil||{}).lastDate||""} onChange={e=>setOil(v,"lastDate",e.target.value)} /></Field>
+                <Field label="Στα χιλιόμετρα"><input type="number" inputMode="numeric" value={(v.oil||{}).lastKm||""} onChange={e=>setOil(v,"lastKm",e.target.value)} /></Field>
+                <Field label="Κάθε πόσα χλμ"><input type="number" inputMode="numeric" value={(v.oil||{}).everyKm||""} onChange={e=>setOil(v,"everyKm",e.target.value)} /></Field>
+                <Field label="Κάθε πόσες ημέρες"><input type="number" inputMode="numeric" value={(v.oil||{}).everyDays||""} onChange={e=>setOil(v,"everyDays",e.target.value)} /></Field>
+              </div>
+              {oilStatus(v).map((o,i)=>(
+                <div key={i} className={o.left<0?"alertbox":(o.left<1500&&o.unit==="χλμ")||(o.left<30&&o.unit==="ημέρες")?"alertbox soon":"muted"} style={{marginTop:8}}>
+                  {o.left<0 ? "Έχει περάσει η αλλαγή λαδιών ("+o.next+")" : "Επόμενη αλλαγή: "+o.next+" — απομένουν "+o.left+" "+o.unit}
+                </div>
+              ))}
+
+              <h3 style={{marginTop:14}}>Ιστορικό εργασιών</h3>
+              <button className="primary small wide" onClick={()=>setAdd({vehicleId:v.id})}>+ Καταχώρηση εργασίας</button>
+              {hist.length===0 ? <div className="muted" style={{marginTop:8}}>Καμία καταχωρημένη εργασία.</div> :
+                hist.map(s=>(
+                  <div key={s.id} className="rowline" style={{alignItems:"flex-start"}}>
+                    <div>
+                      <b>{fmtDate(s.date)}</b> · {num(s.km).toLocaleString("el-GR")} χλμ
+                      <div className="muted">{(s.items||[]).join(", ")}{s.note?" — "+s.note:""}{s.shop?" · "+s.shop:""}</div>
+                    </div>
+                    <div style={{textAlign:"right",whiteSpace:"nowrap"}}>
+                      {s.cost?<div><b>{num(s.cost).toLocaleString("el-GR")} €</b></div>:null}
+                      <button className="small" style={{marginTop:4}} onClick={()=>setAdd(s)}>Άλλαξε</button>
+                    </div>
+                  </div>
+                ))
+              }
+            </div>
+          </details>
+        );
+      })}
+    </div>
+  );
+}
+
+function ServiceForm({v, db, init, onSave, onCancel, onAdd}){
+  const [f,setF] = useState(init || {id:null, vehicleId:v.id, date:today(), km:v.km||"", items:[], shop:"", cost:"", note:""});
+  const set = (k,val)=>setF(p=>Object.assign({},p,{[k]:val}));
+  const toggle = (it)=>setF(p=>{
+    const has = (p.items||[]).indexOf(it)>=0;
+    return Object.assign({},p,{items: has ? p.items.filter(x=>x!==it) : (p.items||[]).concat([it])});
+  });
+  return (
+    <div className="card">
+      <h3>Εργασία στο όχημα {v.plate}</h3>
+      <div className="grid2">
+        <Field label="Ημερομηνία"><input type="date" value={f.date} onChange={e=>set("date",e.target.value)} /></Field>
+        <Field label="Χιλιόμετρα"><input type="number" inputMode="numeric" value={f.km} onChange={e=>set("km",e.target.value)} /></Field>
+      </div>
+      <label>Τι έγινε</label>
+      {ERGASIES.map((it,i)=>(
+        <div className="chk" key={it}>
+          <input type="checkbox" id={"s_"+i} checked={(f.items||[]).indexOf(it)>=0} onChange={()=>toggle(it)} />
+          <label htmlFor={"s_"+i} style={{margin:0,color:"var(--ink)",fontWeight:400,fontSize:"14.5px"}}>{it}</label>
+        </div>
+      ))}
+      <div className="grid2">
+        <Field label="Συνεργείο"><ListSelect value={f.shop} onChange={v2=>set("shop",v2)} items={db.shops||[]} onAdd={n=>onAdd("shops",n)} addLabel="Νέο συνεργείο" /></Field>
+        <Field label="Κόστος (€)"><input type="number" inputMode="decimal" value={f.cost} onChange={e=>set("cost",e.target.value)} /></Field>
+      </div>
+      <Field label="Σημείωση"><textarea value={f.note} onChange={e=>set("note",e.target.value)} /></Field>
+      <div className="btnrow">
+        <button className="primary" onClick={()=>onSave(Object.assign({},f,{id:f.id||uid()}))}>Αποθήκευση</button>
+        <button onClick={onCancel}>Ακύρωση</button>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- ΚΑΥΣΙΜΑ ---------- */
+
+function fuelStats(db, vehicleId){
+  const list = (db.fuels||[]).filter(f=>f.vehicleId===vehicleId).sort((a,b)=>num(a.km)-num(b.km));
+  let dist = 0, litForDist = 0, totLit = 0, totCost = 0;
+  list.forEach(f=>{ totLit += num(f.liters); totCost += (num(f.cost) || num(f.liters)*num(f.price)); });
+  for(let i=1;i<list.length;i++){
+    const d = num(list[i].km) - num(list[i-1].km);
+    if(d > 0 && d < 5000 && list[i].full !== false){ dist += d; litForDist += num(list[i].liters); }
+  }
+  const avg = dist ? (litForDist/dist*100) : null;
+  return {n:list.length, avg, dist, totLit, totCost, costPerKm: dist ? totCost/dist : null};
+}
+function fleetAvg(db){
+  let sum = 0, n = 0;
+  db.vehicles.forEach(v=>{ const f = fuelStats(db, v.id); if(f.avg){ sum += f.avg; n++; } });
+  return n ? sum/n : null;
+}
+function litersForTrip(db, t){
+  const f = fuelStats(db, t.vehicleId);
+  if(!f.avg) return 0;
+  return f.avg * tripKm(t) / 100;
+}
+function fmt1(x){ return (Math.round(x*10)/10).toLocaleString("el-GR"); }
+
+function FuelForm({db, init, onSave, onCancel, onAddStation}){
+  const [f,setF] = useState(init || {id:null, date:today(), vehicleId:"", driverId:"", km:"", liters:"", price:"", cost:"", station:"", full:true, note:""});
+  const set = (k,v)=>setF(p=>Object.assign({},p,{[k]:v}));
+  const autoCost = num(f.liters) && num(f.price) ? num(f.liters)*num(f.price) : 0;
+  return (
+    <div className="card">
+      <h3>{f.id ? "Επεξεργασία ανεφοδιασμού" : "Νέος ανεφοδιασμός"}</h3>
+      <div className="grid2">
+        <Field label="Ημερομηνία"><input type="date" value={f.date} onChange={e=>set("date",e.target.value)} /></Field>
+        <Field label="Όχημα">
+          <select value={f.vehicleId} onChange={e=>set("vehicleId",e.target.value)}>
+            <option value="">— διάλεξε —</option>
+            {db.vehicles.map(v=><option key={v.id} value={v.id}>{v.plate}</option>)}
+          </select>
+        </Field>
+        <Field label="Ένδειξη χιλιομετρητή"><input type="number" inputMode="numeric" value={f.km} onChange={e=>set("km",e.target.value)} /></Field>
+        <Field label="Λίτρα"><input type="number" inputMode="decimal" value={f.liters} onChange={e=>set("liters",e.target.value)} /></Field>
+        <Field label="Τιμή ανά λίτρο (€)"><input type="number" inputMode="decimal" value={f.price} onChange={e=>set("price",e.target.value)} /></Field>
+        <Field label="Συνολικό κόστος (€)"><input type="number" inputMode="decimal" value={f.cost} onChange={e=>set("cost",e.target.value)} placeholder={autoCost?fmt1(autoCost):""} /></Field>
+      </div>
+      <Field label="Οδηγός">
+        <select value={f.driverId} onChange={e=>set("driverId",e.target.value)}>
+          <option value="">— κανένας —</option>
+          {db.drivers.filter(d=>!d.left).map(d=><option key={d.id} value={d.id}>{d.name}</option>)}
+        </select>
+      </Field>
+      <Field label="Πρατήριο"><ListSelect value={f.station} onChange={v=>set("station",v)} items={db.stations||[]} onAdd={onAddStation} addLabel="Νέο πρατήριο" /></Field>
+      <div className="chk">
+        <input type="checkbox" id="fullTank" checked={f.full!==false} onChange={e=>set("full",e.target.checked)} />
+        <label htmlFor="fullTank" style={{margin:0,color:"var(--ink)",fontWeight:400,fontSize:"14.5px"}}>Γέμισμα μέχρι επάνω — χρειάζεται για σωστή κατανάλωση</label>
+      </div>
+      <Field label="Σημείωση"><textarea value={f.note} onChange={e=>set("note",e.target.value)} /></Field>
+      <div className="btnrow">
+        <button className="primary" onClick={()=>{
+          if(!f.vehicleId){ alert("Διάλεξε όχημα."); return; }
+          if(!num(f.liters)){ alert("Συμπλήρωσε λίτρα."); return; }
+          const c = num(f.cost) || autoCost;
+          onSave(Object.assign({}, f, {id:f.id||uid(), cost:String(c||"")}));
+        }}>Αποθήκευση</button>
+        <button onClick={onCancel}>Ακύρωση</button>
+      </div>
+    </div>
+  );
+}
+
+function FuelTab({db,setDb}){
+  const [form,setForm] = useState(null);
+  const [veh,setVeh] = useState("");
+  const avgAll = fleetAvg(db);
+  const addStation = (n) => setDb(d => (d.stations||[]).indexOf(n)>=0 ? d : Object.assign({},d,{stations:(d.stations||[]).concat([n])}));
+  const save = (x) => {
+    setDb(d=>Object.assign({},d,{fuels: (d.fuels||[]).some(y=>y.id===x.id) ? d.fuels.map(y=>y.id===x.id?x:y) : (d.fuels||[]).concat([x])}));
+    setForm(null);
+  };
+  if(form) return <FuelForm db={db} init={form.id?form:null} onSave={save} onCancel={()=>setForm(null)} onAddStation={addStation} />;
+  const list = (db.fuels||[]).filter(f=>!veh || f.vehicleId===veh).sort((a,b)=>b.date.localeCompare(a.date));
+  return (
+    <div>
+      <div className="head-actions">
+        <h2 style={{margin:0}}>Καύσιμα</h2>
+        <button className="primary small" onClick={()=>setForm({})}>+ Ανεφοδιασμός</button>
+      </div>
+      {avgAll ? <div className="card tight"><b>Μέσος όρος στόλου: {fmt1(avgAll)} λίτρα ανά 100 χλμ</b></div> : null}
+      {db.vehicles.map(v=>{
+        const f = fuelStats(db, v.id);
+        if(!f.n) return null;
+        const dev = (f.avg && avgAll) ? ((f.avg - avgAll)/avgAll*100) : null;
+        const bad = dev !== null && dev > 12;
+        return (
+          <div className="card tight" key={v.id}>
+            <div className="head-actions" style={{marginBottom:6}}>
+              <span className="plate">{v.plate}</span>
+              <span className="muted">{v.brand} {v.model}</span>
+            </div>
+            <div className="statgrid">
+              <div className="stat"><div className="big">{f.avg?fmt1(f.avg):"—"}</div><div className="lab">λίτρα / 100 χλμ</div></div>
+              <div className="stat"><div className="big">{f.costPerKm?fmt1(f.costPerKm):"—"}</div><div className="lab">€ ανά χιλιόμετρο</div></div>
+              <div className="stat"><div className="big">{fmt1(f.totLit)}</div><div className="lab">συνολικά λίτρα</div></div>
+              <div className="stat"><div className="big">{Math.round(f.totCost).toLocaleString("el-GR")}</div><div className="lab">€ καύσιμα</div></div>
+            </div>
+            {dev !== null ? (
+              <div className={bad ? "alertbox" : "muted"} style={{marginTop:8}}>
+                {dev > 0 ? "Κατανάλωση " + fmt1(dev) + "% πάνω από τον μέσο όρο του στόλου" : "Κατανάλωση " + fmt1(-dev) + "% κάτω από τον μέσο όρο του στόλου"}
+                {bad ? " — αξίζει έλεγχος σε κινητήρα, ελαστικά, βάρος φορτίων και τρόπο οδήγησης." : ""}
+              </div>
+            ) : <div className="muted" style={{marginTop:8}}>Χρειάζονται δύο διαδοχικά γεμίσματα μέχρι επάνω για να βγει κατανάλωση.</div>}
+          </div>
+        );
+      })}
+      <h3 style={{marginTop:14}}>Ανεφοδιασμοί</h3>
+      {db.vehicles.length ? (
+        <select value={veh} onChange={e=>setVeh(e.target.value)} style={{marginBottom:10}}>
+          <option value="">Όλα τα οχήματα</option>
+          {db.vehicles.map(v=><option key={v.id} value={v.id}>{v.plate}</option>)}
+        </select>
+      ) : null}
+      {list.length===0 ? <Empty t="Καμία καταχώρηση καυσίμου ακόμα." /> :
+        list.map(f=>{
+          const v = db.vehicles.find(x=>x.id===f.vehicleId);
+          const dr = db.drivers.find(x=>x.id===f.driverId);
+          return (
+            <div className="card tight" key={f.id}>
+              <div className="head-actions" style={{marginBottom:4}}>
+                <div><b>{fmtDate(f.date)}</b> <span className="muted">{dr?dr.name:""}</span></div>
+                {v?<span className="plate">{v.plate}</span>:null}
+              </div>
+              <div>
+                <span className="tag">{fmt1(num(f.liters))} λίτρα</span>
+                {num(f.cost)?<span className="tag">{fmt1(num(f.cost))} €</span>:null}
+                {num(f.price)?<span className="tag">{fmt1(num(f.price))} €/λίτρο</span>:null}
+                {num(f.km)?<span className="tag">{num(f.km).toLocaleString("el-GR")} χλμ</span>:null}
+                {f.full===false?<span className="tag">μερικό γέμισμα</span>:null}
+              </div>
+              {f.station?<div className="muted">{f.station}</div>:null}
+              {f.note?<div className="muted">{f.note}</div>:null}
+              <div className="btnrow" style={{marginTop:8}}>
+                <button className="small" onClick={()=>setForm(f)}>Επεξεργασία</button>
+                <button className="small danger" onClick={()=>{
+                  if(confirm("Διαγραφή καταχώρησης;")) setDb(d=>Object.assign({},d,{fuels:d.fuels.filter(x=>x.id!==f.id)}));
+                }}>Διαγραφή</button>
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+  );
+}
+
+/* ---------- ΔΕΙΚΤΕΣ ΑΝΑ ΤΟΝΟΧΙΛΙΟΜΕΤΡΟ ---------- */
+
+function aggrTrips(list){
+  let o = {n:0, km:0, mins:0, tons:0, tkm:0, rev:0};
+  list.forEach(t=>{
+    o.n++; o.km += tripKm(t); o.mins += dur(t.timeStart,t.timeEnd);
+    o.tons += tripTons(t); o.tkm += tripTonneKm(t); o.rev += num(t.revenue);
+  });
+  return o;
+}
+function maintCost(db, vehicleId, months){
+  return db.services.filter(x=>x.vehicleId===vehicleId && (!months || daysLeft(x.date) > -(months*30)))
+    .reduce((a,x)=>a+num(x.cost), 0);
+}
+function breakdowns(db, vehicleId, months){
+  return db.trips.filter(t=>t.vehicleId===vehicleId && daysLeft(t.date) > -(months*30) &&
+    (t.problems||[]).some(x=>["Βλάβη οχήματος","Λάστιχο","Ατύχημα"].indexOf(x)>=0)).length;
+}
+function avgFuelPrice(db){
+  const l = (db.fuels||[]).map(f=>num(f.price)).filter(x=>x>0);
+  return l.length ? l.reduce((a,b)=>a+b,0)/l.length : 1.45;
+}
+function vehicleEconomy(db, v){
+  const a = aggrTrips(db.trips.filter(t=>t.vehicleId===v.id));
+  const fs = fuelStats(db, v.id);
+  const fuelCost = fs.totCost || (fs.totLit * avgFuelPrice(db));
+  const mCost = maintCost(db, v.id, 0);
+  const liters = fs.totLit;
+  return {
+    tkm:a.tkm, km:a.km, trips:a.n, tons:a.tons, rev:a.rev, mins:a.mins,
+    liters, fuelCost, mCost, totalCost: fuelCost + mCost,
+    litPerKtkm: a.tkm ? liters/a.tkm*1000 : null,
+    costPerTkm: a.tkm ? (fuelCost+mCost)/a.tkm : null,
+    revPerTkm: a.tkm && a.rev ? a.rev/a.tkm : null,
+    marginPerTkm: a.tkm && a.rev ? (a.rev-fuelCost-mCost)/a.tkm : null
+  };
+}
+function driverEconomy(db, dr){
+  const list = db.trips.filter(t=>t.driverId===dr.id);
+  const a = aggrTrips(list);
+  let liters = 0;
+  list.forEach(t=>{ liters += litersForTrip(db, t); });
+  const fuelCost = liters * avgFuelPrice(db);
+  return {
+    tkm:a.tkm, km:a.km, trips:a.n, tons:a.tons, rev:a.rev, mins:a.mins,
+    liters, fuelCost, mCost:0, totalCost:fuelCost,
+    litPerKtkm: a.tkm ? liters/a.tkm*1000 : null,
+    costPerTkm: a.tkm ? fuelCost/a.tkm : null,
+    revPerTkm: a.tkm && a.rev ? a.rev/a.tkm : null,
+    marginPerTkm: a.tkm && a.rev ? (a.rev-fuelCost)/a.tkm : null
+  };
+}
+function EconRows({e}){
+  return (
+    <div>
+      <div className="rowline"><span>Τονοχιλιόμετρα</span><b>{Math.round(e.tkm).toLocaleString("el-GR")} τχλμ</b></div>
+      <div className="rowline"><span>Καύσιμο ανά 1.000 τχλμ</span><b>{e.litPerKtkm?fmt1(e.litPerKtkm)+" λίτρα":"—"}</b></div>
+      <div className="rowline"><span>Κόστος ανά τχλμ</span><b>{e.costPerTkm?fmt2(e.costPerTkm)+" €":"—"}</b></div>
+      <div className="rowline"><span>Έσοδα ανά τχλμ</span><b>{e.revPerTkm?fmt2(e.revPerTkm)+" €":"—"}</b></div>
+      <div className="rowline"><span>Περιθώριο ανά τχλμ</span>
+        <b style={e.marginPerTkm!==null && e.marginPerTkm<0?{color:"var(--alert)"}:null}>{e.marginPerTkm!==null?fmt2(e.marginPerTkm)+" €":"—"}</b></div>
+      <div className="rowline"><span>Σύνολο εσόδων</span><b>{e.rev?Math.round(e.rev).toLocaleString("el-GR")+" €":"—"}</b></div>
+      <div className="rowline"><span>Σύνολο κόστους</span><b>{Math.round(e.totalCost).toLocaleString("el-GR")} €</b></div>
+    </div>
+  );
+}
+function fmt2(x){ return (Math.round(x*100)/100).toLocaleString("el-GR"); }
+
+/* ---------- ΔΕΙΚΤΗΣ ΑΝΤΙΚΑΤΑΣΤΑΣΗΣ ---------- */
+
+function clamp100(x){ return Math.max(0, Math.min(100, x)); }
+
+function replacementScore(db, v){
+  const parts = [];
+  const push = (n, w, sub, val) => { if(sub !== null) parts.push({n, w, sub:clamp100(sub), val}); else parts.push({n, w, sub:null, val:"δεν υπάρχουν στοιχεία"}); };
+
+  const age = v.firstReg ? yearsSince(v.firstReg) : (num(v.year) ? new Date().getFullYear()-num(v.year) : null);
+  push("Ηλικία", 15, age===null?null:age/15*100, age===null?"":age+" έτη");
+
+  const km = num(v.km);
+  push("Χιλιόμετρα", 15, km?km/800000*100:null, km?km.toLocaleString("el-GR")+" χλμ":"");
+
+  const e = vehicleEconomy(db, v);
+  const mPerKkm = e.km ? e.mCost/e.km*1000 : null;
+  push("Κόστος συντήρησης", 20, mPerKkm===null?null:(mPerKkm-20)/130*100, mPerKkm===null?"":fmt1(mPerKkm)+" € ανά 1.000 χλμ");
+
+  const br = breakdowns(db, v.id, 12);
+  push("Βλάβες και ακινησία", 15, br/6*100, br + (br===1?" βλάβη":" βλάβες") + " σε 12 μήνες");
+
+  const cpk = e.km ? (e.fuelCost+e.mCost)/e.km : null;
+  push("Κόστος ανά χιλιόμετρο", 15, cpk===null||!e.fuelCost?null:(cpk-0.25)/0.5*100, cpk&&e.fuelCost?fmt2(cpk)+" € ανά χλμ":"");
+
+  const fs = fuelStats(db, v.id), fa = fleetAvg(db);
+  const dev = (fs.avg && fa) ? (fs.avg-fa)/fa*100 : null;
+  push("Κατανάλωση", 10, dev===null?null:(dev+10)/40*100, dev===null?"":fmt1(fs.avg)+" λίτρα/100 χλμ ("+(dev>0?"+":"")+fmt1(dev)+"% από τον στόλο)");
+
+  let tkmAll = 0, nv = 0;
+  db.vehicles.forEach(x=>{ const a = aggrTrips(db.trips.filter(t=>t.vehicleId===x.id)); if(a.tkm){ tkmAll += a.tkm; nv++; } });
+  const tkmAvg = nv ? tkmAll/nv : null;
+  const use = (tkmAvg && e.tkm) ? (1 - e.tkm/tkmAvg)*100 : null;
+  push("Χρήση σε τονοχιλιόμετρα", 5, use, e.tkm?Math.round(e.tkm).toLocaleString("el-GR")+" τχλμ":"");
+
+  const st = docState(v, EGGRAFA);
+  const comp = st.expired ? 100 : (st.soon ? 50 : 0);
+  push("Κατάσταση και συμμόρφωση", 5, comp, st.expired?st.expired+" ληγμένα":(st.soon?st.soon+" λήγουν σύντομα":"εντάξει"));
+
+  let wsum = 0, ssum = 0;
+  parts.forEach(pt=>{ if(pt.sub !== null){ wsum += pt.w; ssum += pt.w*pt.sub; } });
+  const p = wsum ? Math.round(ssum/wsum) : 0;
+  parts.forEach(pt=>{ pt.contrib = (pt.sub === null || !wsum) ? null : Math.round(pt.w*pt.sub/wsum); });
+  const lab = p<30 ? "Κρατιέται" : p<55 ? "Παρακολούθηση" : p<75 ? "Προγραμματισμός αντικατάστασης" : "Άμεση αντικατάσταση";
+  const lvl = p<30 ? "ok" : p<55 ? "mid" : p<75 ? "warn" : "bad";
+  return {p, lab, lvl, parts, coverage:wsum, why:parts.filter(x=>x.sub!==null&&x.sub>=50).map(x=>x.n+": "+x.val)};
+}
+
+const EXPL_REPL = "Ο δείκτης 0–100 δείχνει πόσο ώριμο είναι το όχημα για αντικατάσταση. Κάθε παράγοντας βαθμολογείται στα 100 και μπαίνει με το βάρος του: ηλικία 15% (15 έτη = 100), χιλιόμετρα 15% (800.000 χλμ = 100), κόστος συντήρησης 20% (20 € ανά 1.000 χλμ = 0, 150 € = 100), βλάβες και ακινησία 15% (6 βλάβες σε 12 μήνες = 100), κόστος ανά χιλιόμετρο 15% (0,25 € = 0, 0,75 € = 100), κατανάλωση 10% (10% κάτω από τον μέσο όρο του στόλου = 0, 30% πάνω = 100), χρήση σε τονοχιλιόμετρα 5% (όσο λιγότερο δουλεύει σε σχέση με τον μέσο όρο, τόσο ανεβαίνει), κατάσταση και συμμόρφωση 5% (ληγμένα χαρτιά = 100). Όποιος παράγοντας δεν έχει στοιχεία αγνοείται και τα βάρη μοιράζονται ξανά στους υπόλοιπους. Έως 30 «Κρατιέται», έως 55 «Παρακολούθηση», έως 75 «Προγραμματισμός αντικατάστασης», πάνω «Άμεση αντικατάσταση».";
+
+function EconSheet({subj, kind, db, onClose}){
+  const e = kind==="v" ? vehicleEconomy(db, subj) : driverEconomy(db, subj);
+  return (
+    <Sheet title={(kind==="v" ? subj.plate : subj.name) + " — οικονομικά"} onClose={onClose}>
+      <div className="statgrid" style={{marginBottom:10}}>
+        <div className="stat"><div className="big">{Math.round(e.tkm).toLocaleString("el-GR")}</div><div className="lab">τονοχιλιόμετρα</div></div>
+        <div className="stat"><div className="big">{e.trips}</div><div className="lab">δρομολόγια</div></div>
+      </div>
+      <EconRows e={e} />
+      {kind==="d" ? <p className="muted" style={{marginTop:8}}>Τα λίτρα του οδηγού είναι εκτίμηση: μέση κατανάλωση του οχήματος επί τα χιλιόμετρα κάθε δρομολογίου.</p> : null}
+    </Sheet>
+  );
+}
+
+function annualKm(db, v){
+  const last12 = db.trips.filter(t=>t.vehicleId===v.id && daysLeft(t.date) > -365);
+  const k = last12.reduce((a,t)=>a+tripKm(t), 0);
+  if(k > 0) return {km:k, src:"από τα δρομολόγια του τελευταίου 12μήνου"};
+  const age = v.firstReg ? yearsSince(v.firstReg) : (num(v.year) ? new Date().getFullYear()-num(v.year) : null);
+  if(age && num(v.km)) return {km: Math.round(num(v.km)/age), src:"εκτίμηση από συνολικά χιλιόμετρα διά ηλικία"};
+  return {km:0, src:"δεν υπάρχουν στοιχεία"};
+}
+
+function economicDecision(db, v){
+  const A = Object.assign({years:"8", resid:"20", fuelGain:"15", maintNew:"25", escal:"15"}, db.assum||{});
+  const ak = annualKm(db, v);
+  const fs = fuelStats(db, v.id);
+  const price = avgFuelPrice(db);
+
+  const fuel12 = (db.fuels||[]).filter(f=>f.vehicleId===v.id && daysLeft(f.date) > -365)
+    .reduce((a,f)=>a + (num(f.cost) || num(f.liters)*num(f.price)), 0);
+  const fuelYear = fuel12 > 0 ? fuel12 : (fs.avg && ak.km ? fs.avg*ak.km/100*price : 0);
+
+  const maint12 = maintCost(db, v.id, 12);
+  const maintAll = maintCost(db, v.id, 0);
+  const maintYear = maint12 > 0 ? maint12 : maintAll;
+
+  const escal = 1 + num(A.escal)/100;
+  const keepCost = fuelYear + maintYear*escal;
+
+  const rc = num(v.replCost);
+  const depr = rc ? rc*(1 - num(A.resid)/100)/num(A.years) : 0;
+  const fuelNew = fuelYear * (1 - num(A.fuelGain)/100);
+  const maintNew = ak.km ? num(A.maintNew)*ak.km/1000 : 0;
+  const newCost = depr + fuelNew + maintNew;
+
+  const ready = !!(rc && keepCost > 0);
+  const diff = keepCost - newCost;
+  return {
+    ready, ak, keepCost, newCost, diff,
+    parts:{fuelYear, maintYear, escal, depr, fuelNew, maintNew},
+    missing: !rc ? "Συμπλήρωσε «Κόστος αντικατάστασης» στην καρτέλα του οχήματος."
+      : (keepCost<=0 ? "Χρειάζονται καταχωρήσεις καυσίμων ή εργασιών συντήρησης." : "")
+  };
+}
+
+function EconDecision({v, db}){
+  const d = economicDecision(db, v);
+  const eur = (x)=>Math.round(x).toLocaleString("el-GR") + " €";
+  if(!d.ready) return <div className="muted" style={{marginTop:8}}>{d.missing}</div>;
+  const replace = d.diff > 0;
+  return (
+    <div style={{marginTop:10}}>
+      <div className={replace ? "alertbox" : ""} style={replace?{fontWeight:700}:{fontWeight:700,color:"var(--ok)"}}>
+        {replace ? "Αντικατάσταση — εξοικονόμηση " + eur(d.diff) + " τον χρόνο"
+                 : "Κράτησέ το για τώρα — η αντικατάσταση κοστίζει " + eur(-d.diff) + " παραπάνω τον χρόνο"}
+      </div>
+      <div className="rowline"><span>Κόστος διατήρησης, 12 μήνες</span><b>{eur(d.keepCost)}</b></div>
+      <div className="muted" style={{fontSize:12}}>
+        Καύσιμα {eur(d.parts.fuelYear)} + συντήρηση {eur(d.parts.maintYear)} προσαυξημένη κατά {Math.round((d.parts.escal-1)*100)}% για τη φθορά
+      </div>
+      <div className="rowline" style={{marginTop:6}}><span>Κόστος νεότερου οχήματος, ετησίως</span><b>{eur(d.newCost)}</b></div>
+      <div className="muted" style={{fontSize:12}}>
+        Απόσβεση {eur(d.parts.depr)} + καύσιμα {eur(d.parts.fuelNew)} + συντήρηση {eur(d.parts.maintNew)}
+      </div>
+      <div className="rowline" style={{marginTop:6}}><span>Διαφορά</span>
+        <b style={replace?{color:"var(--alert)"}:{color:"var(--ok)"}}>{(d.diff>0?"+":"") + eur(d.diff)}</b></div>
+      <p className="muted" style={{fontSize:12,marginTop:6}}>
+        Ετήσια χιλιόμετρα {Math.round(d.ak.km).toLocaleString("el-GR")} — {d.ak.src}. Οι παραδοχές αλλάζουν στο Αρχείο.
+      </p>
+    </div>
+  );
+}
+
+function ReplSheet({v, db, onClose}){
+  const r = replacementScore(db, v);
+  return (
+    <Sheet title={"Δείκτης αντικατάστασης — " + v.plate} onClose={onClose}>
+      <div className="big" style={{color:r.lvl==="bad"?"var(--alert)":"var(--ink)"}}>{r.p}% — {r.lab}</div>
+      <p className="muted" style={{marginTop:4}}>Καλύπτεται το {r.coverage}% των βαρών με τα στοιχεία που υπάρχουν.</p>
+
+      <h3 style={{marginTop:14}}>Οικονομική απόφαση</h3>
+      <EconDecision v={v} db={db} />
+
+      <h3 style={{marginTop:16}}>Γιατί πήρε αυτό το σκορ</h3>
+      {r.parts.filter(x=>x.contrib!==null).sort((a,b)=>b.contrib-a.contrib).map(pt=>(
+        <div className="rowline" key={"c"+pt.n}>
+          <span>
+            <span style={{color:pt.sub>=70?"var(--alert)":(pt.sub>=40?"var(--warn)":"var(--ok)"),fontWeight:700}}>●</span> {pt.n}
+            <div className="muted" style={{fontSize:12}}>{pt.val}</div>
+          </span>
+          <b style={pt.sub>=70?{color:"var(--alert)"}:null}>+{pt.contrib}</b>
+        </div>
+      ))}
+      <p className="muted" style={{fontSize:12,marginTop:6}}>Τα νούμερα αθροίζουν στο {r.p} του συνολικού δείκτη.</p>
+
+      <h3 style={{marginTop:16}}>Ανάλυση παραγόντων</h3>
+      {r.parts.map(pt=>(
+        <div key={pt.n} style={{padding:"7px 0",borderBottom:"1px solid #eef1f4"}}>
+          <div className="rowline" style={{border:"none",padding:0}}>
+            <span>{pt.n} <span className="muted">({pt.w}%)</span></span>
+            <b style={pt.sub===null?{color:"var(--mute)"}:(pt.sub>=70?{color:"var(--alert)"}:null)}>{pt.sub===null?"—":pt.sub+"/100"}</b>
+          </div>
+          <div className="muted" style={{fontSize:12}}>{pt.val}</div>
+          {pt.sub!==null ? (
+            <div style={{height:5,background:"#eef2f6",borderRadius:3,marginTop:4}}>
+              <div style={{height:5,borderRadius:3,background:pt.sub>=70?"var(--alert)":"var(--amber)",width:Math.max(2,pt.sub)+"%"}}></div>
+            </div>
+          ) : null}
+        </div>
+      ))}
+      <h3 style={{marginTop:14}}>Πώς υπολογίζεται</h3>
+      <p className="muted" style={{marginTop:0}}>{EXPL_REPL}</p>
+    </Sheet>
+  );
+}
+
+/* ---------- ΣΤΑΤΙΣΤΙΚΑ ---------- */
+
+
+function StatsTab({db}){
+  const months = useMemo(()=>Array.from(new Set(db.trips.map(t=>t.date.slice(0,7)))).sort().reverse(),[db.trips]);
+  const [per,setPer] = useState("all");
+  const [veh,setVeh] = useState("");
+  const [drv,setDrv] = useState("");
+  const [grp,setGrp] = useState("vehicle");
+  const [met,setMet] = useState("tkm");
+
+  const trips = useMemo(()=>db.trips.filter(t=>{
+    if(veh && t.vehicleId!==veh) return false;
+    if(drv && t.driverId!==drv) return false;
+    if(per === "all") return true;
+    if(per.indexOf("m:") === 0) return t.date.slice(0,7) === per.slice(2);
+    return daysLeft(t.date) > -num(per);
+  }),[db.trips,per,veh,drv]);
+
+  const tot = useMemo(()=>{
+    let km=0, mins=0, probs=0, tons=0, tkm=0;
+    trips.forEach(t=>{
+      km += tripKm(t); mins += dur(t.timeStart,t.timeEnd);
+      probs += (t.problems&&t.problems.length?1:0);
+      tons += tripTons(t); tkm += tripTonneKm(t);
+    });
+    return {km,mins,probs,tons,tkm};
+  },[trips]);
+
+  const GROUPS = {
+    vehicle:{n:"Όχημα", key:t=>t.vehicleId, name:k=>{const v=db.vehicles.find(x=>x.id===k); return v?v.plate+" "+v.brand:"—";}},
+    driver:{n:"Οδηγό", key:t=>t.driverId, name:k=>{const d=db.drivers.find(x=>x.id===k); return d?d.name:"—";}},
+    cargo:{n:"Εμπόρευμα", key:t=>t.cargo, name:k=>k},
+    to:{n:"Προορισμό", key:t=>t.to, name:k=>k},
+    from:{n:"Αφετηρία", key:t=>t.from, name:k=>k},
+    category:{n:"Κατηγορία οχήματος", key:t=>{const v=db.vehicles.find(x=>x.id===t.vehicleId); return v?v.category:"—";}, name:k=>k},
+    month:{n:"Μήνα", key:t=>t.date.slice(0,7), name:k=>k}
+  };
+  const METRICS = {
+    tkm:{n:"Τονοχιλιόμετρα", f:r=>r.tkm, fmt:v=>Math.round(v).toLocaleString("el-GR")+" τχλμ"},
+    trips:{n:"Δρομολόγια", f:r=>r.n, fmt:v=>v.toLocaleString("el-GR")},
+    km:{n:"Χιλιόμετρα", f:r=>r.km, fmt:v=>Math.round(v).toLocaleString("el-GR")+" χλμ"},
+    hours:{n:"Ώρες", f:r=>r.mins, fmt:v=>hhmm(Math.round(v))},
+    tons:{n:"Βάρος φορτίου", f:r=>r.tons, fmt:v=>(Math.round(v*10)/10).toLocaleString("el-GR")+" τόνοι"},
+    liters:{n:"Λίτρα καυσίμου (εκτίμηση)", f:r=>r.lit, fmt:v=>fmt1(v)+" λίτρα"},
+    rev:{n:"Έσοδα", f:r=>r.rev, fmt:v=>Math.round(v).toLocaleString("el-GR")+" €"},
+    problems:{n:"Προβλήματα", f:r=>r.probs, fmt:v=>v.toLocaleString("el-GR")}
+  };
+
+  const rows = useMemo(()=>{
+    const g = GROUPS[grp], map = {};
+    trips.forEach(t=>{
+      const k = g.key(t) || "—";
+      if(!map[k]) map[k] = {n:0,km:0,mins:0,tons:0,tkm:0,probs:0,lit:0,rev:0};
+      map[k].n++; map[k].km += tripKm(t); map[k].mins += dur(t.timeStart,t.timeEnd);
+      map[k].tons += tripTons(t); map[k].tkm += tripTonneKm(t);
+      map[k].probs += (t.problems&&t.problems.length?1:0);
+      map[k].lit += litersForTrip(db, t);
+      map[k].rev += num(t.revenue);
+    });
+    const m = METRICS[met];
+    return Object.keys(map).map(k=>Object.assign({key:k,name:g.name(k)},map[k]))
+      .sort((a,b)=>m.f(b)-m.f(a));
+  },[trips,grp,met]);
+
+  const probList = useMemo(()=>{
+    const map = {};
+    trips.forEach(t=>(t.problems||[]).forEach(p=>{
+      if(!map[p]) map[p] = {n:0, veh:{}};
+      map[p].n++;
+      map[p].veh[t.vehicleId] = (map[p].veh[t.vehicleId]||0)+1;
+    }));
+    return Object.keys(map).map(k=>({k, n:map[k].n, veh:map[k].veh})).sort((a,b)=>b.n-a.n);
+  },[trips]);
+  const [openProb,setOpenProb] = useState(null);
+
+  const monthName = (s)=>{
+    const names = ["Ιανουάριος","Φεβρουάριος","Μάρτιος","Απρίλιος","Μάιος","Ιούνιος","Ιούλιος","Αύγουστος","Σεπτέμβριος","Οκτώβριος","Νοέμβριος","Δεκέμβριος"];
+    return names[+s.slice(5,7)-1] + " " + s.slice(0,4);
+  };
+  const m = METRICS[met];
+  const maxVal = rows.length ? Math.max.apply(null, rows.map(r=>m.f(r))) : 0;
+
+  return (
+    <div>
+      <h2>Στατιστικά</h2>
+      <div className="card tight">
+        <div className="grid2">
+          <Field label="Περίοδος">
+            <select value={per} onChange={e=>setPer(e.target.value)}>
+              <option value="all">Όλη η περίοδος</option>
+              <option value="7">Τελευταίες 7 ημέρες</option>
+              <option value="30">Τελευταίες 30 ημέρες</option>
+              <option value="90">Τελευταίοι 3 μήνες</option>
+              <option value="365">Τελευταίοι 12 μήνες</option>
+              {months.map(x=><option key={x} value={"m:"+x}>{monthName(x)}</option>)}
+            </select>
+          </Field>
+          <Field label="Όχημα">
+            <select value={veh} onChange={e=>setVeh(e.target.value)}>
+              <option value="">Όλα</option>
+              {db.vehicles.map(v=><option key={v.id} value={v.id}>{v.plate}</option>)}
+            </select>
+          </Field>
+          <Field label="Οδηγός">
+            <select value={drv} onChange={e=>setDrv(e.target.value)}>
+              <option value="">Όλοι</option>
+              {db.drivers.map(d=><option key={d.id} value={d.id}>{d.name}</option>)}
+            </select>
+          </Field>
+          <Field label="Ομαδοποίηση κατά">
+            <select value={grp} onChange={e=>setGrp(e.target.value)}>
+              {Object.keys(GROUPS).map(k=><option key={k} value={k}>{GROUPS[k].n}</option>)}
+            </select>
+          </Field>
+        </div>
+        <Field label="Τι μετράμε">
+          <select value={met} onChange={e=>setMet(e.target.value)}>
+            {Object.keys(METRICS).map(k=><option key={k} value={k}>{METRICS[k].n}</option>)}
+          </select>
+        </Field>
+      </div>
+
+      <div className="statgrid" style={{marginBottom:10}}>
+        <div className="stat"><div className="big">{trips.length}</div><div className="lab">δρομολόγια</div></div>
+        <div className="stat"><div className="big">{Math.round(tot.km).toLocaleString("el-GR")}</div><div className="lab">χιλιόμετρα</div></div>
+        <div className="stat"><div className="big">{hhmm(tot.mins)}</div><div className="lab">ώρες στον δρόμο</div></div>
+        <div className="stat"><div className="big">{(Math.round(tot.tons*10)/10).toLocaleString("el-GR")}</div><div className="lab">τόνοι φορτίου</div></div>
+        <div className="stat"><div className="big">{Math.round(tot.tkm).toLocaleString("el-GR")}</div><div className="lab">τονοχιλιόμετρα</div></div>
+        <div className="stat"><div className="big">{tot.probs}</div><div className="lab">με πρόβλημα</div></div>
+      </div>
+
+      {trips.length===0 ? <Empty t="Δεν υπάρχουν δρομολόγια με αυτά τα φίλτρα." /> : (
+        <div>
+          <div className="card">
+            <h3>{METRICS[met].n} ανά {GROUPS[grp].n.toLowerCase()}</h3>
+            {rows.map(r=>(
+              <div key={r.key} style={{padding:"7px 0",borderBottom:"1px solid #eef1f4"}}>
+                <div className="rowline" style={{border:"none",padding:0}}>
+                  <span>{r.name}</span>
+                  <b>{m.fmt(m.f(r))}</b>
+                </div>
+                <div style={{height:6,background:"#eef2f6",borderRadius:4,marginTop:4}}>
+                  <div style={{height:6,borderRadius:4,background:"var(--amber)",width:(maxVal?Math.max(3,Math.round(m.f(r)/maxVal*100)):0)+"%"}}></div>
+                </div>
+                <div className="muted" style={{fontSize:12,marginTop:3}}>
+                  {r.n} δρομ. · {Math.round(r.km).toLocaleString("el-GR")} χλμ · {hhmm(Math.round(r.mins))} · {Math.round(r.tkm).toLocaleString("el-GR")} τχλμ
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="card">
+            <h3>Ανά τονοχιλιόμετρο — οχήματα</h3>
+            {db.vehicles.map(v=>{
+              const e = vehicleEconomy(db, v);
+              if(!e.tkm) return null;
+              return (
+                <div key={v.id} style={{padding:"8px 0",borderBottom:"1px solid #eef1f4"}}>
+                  <div className="rowline" style={{border:"none",padding:0}}>
+                    <span className="plate">{v.plate}</span>
+                    <b>{Math.round(e.tkm).toLocaleString("el-GR")} τχλμ</b>
+                  </div>
+                  <div className="muted" style={{fontSize:12.5,marginTop:3}}>
+                    Καύσιμο {e.litPerKtkm?fmt1(e.litPerKtkm)+" λίτρα/1.000 τχλμ":"—"} ·
+                    Κόστος {e.costPerTkm?fmt2(e.costPerTkm)+" €/τχλμ":"—"} ·
+                    Έσοδα {e.revPerTkm?fmt2(e.revPerTkm)+" €/τχλμ":"—"}
+                    {e.marginPerTkm!==null ? " · Περιθώριο "+fmt2(e.marginPerTkm)+" €/τχλμ" : ""}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="card">
+            <h3>Ανά τονοχιλιόμετρο — οδηγοί</h3>
+            {db.drivers.map(dr=>{
+              const e = driverEconomy(db, dr);
+              if(!e.tkm) return null;
+              return (
+                <div key={dr.id} style={{padding:"8px 0",borderBottom:"1px solid #eef1f4"}}>
+                  <div className="rowline" style={{border:"none",padding:0}}>
+                    <span>{dr.name}</span>
+                    <b>{Math.round(e.tkm).toLocaleString("el-GR")} τχλμ</b>
+                  </div>
+                  <div className="muted" style={{fontSize:12.5,marginTop:3}}>
+                    Καύσιμο {e.litPerKtkm?fmt1(e.litPerKtkm)+" λίτρα/1.000 τχλμ":"—"} ·
+                    Κόστος {e.costPerTkm?fmt2(e.costPerTkm)+" €/τχλμ":"—"} ·
+                    Έσοδα {e.revPerTkm?fmt2(e.revPerTkm)+" €/τχλμ":"—"}
+                  </div>
+                </div>
+              );
+            })}
+            <p className="muted" style={{fontSize:12,marginTop:8}}>Οι δείκτες των οδηγών αφορούν όλη την περίοδο, όχι το φίλτρο πάνω.</p>
+          </div>
+
+          {probList.length ? (
+            <div className="card">
+              <h3>Προβλήματα</h3>
+              {probList.map(pr=>(
+                <button key={pr.k} className="rowline" style={{width:"100%",border:"none",borderBottom:"1px solid #eef1f4",borderRadius:0,background:"none",padding:"8px 0"}}
+                  onClick={()=>setOpenProb(pr)}>
+                  <span>{pr.k}</span><span><b>{pr.n}</b> ▸</span>
+                </button>
+              ))}
+              {openProb ? (
+                <Sheet title={openProb.k} onClose={()=>setOpenProb(null)}>
+                  <p className="muted" style={{marginTop:0}}>Σε ποια οχήματα εμφανίστηκε, στην επιλεγμένη περίοδο.</p>
+                  {Object.keys(openProb.veh).map(vid=>{
+                    const v = db.vehicles.find(x=>x.id===vid);
+                    if(!v) return <div className="rowline" key={vid}><span>Άγνωστο όχημα</span><b>{openProb.veh[vid]}</b></div>;
+                    return (
+                      <div className="rowline" key={vid} style={{alignItems:"flex-start"}}>
+                        <div>
+                          <span className={docState(v,EGGRAFA).expired ? "plate bad" : "plate"}>{v.plate}</span>
+                          <div className="muted" style={{marginTop:3}}>{v.brand} {v.model} · {v.category}</div>
+                        </div>
+                        <b>{openProb.veh[vid]} {openProb.veh[vid]===1?"φορά":"φορές"}</b>
+                      </div>
+                    );
+                  })}
+                </Sheet>
+              ) : null}
+            </div>
+          ) : null}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ---------- ΔΟΚΙΜΑΣΤΙΚΑ ΔΕΔΟΜΕΝΑ ---------- */
+
+function D(n){ const d = new Date(); d.setDate(d.getDate()+n); return d.toISOString().slice(0,10); }
+
+function demoData(){
+  const vehicles = [
+    {id:"dv1", demo:true, replCost:"78000", firstReg:"2015-04-20", plate:"ΚΗΙ 3241", brand:"Mercedes-Benz", model:"Atego 1524 με καλάθι", category:"Καλαθοφόρο",
+     payload:"5000", year:"2015", km:"318000", notes:"Καλάθι 16 μ., εργασίες σε στύλους μέσης τάσης",
+     docs:{kteo:D(-12), asfaleia:D(58), tachografos:D(140), kaysaeria:D(-3), adeia:D(115)},
+     oil:{lastDate:D(-160), lastKm:"302000", everyKm:"15000", everyDays:"365"}},
+    {id:"dv2", demo:true, replCost:"72000", firstReg:"2018-07-11", plate:"ΚΗΙ 5518", brand:"Iveco", model:"Eurocargo 150E με παπαγάλο", category:"Γερανοφόρο (παπαγάλος)",
+     payload:"8000", year:"2018", km:"246000", notes:"Ανύψωση τσιμεντοκολώνων, βέλος 12 τόνων",
+     docs:{kteo:D(210), asfaleia:D(96), tachografos:D(320), kaysaeria:D(180), adeia:D(115)},
+     oil:{lastDate:D(-40), lastKm:"238000", everyKm:"20000", everyDays:"365"}},
+    {id:"dv3", demo:true, replCost:"69000", firstReg:"2020-02-27", plate:"ΚΗΙ 7702", brand:"Volvo", model:"FL 280", category:"Φορτηγό μεταφοράς μπομπίνων",
+     payload:"11000", year:"2020", km:"189000", notes:"Μεταφορά μπομπίνων καλωδίου και μετασχηματιστών",
+     docs:{kteo:D(150), asfaleia:D(200), tachografos:D(24), kaysaeria:D(160), adeia:D(115)},
+     oil:{lastDate:D(-75), lastKm:"180000", everyKm:"20000", everyDays:"365"}},
+    {id:"dv4", demo:true, replCost:"65000", firstReg:"2013-09-05", plate:"ΚΗΙ 1160", brand:"MAN", model:"TGM 18.250 ανατρεπόμενο", category:"Ανατρεπόμενο",
+     payload:"9000", year:"2013", km:"472000", notes:"Εκσκαφές βάσεων στύλων, μεταφορά αδρανών",
+     docs:{kteo:D(21), asfaleia:D(45), tachografos:D(75), kaysaeria:D(28), adeia:D(115)},
+     oil:{lastDate:D(-120), lastKm:"459000", everyKm:"15000", everyDays:"365"}},
+    {id:"dv5", demo:true, replCost:"32000", firstReg:"2022-05-16", plate:"ΚΗΙ 4409", brand:"Ford", model:"Transit 350", category:"Βαν συνεργείου",
+     payload:"1300", year:"2022", km:"78400", notes:"Συνεργείο βλαβών χαμηλής τάσης, εργαλεία και μονωτικός εξοπλισμός",
+     docs:{kteo:D(260), asfaleia:D(130), tachografos:"", kaysaeria:D(240), adeia:D(115)},
+     oil:{lastDate:D(-55), lastKm:"71000", everyKm:"15000", everyDays:"365"}}
+  ];
+
+  const drivers = [
+    {id:"dd1", demo:true, proSince:"2001-05-14", birth:"1974-03-18", hired:"2001-09-01", name:"Γιώργος Παπαδόπουλος", phone:"6944 123456", cat:"Γ+Ε (CE)", left:false,
+     notes:"Χειριστής καλαθοφόρου, εργασίες υπό τάση σε δίκτυο μέσης τάσης",
+     docs:{diploma:D(420), pei:D(-8), karta:D(190), adr:D(70), xeiristis:D(640), ypotasi:D(-15), ypsos:D(120), protes:D(200), iatriko:D(150)}},
+    {id:"dd2", demo:true, proSince:"2007-03-08", birth:"1981-11-05", hired:"2008-04-15", name:"Δημήτρης Κοντός", phone:"6945 234567", cat:"Γ+Ε (CE)", left:false,
+     notes:"Χειριστής γερανοφόρου, τοποθέτηση τσιμεντοκολώνων",
+     docs:{diploma:D(700), pei:D(230), karta:D(26), adr:D(410), xeiristis:D(1100), ypotasi:D(310), ypsos:D(45), protes:D(-40), iatriko:D(310)}},
+    {id:"dd3", demo:true, proSince:"2012-11-19", birth:"1988-06-22", hired:"2014-02-10", name:"Νίκος Βλαχάκης", phone:"6946 345678", cat:"Γ (C)", left:false,
+     notes:"Μεταφορά μετασχηματιστών και μπομπίνων",
+     docs:{diploma:D(980), pei:D(540), karta:D(620), adr:"", xeiristis:D(880), ypotasi:D(400), ypsos:D(500), protes:D(90), iatriko:D(20)}},
+    {id:"dd4", demo:true, proSince:"2018-02-26", birth:"1993-01-30", hired:"2019-06-03", name:"Κώστας Ρήγας", phone:"6947 456789", cat:"Γ (C)", left:false,
+     notes:"Συνεργείο βλαβών, βάρδιες ετοιμότητας",
+     docs:{diploma:D(1300), pei:D(760), karta:D(880), adr:"", xeiristis:"", ypotasi:D(240), ypsos:D(280), protes:D(330), iatriko:D(400)}},
+    {id:"dd5", demo:true, proSince:"2004-07-30", birth:"1978-08-12", hired:"2005-10-20", name:"Αντώνης Σταθόπουλος", phone:"6948 567890", cat:"Γ+Ε (CE)", left:false,
+     notes:"Ανατρεπόμενο και εκσκαφές βάσεων",
+     docs:{diploma:D(360), pei:D(95), karta:D(340), adr:D(-25), xeiristis:D(20), ypotasi:D(600), ypsos:D(15), protes:D(410), iatriko:D(240)}}
+  ];
+
+  const routes = [
+    {from:"Ασπρόπυργος - Κέντρο Αποθηκών", to:"Περιοχή Ελευσίνας", km:22, s:"07:00", e:"15:30", cargo:"Τσιμεντοκολώνες", qty:"8", unit:"τεμάχια", rec:"Συνεργείο δικτύου Ελευσίνας"},
+    {from:"Ασπρόπυργος - Κέντρο Αποθηκών", to:"Περιοχή Μεσογείων", km:58, s:"06:30", e:"16:00", cargo:"Μετασχηματιστές διανομής", qty:"3", unit:"τεμάχια", rec:"Υποσταθμός Παιανίας"},
+    {from:"Ασπρόπυργος - Κέντρο Αποθηκών", to:"Περιοχή Πειραιά", km:34, s:"07:15", e:"14:45", cargo:"Μπομπίνες καλωδίου χαμηλής τάσης", qty:"4", unit:"τεμάχια", rec:"Αποθήκη Περιοχής Πειραιά"},
+    {from:"Περιοχή Αθήνας", to:"Εργοτάξιο δικτύου", km:41, s:"07:00", e:"17:30", cargo:"Ηλεκτροπαραγωγό ζεύγος", qty:"1", unit:"τεμάχια", rec:"Εργοτάξιο αποκατάστασης βλάβης"},
+    {from:"Ασπρόπυργος - Κέντρο Αποθηκών", to:"Περιοχή Φιλοθέης - Κηφισιάς", km:47, s:"06:45", e:"15:15", cargo:"Ξύλινοι στύλοι", qty:"12", unit:"τεμάχια", rec:"Συνεργείο Κηφισιάς"},
+    {from:"Ασπρόπυργος - Κέντρο Αποθηκών", to:"Περιοχή Λάρισας", km:340, s:"05:30", e:"18:00", cargo:"Πίλαρ και υλικά δικτύου", qty:"2.2", unit:"τόνοι", rec:"Αποθήκη Περιοχής Λάρισας"},
+    {from:"Περιοχή Καλλιθέας", to:"Υποσταθμός", km:18, s:"08:00", e:"13:00", cargo:"Μονωτήρες και εξαρτήματα", qty:"36", unit:"κιβώτια", rec:"Συνεργείο υποσταθμού"}
+  ];
+  const problemSets = [
+    ["Κυκλοφοριακό"],
+    ["Καθυστέρηση στη φόρτωση"],
+    ["Λάστιχο"],
+    ["Βλάβη οχήματος"],
+    ["Καιρικές συνθήκες","Καθυστέρηση στην εκφόρτωση"]
+  ];
+
+  const trips = [];
+  for(let i=0;i<26;i++){
+    const r = routes[i % routes.length];
+    const v = vehicles[i % vehicles.length];
+    const dr = drivers[(i*2+1) % drivers.length];
+    const hasProblem = (i % 5 === 0);
+    trips.push({
+      id:"dt"+i, demo:true, date:D(-(i*2+1)), vehicleId:v.id, driverId:dr.id,
+      from:r.from, to:r.to, timeStart:r.s, timeEnd:r.e,
+      kmStart:"", kmEnd:"", km:String(r.km + (i%4)*3),
+      cargo:r.cargo, qty:r.qty, unit:r.unit, recipient:r.rec,
+      revenue: String(Math.round(r.km*2.4 + 120 + (i%5)*35)),
+      problems: hasProblem ? problemSets[(i/5|0) % problemSets.length] : [],
+      note: hasProblem ? "Καταγράφηκε από τον οδηγό κατά την επιστροφή." : ""
+    });
+  }
+  trips.push({id:"dtx1", demo:true, date:D(-9), vehicleId:"dv1", driverId:"dd1",
+    from:"Ασπρόπυργος - Κέντρο Αποθηκών", to:"Εργοτάξιο δικτύου",
+    timeStart:"05:00", timeEnd:"19:30", kmStart:"", kmEnd:"", km:"96", cargo:"Ηλεκτροπαραγωγό ζεύγος", qty:"1", unit:"τεμάχια",
+    recipient:"Έκτακτη αποκατάσταση μετά από κακοκαιρία", problems:["Βλάβη οχήματος"], note:"Πρόβλημα στο υδραυλικό του καλαθιού, στάση 2 ώρες."});
+  trips.push({id:"dtx2", demo:true, date:D(-27), vehicleId:"dv1", driverId:"dd1",
+    from:"Ασπρόπυργος - Κέντρο Αποθηκών", to:"Περιοχή Ελευσίνας",
+    timeStart:"06:00", timeEnd:"16:45", kmStart:"", kmEnd:"", km:"26", cargo:"Τσιμεντοκολώνες", qty:"6", unit:"τεμάχια",
+    recipient:"Αντικατάσταση στύλων μετά από πρόσκρουση", problems:["Λάστιχο"], note:"Αλλαγή ελαστικού στον δρόμο."});
+  trips.push({id:"dtx3", demo:true, date:D(-51), vehicleId:"dv1", driverId:"dd1",
+    from:"Περιοχή Αθήνας", to:"Υποσταθμός",
+    timeStart:"07:00", timeEnd:"15:00", kmStart:"", kmEnd:"", km:"31", cargo:"Μονωτήρες και εξαρτήματα", qty:"20", unit:"κιβώτια",
+    recipient:"Συνεργείο υποσταθμού", problems:["Βλάβη οχήματος"], note:"Ξανά διαρροή στο υδραυλικό κύκλωμα."});
+
+  const services = [
+    {id:"ds1", demo:true, vehicleId:"dv1", date:D(-160), km:"302000", items:["Λάδια και φίλτρο λαδιού","Φίλτρο αέρα","Υδραυλικά"], shop:"Συνεργείο στόλου Ασπροπύργου", cost:"640", note:"Τακτικό σέρβις και έλεγχος καλαθιού"},
+    {id:"ds2", demo:true, vehicleId:"dv1", date:D(-70), km:"311000", items:["Υδραυλικά"], shop:"Εξωτερικό συνεργείο ανυψωτικών", cost:"890", note:"Διαρροή στο έμβολο του βραχίονα"},
+    {id:"ds3", demo:true, vehicleId:"dv2", date:D(-40), km:"238000", items:["Λάδια και φίλτρο λαδιού","Φίλτρο καμπίνας"], shop:"Συνεργείο στόλου Ασπροπύργου", cost:"720", note:""},
+    {id:"ds4", demo:true, vehicleId:"dv3", date:D(-75), km:"180000", items:["Λάδια και φίλτρο λαδιού","Ελαστικά"], shop:"Volvo Service", cost:"2150", note:"Αλλαγή 4 ελαστικών"},
+    {id:"ds5", demo:true, vehicleId:"dv4", date:D(-120), km:"459000", items:["Λάδια και φίλτρο λαδιού","Υδραυλικά"], shop:"Συνεργείο στόλου Ασπροπύργου", cost:"980", note:"Έλεγχος ανατροπής"},
+    {id:"ds6", demo:true, vehicleId:"dv4", date:D(-25), km:"468000", items:["Μπαταρία","Ηλεκτρολογικά"], shop:"Συνεργείο στόλου Ασπροπύργου", cost:"310", note:"Δεν έπαιρνε μπροστά"},
+    {id:"ds8", demo:true, vehicleId:"dv1", date:D(-210), km:"306000", items:["Τακάκια","Δισκόπλακες","Ελαστικά"], shop:"Συνεργείο στόλου Ασπροπύργου", cost:"1980", note:"Φθορά εμπρός και δύο ελαστικά"},
+    {id:"ds9", demo:true, vehicleId:"dv1", date:D(-18), km:"316500", items:["Υδραυλικά","Ηλεκτρολογικά"], shop:"Εξωτερικό συνεργείο ανυψωτικών", cost:"1240", note:"Επισκευή μετά από βλάβη στο καλάθι"},
+    {id:"ds10", demo:true, vehicleId:"dv2", date:D(-190), km:"228000", items:["Φρένα - γενικός έλεγχος"], shop:"Συνεργείο αντιπροσωπείας", cost:"430", note:""},
+    {id:"ds11", demo:true, vehicleId:"dv3", date:D(-150), km:"172000", items:["Φίλτρο αέρα","Φίλτρο καυσίμου"], shop:"Συνεργείο στόλου Ασπροπύργου", cost:"260", note:""},
+    {id:"ds12", demo:true, vehicleId:"dv4", date:D(-300), km:"452000", items:["Συμπλέκτης"], shop:"Συνεργείο αντιπροσωπείας", cost:"2600", note:"Μεγάλη επισκευή"},
+    {id:"ds13", demo:true, vehicleId:"dv4", date:D(-95), km:"465000", items:["Αμορτισέρ","Ελαστικά"], shop:"Βουλκανιζατέρ", cost:"1450", note:""},
+    {id:"ds14", demo:true, vehicleId:"dv5", date:D(-140), km:"74000", items:["Τακάκια"], shop:"Ford Service", cost:"190", note:""},
+    {id:"ds7", demo:true, vehicleId:"dv5", date:D(-55), km:"71000", items:["Λάδια και φίλτρο λαδιού","Φίλτρο αέρα"], shop:"Ford Service", cost:"280", note:""}
+  ];
+
+  const fuels = [];
+  const fuelPlan = [
+    {v:"dv1", d:"dd1", endKm:318000, yearKm:26000, cons:28.5, n:16},
+    {v:"dv2", d:"dd2", endKm:246000, yearKm:31000, cons:26.0, n:18},
+    {v:"dv3", d:"dd3", endKm:189000, yearKm:34000, cons:24.5, n:18},
+    {v:"dv4", d:"dd5", endKm:472000, yearKm:22000, cons:31.5, n:14},
+    {v:"dv5", d:"dd4", endKm:78400, yearKm:19000, cons:11.5, n:14}
+  ];
+  const prices = [1.38,1.41,1.44,1.47,1.43,1.40,1.46,1.49,1.45,1.42];
+  fuelPlan.forEach((fp,vi)=>{
+    const stepKm = Math.round(fp.yearKm/fp.n);
+    const stepDays = Math.round(360/fp.n);
+    for(let i=0;i<fp.n;i++){
+      const kmAt = fp.endKm - stepKm*(fp.n-1-i);
+      const consNow = fp.cons * (1 + ((i%4)-1.5)*0.03);
+      const lit = Math.round(stepKm*consNow/100);
+      const price = prices[(vi*3+i) % prices.length];
+      fuels.push({
+        id:"df"+vi+"_"+i, demo:true,
+        date:D(-(stepDays*(fp.n-1-i)) - 2),
+        vehicleId:fp.v, driverId:fp.d,
+        km:String(kmAt), liters:String(lit), price:String(price),
+        cost:String(Math.round(lit*price)),
+        station: (i%3===0) ? "Πρατήριο εγκατάστασης Ασπροπύργου" : (i%3===1 ? "ΕΚΟ" : "Shell"),
+        full:true, note:""
+      });
+    }
+  });
+  return {vehicles, drivers, trips, services, fuels};
+}
+
+function ListManager({title, hint, dbKey, db, setDb, defaults}){
+  const items = db[dbKey] || [];
+  const set = (arr) => setDb(d=>Object.assign({},d,{[dbKey]:arr}));
+  const move = (i,dir) => {
+    const a = items.slice(), j = i+dir;
+    if(j<0 || j>=a.length) return;
+    const tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    set(a);
+  };
+  return (
+    <div className="card">
+      <h3>{title}</h3>
+      <p className="muted" style={{marginTop:0}}>{hint}</p>
+      {items.length===0 ? <div className="muted">Η λίστα είναι άδεια.</div> : null}
+      {items.map((it,i)=>(
+        <div key={it} style={{display:"flex",alignItems:"center",gap:6,padding:"5px 0",borderBottom:"1px solid #eef1f4"}}>
+          <span style={{flex:1,fontSize:14}}>{it}</span>
+          <button className="small" disabled={i===0} onClick={()=>move(i,-1)} title="Πιο πάνω">↑</button>
+          <button className="small" disabled={i===items.length-1} onClick={()=>move(i,1)} title="Πιο κάτω">↓</button>
+          <button className="small danger" onClick={()=>{
+            if(confirm("Αφαίρεση «"+it+"»;\nΟι παλιές καταχωρήσεις δεν αλλάζουν.")) set(items.filter(x=>x!==it));
+          }}>×</button>
+        </div>
+      ))}
+      <div className="btnrow">
+        <button className="dark" onClick={()=>{
+          const n = prompt("Προσθήκη στη λίστα «"+title+"»:");
+          if(n && n.trim() && items.indexOf(n.trim())<0) set(items.concat([n.trim()]));
+        }}>+ Προσθήκη</button>
+        <button onClick={()=>{
+          if(confirm("Επαναφορά των αρχικών; Ό,τι έχεις προσθέσει διατηρείται στο τέλος."))
+            set(defaults.concat(items.filter(x=>defaults.indexOf(x)<0)));
+        }}>Επαναφορά αρχικών</button>
+      </div>
+    </div>
+  );
+}
+
+function FileTab({db,setDb}){
+  const [txt,setTxt] = useState("");
+  const backup = JSON.stringify(db);
+  return (
+    <div>
+      <h2>Αρχείο</h2>
+      <div className="card">
+        <h3>Αντίγραφο ασφαλείας</h3>
+        <p className="muted" style={{marginTop:0}}>Μάρκαρε όλο το κείμενο και αντίγραψέ το. Κράτα το κάπου ασφαλές (σημειώσεις, μήνυμα στον εαυτό σου).</p>
+        <textarea readOnly value={backup} style={{minHeight:110,fontSize:12}} onFocus={e=>e.target.select()} />
+        <div className="btnrow">
+          <button className="dark" onClick={()=>{
+            try{ navigator.clipboard.writeText(backup); alert("Αντιγράφηκε."); }
+            catch(e){ alert("Δεν έγινε αυτόματη αντιγραφή. Μάρκαρε το κείμενο με το χέρι."); }
+          }}>Αντιγραφή</button>
+        </div>
+      </div>
+
+      <div className="card">
+        <h3>Επαναφορά</h3>
+        <p className="muted" style={{marginTop:0}}>Επικόλλησε εδώ ένα παλιό αντίγραφο. Αντικαθιστά όλα τα τωρινά δεδομένα.</p>
+        <textarea value={txt} onChange={e=>setTxt(e.target.value)} placeholder="Επικόλληση αντιγράφου" />
+        <div className="btnrow">
+          <button className="primary" onClick={()=>{
+            try{
+              const d = JSON.parse(txt);
+              if(!d || !Array.isArray(d.trips)) throw new Error("bad");
+              if(confirm("Θα αντικατασταθούν όλα τα τωρινά δεδομένα. Συνέχεια;")){
+                setDb(Object.assign(emptyDb(), d)); setTxt(""); alert("Έγινε επαναφορά.");
+              }
+            }catch(e){ alert("Το κείμενο δεν είναι έγκυρο αντίγραφο."); }
+          }}>Επαναφορά</button>
+        </div>
+      </div>
+
+      <div className="card">
+        <h3>Κωδικός διαχειριστή</h3>
+        <p className="muted" style={{marginTop:0}}>Ξεκλειδώνει τις εμπιστευτικές σημειώσεις και τις αξιολογήσεις των οδηγών. Προεπιλογή 1234.</p>
+        <div className="btnrow" style={{marginTop:0}}>
+          <button className="dark" onClick={()=>{
+            const old = prompt("Τρέχων κωδικός:");
+            if(old === null) return;
+            if(old !== (db.pin || "1234")){ alert("Λάθος κωδικός."); return; }
+            const n1 = prompt("Νέος κωδικός:");
+            if(!n1) return;
+            const n2 = prompt("Ξαναγράψε τον νέο κωδικό:");
+            if(n1 !== n2){ alert("Οι δύο κωδικοί δεν ταιριάζουν."); return; }
+            setDb(d=>Object.assign({},d,{pin:n1}));
+            alert("Ο κωδικός άλλαξε.");
+          }}>Αλλαγή κωδικού</button>
+        </div>
+      </div>
+
+      <div className="card">
+        <h3>Παραδοχές αντικατάστασης</h3>
+        <p className="muted" style={{marginTop:0}}>Χρησιμοποιούνται στην οικονομική απόφαση κάθε οχήματος.</p>
+        <div className="grid2">
+          <Field label="Έτη απόσβεσης νέου"><input type="number" inputMode="numeric" value={(db.assum||{}).years||""} onChange={e=>setDb(d=>Object.assign({},d,{assum:Object.assign({},d.assum,{years:e.target.value})}))} /></Field>
+          <Field label="Υπολειμματική αξία (%)"><input type="number" inputMode="numeric" value={(db.assum||{}).resid||""} onChange={e=>setDb(d=>Object.assign({},d,{assum:Object.assign({},d.assum,{resid:e.target.value})}))} /></Field>
+          <Field label="Βελτίωση κατανάλωσης νέου (%)"><input type="number" inputMode="numeric" value={(db.assum||{}).fuelGain||""} onChange={e=>setDb(d=>Object.assign({},d,{assum:Object.assign({},d.assum,{fuelGain:e.target.value})}))} /></Field>
+          <Field label="Συντήρηση νέου (€ ανά 1.000 χλμ)"><input type="number" inputMode="numeric" value={(db.assum||{}).maintNew||""} onChange={e=>setDb(d=>Object.assign({},d,{assum:Object.assign({},d.assum,{maintNew:e.target.value})}))} /></Field>
+        </div>
+        <Field label="Ετήσια αύξηση συντήρησης παλαιού (%)"><input type="number" inputMode="numeric" value={(db.assum||{}).escal||""} onChange={e=>setDb(d=>Object.assign({},d,{assum:Object.assign({},d.assum,{escal:e.target.value})}))} /></Field>
+      </div>
+
+      <ListManager title="Τόποι" db={db} setDb={setDb} dbKey="places" defaults={TOPOI_ARXIKA}
+        hint="Αφετηρίες και προορισμοί στα δρομολόγια. Με τα βελάκια ανεβάζεις όσα χρησιμοποιείς πιο συχνά στην κορυφή." />
+      <ListManager title="Εμπορεύματα" db={db} setDb={setDb} dbKey="cargos" defaults={EMPOREUMATA_ARXIKA}
+        hint="Τα είδη που μεταφέρονται. Ό,τι προσθέτεις μένει μόνιμα." />
+      <ListManager title="Συνεργεία" db={db} setDb={setDb} dbKey="shops" defaults={SYNERGEIA_ARXIKA}
+        hint="Πού πάει το όχημα για εργασίες. Το πεδίο ξεκινά κενό — διαλέγεις από τη λίστα ή προσθέτεις νέο." />
+      <ListManager title="Μάρκες οχημάτων" db={db} setDb={setDb} dbKey="brands" defaults={MARKES_ARXIKA}
+        hint="Εμφανίζονται στη φόρμα του οχήματος." />
+      <ListManager title="Μοντέλα / τύποι" db={db} setDb={setDb} dbKey="models" defaults={MONTELA_ARXIKA}
+        hint="Εμφανίζονται στη φόρμα του οχήματος." />
+
+      <div className="card">
+        <h3>Δοκιμαστικά δεδομένα</h3>
+        <p className="muted" style={{marginTop:0}}>
+          Πέντε εικονικά φορτηγά και πέντε οδηγοί με δρομολόγια, σέρβις και λήξεις, για να δεις πώς δουλεύει η εφαρμογή.
+          Είναι σημαδεμένα ξεχωριστά και φεύγουν όλα μαζί χωρίς να πειραχτούν τα δικά σου.
+        </p>
+        <div className="btnrow" style={{marginTop:0}}>
+          <button className="dark" onClick={()=>{
+            if(db.vehicles.some(v=>v.demo)){ alert("Τα δοκιμαστικά δεδομένα είναι ήδη φορτωμένα."); return; }
+            const dd = demoData();
+            setDb(d=>Object.assign({}, d, {
+              vehicles: d.vehicles.concat(dd.vehicles),
+              drivers: d.drivers.concat(dd.drivers),
+              trips: d.trips.concat(dd.trips),
+              services: d.services.concat(dd.services),
+              fuels: (d.fuels||[]).concat(dd.fuels)
+            }));
+            alert("Φορτώθηκαν 5 φορτηγά, 5 οδηγοί και 28 δρομολόγια.");
+          }}>Φόρτωση δοκιμαστικών</button>
+          <button className="danger" onClick={()=>{
+            if(!confirm("Θα αφαιρεθούν μόνο τα δοκιμαστικά δεδομένα. Συνέχεια;")) return;
+            setDb(d=>Object.assign({}, d, {
+              vehicles: d.vehicles.filter(x=>!x.demo),
+              drivers: d.drivers.filter(x=>!x.demo),
+              trips: d.trips.filter(x=>!x.demo),
+              services: d.services.filter(x=>!x.demo),
+              fuels: (d.fuels||[]).filter(x=>!x.demo)
+            }));
+          }}>Αφαίρεση δοκιμαστικών</button>
+        </div>
+      </div>
+
+      <div className="card">
+        <h3>Σύνολα</h3>
+        <div className="rowline"><span>Οχήματα</span><b>{db.vehicles.length}</b></div>
+        <div className="rowline"><span>Οδηγοί</span><b>{db.drivers.length}</b></div>
+        <div className="rowline"><span>Δρομολόγια</span><b>{db.trips.length}</b></div>
+        <div className="rowline"><span>Εργασίες συντήρησης</span><b>{db.services.length}</b></div>
+        <div className="rowline"><span>Έκδοση</span><b>{VERSION}</b></div>
+      </div>
+
+      <div className="card">
+        <h3>Διαγραφή όλων</h3>
+        <p className="muted" style={{marginTop:0}}>Σβήνει τα πάντα από αυτή τη συσκευή. Κράτα πρώτα αντίγραφο.</p>
+        <button className="danger wide" onClick={()=>{
+          if(confirm("Σίγουρα; Θα χαθούν όλα τα δεδομένα.") && confirm("Τελευταία επιβεβαίωση.")) setDb(emptyDb());
+        }}>Διαγραφή όλων</button>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- ΕΙΔΟΠΟΙΗΣΕΙΣ ---------- */
+
+function Alerts({db}){
+  const items = [];
+  db.vehicles.forEach(v=>{
+    EGGRAFA.forEach(dcm=>{
+      const val = (v.docs||{})[dcm.k];
+      if(!val) return;
+      const dl = daysLeft(val);
+      if(dl < 0) items.push({lvl:"now", txt: v.plate+" — "+dcm.n+": έληξε στις "+fmtDate(val)});
+      else if(dl <= 30) items.push({lvl:"soon", txt: v.plate+" — "+dcm.n+": λήγει σε "+dl+" ημέρες ("+fmtDate(val)+")"});
+    });
+    oilStatus(v).forEach(o=>{
+      if(o.left < 0) items.push({lvl:"now", txt: v.plate+" — αλλαγή λαδιών: έχει περάσει ("+o.next+")"});
+      else if((o.unit==="χλμ" && o.left<1500) || (o.unit==="ημέρες" && o.left<30))
+        items.push({lvl:"soon", txt: v.plate+" — αλλαγή λαδιών σε "+o.left+" "+o.unit});
+    });
+  });
+  db.drivers.filter(d=>!d.left).forEach(dr=>{
+    EGGRAFA_ODIGOU.forEach(dcm=>{
+      const val = (dr.docs||{})[dcm.k];
+      if(!val) return;
+      const dl = daysLeft(val);
+      if(dl < 0) items.push({lvl:"now", txt: dr.name+" — "+dcm.n+": έληξε στις "+fmtDate(val)});
+      else if(dl <= 30) items.push({lvl:"soon", txt: dr.name+" — "+dcm.n+": λήγει σε "+dl+" ημέρες"});
+    });
+  });
+  if(!items.length) return null;
+  items.sort((a,b)=> (a.lvl==="now"?0:1) - (b.lvl==="now"?0:1));
+  const now = items.filter(i=>i.lvl==="now").length;
+  const soon = items.length - now;
+  return <AlertsBox items={items} now={now} soon={soon} />;
+}
+
+function AlertsBox({items, now, soon}){
+  const [open,setOpen] = useState(false);
+  return (
+    <div>
+      <button className={now ? "redbox" : "redbox amberbox"} onClick={()=>setOpen(true)}>
+        <span>
+          {now ? now + (now===1 ? " επείγον πρόβλημα" : " επείγοντα προβλήματα") : soon + " λήξεις πλησιάζουν"}
+          {now && soon ? " · " + soon + " ακόμα πλησιάζουν" : ""}
+        </span>
+        <span style={{fontWeight:600,fontSize:13}}>Δες τα</span>
+      </button>
+      {open ? (
+        <div className="overlay" onClick={()=>setOpen(false)}>
+          <div className="sheet" onClick={e=>e.stopPropagation()}>
+            <h3>Τι χρειάζεται την προσοχή σου</h3>
+            {items.map((i,k)=>(
+              <div key={k} className={i.lvl==="now" ? "alertbox" : "alertbox soon"}>{i.txt}</div>
+            ))}
+            <button className="dark wide" style={{marginTop:10}} onClick={()=>setOpen(false)}>Κλείσιμο</button>
+          </div>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+/* ---------- ΕΦΑΡΜΟΓΗ ---------- */
+
+function App(){
+  const [db,setDb] = useState(load);
+  const [tab,setTab] = useState("stats");
+
+  useEffect(()=>{
+    try{ localStorage.setItem(KEY, JSON.stringify(db)); }
+    catch(e){ alert("Δεν αποθηκεύτηκαν τα δεδομένα — ο χώρος της συσκευής είναι γεμάτος."); }
+  },[db]);
+
+  const tabs = [
+    {k:"stats", n:"Στατιστικά"},
+    {k:"trips", n:"Δρομολόγια"},
+    {k:"fuel", n:"Καύσιμα"},
+    {k:"service", n:"Συντήρηση"},
+    {k:"fleet", n:"Στόλος"},
+    {k:"file", n:"Αρχείο"}
+  ];
+
+  return (
+    <div>
+      <header>
+        <div className="row">
+          <h1>Στόλος</h1>
+          <span className="ver">{VERSION}</span>
+        </div>
+        <div className="sub">Δρομολόγια, φορτία και συντήρηση οχημάτων</div>
+      </header>
+      <div className="stripe"></div>
+      <main>
+        {tab!=="file" ? <Alerts db={db} /> : null}
+        {tab==="trips" ? <TripsTab db={db} setDb={setDb} /> : null}
+        {tab==="fuel" ? <FuelTab db={db} setDb={setDb} /> : null}
+        {tab==="stats" ? <StatsTab db={db} /> : null}
+        {tab==="service" ? <ServiceTab db={db} setDb={setDb} /> : null}
+        {tab==="fleet" ? <FleetTab db={db} setDb={setDb} /> : null}
+        {tab==="file" ? <FileTab db={db} setDb={setDb} /> : null}
+      </main>
+      <nav>
+        {tabs.map(t=>(
+          <button key={t.k} className={tab===t.k?"on":""} onClick={()=>{setTab(t.k); window.scrollTo(0,0);}}>{t.n}</button>
+        ))}
+      </nav>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+<script>
+if("serviceWorker" in navigator){
+  window.addEventListener("load", function(){
+    navigator.serviceWorker.register("./sw.js").catch(function(){});
+  });
+}
+</script>
+</body>
+</html>
