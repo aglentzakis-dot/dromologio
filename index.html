@@ -586,9 +586,9 @@ function lwBind(o){
   $("#lw_gmap").onclick=e=>{if(!LW.loc&&!LW.addr()){e.preventDefault();toast(T("Γράψε πρώτα διεύθυνση."))}};
   ["lw_addr","f_area","f_street","f_number","f_zip","p_area"].forEach(id=>{const el=$("#"+id);if(el)el.addEventListener("input",upd)});
   // αυτόματη εύρεση: μόλις σταματήσεις να γράφεις διεύθυνση και δεν υπάρχει θέση
-  const pending=()=>!!$("#lw_choices").children.length;
-  const tryAuto=()=>{if(!LW.loc&&!pending()&&LW.addr().length>5)geocodeLW(true)};
-  const auto=()=>{clearTimeout(LW._t);$("#lw_choices").innerHTML="";LW._t=setTimeout(tryAuto,1300)};
+  const pending=()=>!!$("#lw_choices")?.children.length;
+  const tryAuto=()=>{if($("#lw_choices")&&LW&&!LW.loc&&!pending()&&LW.addr().length>5)geocodeLW(true)};
+  const auto=()=>{clearTimeout(LW._t);if($("#lw_choices"))$("#lw_choices").innerHTML="";LW._t=setTimeout(tryAuto,1300)};
   ["lw_addr","f_street","f_number","f_area","f_zip","p_area"].forEach(id=>{const el=$("#"+id);if(el){el.addEventListener("input",auto);el.addEventListener("blur",()=>{clearTimeout(LW._t);setTimeout(tryAuto,150)})}});
   LW.upd=upd;upd();
 }
@@ -616,6 +616,7 @@ async function reverseFill(p,silent){
   }catch(e){LW.upd();if(!silent)toast(T("Η διεύθυνση δεν βρέθηκε από το σημείο. Χρειάζεται σύνδεση στο διαδίκτυο."))}
 }
 async function geocodeLW(silent){
+  if(!LW||!$("#lw_status"))return;
   const raw=($("#lw_addr")?.value||"").trim(),direct=parseCoords(raw);
   if(direct&&direct!=="short"){LW.loc=direct;$("#lw_coords").value=fmtLL(direct);sheetDirty=true;reverseFill(direct);return}
   const q=LW.addr();if(!q){if(!silent)toast(T("Γράψε πρώτα διεύθυνση."));return}
