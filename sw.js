@@ -1,11 +1,11 @@
 /* Δρομολόγιο — service worker
    Χρειάζεται για να εμφανίζονται ειδοποιήσεις στο Android
    και για να ανοίγει η εφαρμογή χωρίς σύνδεση. */
-const CACHE = "dromologio-v1.2";
+const CACHE = "dromologio-v1.6";
 
 self.addEventListener("install", e => {
   self.skipWaiting();
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(["./", "./index.html"]).catch(() => {})));
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(["./", "./index.html", "./manifest.json", "./icon-192.png"]).catch(() => {})));
 });
 
 self.addEventListener("activate", e => {
