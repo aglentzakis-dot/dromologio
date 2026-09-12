@@ -1,11 +1,12 @@
 /* Δρομολόγιο — service worker
-   Χρειάζεται για να εμφανίζονται ειδοποιήσεις στο Android
-   και για να ανοίγει η εφαρμογή χωρίς σύνδεση. */
-const CACHE = "dromologio-v1.6";
+   Ρόλος: ειδοποιήσεις στο Android και άνοιγμα χωρίς σύνδεση.
+   Η σελίδα ΔΕΝ σερβίρεται ποτέ από τη μνήμη όταν υπάρχει δίκτυο,
+   ώστε να βλέπεις πάντα την τελευταία έκδοση. */
+const CACHE = "dromologio-1.9";
 
 self.addEventListener("install", e => {
   self.skipWaiting();
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(["./", "./index.html", "./manifest.json", "./icon-192.png"]).catch(() => {})));
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(["./manifest.json", "./icon-192.png"]).catch(() => {})));
 });
 
 self.addEventListener("activate", e => {
@@ -16,10 +17,29 @@ self.addEventListener("activate", e => {
   );
 });
 
-/* Δίκτυο πρώτα, με το αποθηκευμένο αντίγραφο ως εφεδρεία όταν δεν υπάρχει σύνδεση. */
+self.addEventListener("message", e => {
+  if (e.data && e.data.type === "skipWaiting") self.skipWaiting();
+});
+
 self.addEventListener("fetch", e => {
   const r = e.request;
   if (r.method !== "GET" || new URL(r.url).origin !== location.origin) return;
+  const isPage = r.mode === "navigate" || (r.destination === "" && /\.html?($|\?)/.test(r.url));
+
+  if (isPage) {
+    // Πάντα από το δίκτυο· η μνήμη μόνο ως εφεδρεία χωρίς σύνδεση.
+    e.respondWith(
+      fetch(new Request(r.url, { cache: "reload", credentials: "same-origin" }))
+        .then(res => {
+          const copy = res.clone();
+          caches.open(CACHE).then(c => c.put("./index.html", copy)).catch(() => {});
+          return res;
+        })
+        .catch(() => caches.match("./index.html").then(m => m || Response.error()))
+    );
+    return;
+  }
+
   e.respondWith(
     fetch(r)
       .then(res => {
@@ -27,11 +47,10 @@ self.addEventListener("fetch", e => {
         caches.open(CACHE).then(c => c.put(r, copy)).catch(() => {});
         return res;
       })
-      .catch(() => caches.match(r).then(m => m || caches.match("./index.html")))
+      .catch(() => caches.match(r))
   );
 });
 
-/* Πάτημα στην ειδοποίηση: φέρνει μπροστά την ανοιχτή εφαρμογή ή την ανοίγει. */
 self.addEventListener("notificationclick", e => {
   e.notification.close();
   e.waitUntil(
