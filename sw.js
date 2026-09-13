@@ -2,7 +2,7 @@
    Ρόλος: ειδοποιήσεις στο Android και άνοιγμα χωρίς σύνδεση.
    Η σελίδα ΔΕΝ σερβίρεται ποτέ από τη μνήμη όταν υπάρχει δίκτυο,
    ώστε να βλέπεις πάντα την τελευταία έκδοση. */
-const CACHE = "dromologio-1.9";
+const CACHE = "dromologio-2.8";
 
 self.addEventListener("install", e => {
   self.skipWaiting();
