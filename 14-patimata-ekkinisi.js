@@ -17,8 +17,15 @@ document.addEventListener("click",e=>{
   const el=e.target.closest("[data-act]");if(!el)return;const a=el.dataset.act,id=el.dataset.id;
   switch(a){
     case"noop":return;
-    case"go":if($("#modal").classList.contains("open"))closeSheet();view=el.dataset.view;clientId=null;if(view==="tasks")taskFilter="open";render();window.scrollTo(0,0);break;
-    case"openClient":clientId=id;view="client";render();window.scrollTo(0,0);break;
+    case"go":{if($("#modal").classList.contains("open"))closeSheet();
+      // Το «‹ Πελάτες» κ.λπ. μέσα στη σελίδα λειτουργεί σαν «πίσω»: γυρνά στο ίδιο σημείο της προηγούμενης οθόνης.
+      if(el.classList.contains("back")&&navStack.length&&navStack[navStack.length-1].view===el.dataset.view){navBack();break}
+      if(el.dataset.view===view&&!clientId){window.scrollTo(0,0);break}
+      navPush();view=el.dataset.view;clientId=null;if(view==="tasks")taskFilter="open";render();window.scrollTo(0,0);break}
+    case"openClient":navPush();clientId=id;view="client";render();window.scrollTo(0,0);break;
+    case"allEntries":allEntriesSheet();break;
+    case"demoOn":enterDemo();break;
+    case"demoOff":exitDemo();break;
     case"editClient":clientForm(getClient(id));break;
     case"newPlace":{const c=getClient(id);if(c)clientPlaceForm(c,null,null);break}
     case"editPlace":{const c=getClient(id);if(c)clientPlaceForm(c,+el.dataset.i,null);break}
@@ -216,6 +223,16 @@ document.addEventListener("click",e=>{
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){if(photoOpen())closePhotoView();else if(jobsMapOpen())closeJobsMap();else if(mapOpen())closeMap();else if($("#modal").classList.contains("open"))cancelSheet()}});
 document.addEventListener("visibilitychange",()=>{if(!document.hidden){render();checkDue()}});
 
+/* ---------- Μνήμη πλοήγησης: το «πίσω» γυρνά στην προηγούμενη οθόνη, στο ίδιο ύψος που ήσουν ---------- */
+const navStack=[];
+function navPush(){navStack.push({view,clientId,taskFilter,y:window.scrollY});if(navStack.length>40)navStack.shift()}
+function navBack(){
+  const s=navStack.pop();if(!s)return false;
+  view=s.view;clientId=s.clientId;if(s.taskFilter)taskFilter=s.taskFilter;render();
+  // δύο φορές: μία αμέσως και μία αφού «κάτσει» η σελίδα (εικόνες, γραμματοσειρές)
+  requestAnimationFrame(()=>window.scrollTo(0,s.y));setTimeout(()=>window.scrollTo(0,s.y),120);
+  return true;
+}
 /* ---------- Κουμπί «πίσω» του κινητού ---------- */
 // Το Chrome προσπερνά εγγραφές ιστορικού που μπήκαν χωρίς άγγιγμα, γι' αυτό τις προσθέτουμε όταν αγγίζεις την οθόνη.
 const BUF=3;let depth=0,leaving=false;
@@ -232,6 +249,7 @@ window.addEventListener("popstate",e=>{
   if(mapOpen()){closeMap();return}
   if($("#alert").classList.contains("open"))return;
   if($("#modal").classList.contains("open")){cancelSheet();return}
+  if(navBack())return;
   if(view==="client"){view="clients";clientId=null;render();return}
   if(view!=="today"){view="today";clientId=null;render();window.scrollTo(0,0);return}
   $("#exitT").textContent=T("Έξοδος από την εφαρμογή;");$("#exitS").textContent=T("Τα δεδομένα σου μένουν αποθηκευμένα.");

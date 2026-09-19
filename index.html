@@ -18,8 +18,8 @@
    Ανεβαίνει κατά 0.1 σε κάθε αλλαγή, όσο μικρή κι αν είναι.
    Μένει ΕΔΩ, στο index.html: από αυτή τη γραμμή καταλαβαίνει το κινητό ότι υπάρχει νέα έκδοση
    και ταυτόχρονα φέρνει φρέσκα όλα τα υπόλοιπα αρχεία. */
-const APP_VERSION="9.2";
-const APP_BUILD="19/09/2026 12:10";
+const APP_VERSION="9.4";
+const APP_BUILD="19/09/2026 13:10";
 document.write('<link rel="stylesheet" href="style.css?v='+APP_VERSION+'">');
 </script>
 </head>
@@ -76,7 +76,7 @@ document.write('<link rel="stylesheet" href="style.css?v='+APP_VERSION+'">');
 <datalist id="placeList"></datalist>
 <script>
 /* Τα κομμάτια της εφαρμογής, με τη σειρά που πρέπει να φορτωθούν (όλα δίπλα στο index.html). */
-const APP_FILES=["eikones.js", "lexiko-agglika.js", "01-vasika.js", "02-glossa-apothikeusi.js", "03-eikonidia.js", "04-xartes.js", "05-simera-listes.js", "06-pelates-tameio.js", "07-diadromi.js", "08-parathyra.js", "09-forma-ergasias.js", "10-ypenthymiseis.js", "11-fotometra.js", "12-rythmiseis.js", "13-antigrafa.js", "14-patimata-ekkinisi.js", "15-prosfores-arxeio.js"];
+const APP_FILES=["eikones.js", "lexiko-agglika.js", "01-vasika.js", "02-glossa-apothikeusi.js", "03-eikonidia.js", "04-xartes.js", "05-simera-listes.js", "06-pelates-tameio.js", "07-diadromi.js", "08-parathyra.js", "09-forma-ergasias.js", "10-ypenthymiseis.js", "11-fotometra.js", "12-rythmiseis.js", "13-antigrafa.js", "14-patimata-ekkinisi.js", "15-prosfores-arxeio.js", "16-epideixi.js"];
 APP_FILES.forEach(f=>document.write('<script src="'+f+'?v='+APP_VERSION+'"><\/script>'));
 </script>
 <script src="https://aglentzakis-dot.github.io/fotometra/embed.js"></script>

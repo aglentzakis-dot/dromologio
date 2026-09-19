@@ -213,7 +213,7 @@ function settingsGroupSheet(group){
         <div class="grow"><div class="title">${esc(a.name)}</div>${a.address||a.area?`<div class="meta"><span>${esc([a.address,a.area].filter(Boolean).join(", "))}</span></div>`:""}</div>
         <span class="note">${T("Αλλαγή")}</span></div>`).join("")||`<div class="empty">${T("Δεν έχεις άλλες τοποθεσίες.")}</div>`)}
     <button class="btn ghost" data-act="placeEdit" data-kind="place" style="width:100%;margin-top:8px">+ ${T("Νέα τοποθεσία")}</button>
-    `:""}${group==="data"?`<h3 class="sub">${T("Εγκατάσταση στο κινητό")}</h3>
+    `:""}${group==="data"?demoSettingsHTML():""}${group==="data"?`<h3 class="sub">${T("Εγκατάσταση στο κινητό")}</h3>
     <p class="note" id="s_instNote">${installNote()}</p>
     <button class="btn amber" data-act="install" style="width:100%">${ic("plus",18)} ${isIOS()?T("Οδηγίες εγκατάστασης (iPhone)"):T("Εγκατάσταση εφαρμογής")}</button>
     `:""}${group==="work"?`<h3 class="sub">${T("Διαδρομή")}</h3>

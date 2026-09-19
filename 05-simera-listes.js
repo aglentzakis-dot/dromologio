@@ -186,7 +186,8 @@ function remRow(r){
 }
 
 /* ---------- Σήμερα ---------- */
-function vToday(){
+function vToday(){return (typeof demoCardHTML==="function"?demoCardHTML():"")+vTodayMain()}
+function vTodayMain(){
   const now=new Date(),open=S.tasks.filter(isOpen);
   const waiting=open.filter(isWaiting).sort(byDue);
   const someday=open.filter(isSomeday).sort(byDue);

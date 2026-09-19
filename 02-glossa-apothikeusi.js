@@ -40,7 +40,9 @@ const MYLOC=()=>T("Η θέση μου");
 const distTxt=m=>m<950?T("{n} μέτρα",{n:Math.max(50,Math.round(m/50)*50)}):T("{n} χλμ.",{n:(m/1000).toFixed(1).replace(".",",")});
 
 /* ---------- Αποθήκευση στη συσκευή ---------- */
-const KEY="stodromo-v1";const DKEY="stodromo-draft";let memCopy=null;
+// Στην επίδειξη (16-epideixi.js) διαβάζουμε/γράφουμε σε ξεχωριστή αποθήκευση· τα πραγματικά δεδομένα μένουν ανέγγιχτα.
+const DEMO_MODE=(()=>{try{return localStorage.getItem("stodromo-mode")==="demo"}catch(e){return false}})();
+const KEY=DEMO_MODE?"stodromo-demo":"stodromo-v1";const DKEY=DEMO_MODE?"stodromo-draft-demo":"stodromo-draft";let memCopy=null;
 function saveDraft(kind,data){try{localStorage.setItem(DKEY,JSON.stringify({kind,data,at:Date.now()}))}catch(e){}}
 function clearDraft(){try{localStorage.removeItem(DKEY)}catch(e){}}
 function getDraft(){try{const x=JSON.parse(localStorage.getItem(DKEY)||"null");
