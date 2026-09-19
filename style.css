@@ -638,3 +638,10 @@ body.typing .sh-body::after{content:"";display:block;height:45vh}
 .demobar button{border:0;background:#fff;color:#8A4FBF;border-radius:999px;padding:5px 10px;font-weight:800;font-size:12px}
 body.demo main{padding-top:40px}
 .tradecard{border-color:var(--loc);background:color-mix(in srgb,var(--loc) 8%,var(--card))}
+.trsel{margin-top:10px;padding:10px 12px;border-radius:12px;background:color-mix(in srgb,var(--loc) 8%,var(--card));border:1px solid var(--line)}
+.trsel b{display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:6px}
+#tr_chosen{display:flex;flex-wrap:wrap;gap:6px}
+.trchip{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1.5px solid var(--green);border-radius:999px;padding:5px 6px 5px 11px;font-size:13.5px;font-weight:700}
+.trchip b{display:inline;margin:0;font-size:17px;line-height:1;color:var(--muted);cursor:pointer;padding:0 4px}
+.trbox{width:22px;height:22px;flex:none;border:1.5px solid var(--line);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff}
+.optrow.on .trbox{background:var(--green);border-color:var(--green)}
