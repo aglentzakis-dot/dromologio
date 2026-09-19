@@ -95,6 +95,7 @@ function vClient(){
   h+=sec(T("Ανοιχτές εργασίες"))+
     `<button class="btn amber wide gobtn" style="margin:0 0 8px" data-act="newTask" data-client="${c.id}">${ic("plus",20)}${T("Καταχώρηση νέας εργασίας")}</button>`+
     panel(open.length?open.map(x=>taskRow(x,false,false,true)).join(""):`<div class="empty">${T("Καμία ανοιχτή εργασία για αυτόν τον πελάτη.")}</div>`);
+  {const no=offersCount(c.id);if(no)h+=`<button class="btn ghost wide" data-act="offerArchive" data-client="${c.id}" style="margin:12px 0 0">${ic("archive",18)} ${T("Προσφορές σε αυτόν τον πελάτη")} (${no})</button>`}
   h+=sec(T("Ιστορικό δουλειών"))+panel(done.length?done.map(x=>`<div class="row" data-act="editTask" data-id="${x.id}">
       <div class="grow"><div class="title">${esc(x.title)}</div>
       <div class="meta"><span>${T("Ολοκληρώθηκε")} ${fmtDay(x.doneAt||x.end||x.start)}</span>${x.amount?`<span>${money(x.amount)}</span>`:""}</div>
@@ -113,6 +114,7 @@ function vTasks(){
   const list=S.tasks.filter(alive).filter(x=>taskFilter==="open"?isOpen(x):taskFilter==="today"?isOpen(x)&&touchesToday(x):taskFilter==="late"?taskState(x)==="late":taskFilter==="waiting"?isWaiting(x):taskFilter==="someday"?isSomeday(x):taskFilter==="noloc"?isOpen(x)&&!taskLoc(x):taskFilter==="cancelled"?x.status==="cancelled":taskFilter==="done"?x.status==="done":true)
     .sort(taskFilter==="done"?(a,b)=>(b.doneAt||0)-(a.doneAt||0):byDue);
   let h=`<button class="filterbar" data-act="filterSheet" data-kind="tasks">${ic("filter",18)}<span>${T(F.find(x=>x[0]===taskFilter)[1])}</span><i>▾</i><b class="fcnt">${list.length}</b></button>`;
+  if(taskFilter==="waiting"||taskFilter==="all")h+=`<button class="btn ghost wide" data-act="offerArchive" style="margin:0 0 10px">${ic("archive",18)} ${T("Αρχείο προσφορών")} (${offersCount()})</button>`;
   if(!list.length)return h+panel(`<div class="empty">${S.tasks.length?T("Καμία εργασία σε αυτή την προβολή."):T("Δεν έχεις εργασίες ακόμα. Πάτα + για να προσθέσεις.")}</div>`);
   if(groupByArea){
     const g=new Map();list.forEach(x=>{const L=taskLoc(x),k=L?L.label:T("Χωρίς τοποθεσία");if(!g.has(k))g.set(k,[]);g.get(k).push(x)});
@@ -324,7 +326,7 @@ function entryForm(e,preset){
       `<div class="picksec">${T("Κατηγορία")}</div>`+
       (list.map(x=>pickRow(x.id,T(x.name),e.kind)).join("")||`<p class="note">${T("Δεν έχεις είδη εδώ.")}</p>`)+
       `<button type="button" class="pickrow editrow" data-editkinds="1">${ic("edit",16)} ${T("Επεξεργασία ειδών")}</button>`+
-      (tips.length?`<div class="picksec">${T("Γρήγορη σημείωση")}</div>`+tips.map(t=>`<button type="button" class="pickrow" data-tip="${esc(t)}">${esc(t)}</button>`).join(""):"")+
+      (tips.length?`<div class="picksec">${T("Γρήγορη σημείωση")}</div>`+tips.map(t=>`<button type="button" class="pickrow" data-tip="${esc(T(t))}">${esc(T(t))}</button>`).join(""):"")+
       `<button type="button" class="pickrow editrow" data-edittips="1">${ic("edit",16)} ${T("Επεξεργασία προτάσεων")} (${dir==="in"?T("έσοδα"):T("έξοδα")})</button>`;
     $("#e_dir").querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.v===dir));
   };
@@ -368,7 +370,7 @@ function taskTipsSheet(back){
   const tips=S.settings.taskTips;
   openSheet({title:T("Προτάσεις τίτλου εργασίας"),cancelLabel:back?T("Πίσω"):T("Κλείσιμο"),onCancel:back||null,
     body:panel(tips.map((t,i)=>`<div class="row listedit" style="align-items:center">
-        <div class="grow title">${esc(t)}</div>
+        <div class="grow title">${esc(T(t))}</div>
         <button class="mv" data-tipmv2="${i}" data-dir="up">▲</button><button class="mv" data-tipmv2="${i}" data-dir="down">▼</button>
         <button class="x bin" data-tipdel2="${i}" aria-label="${T("Διαγραφή")}">${ic("trash",18)}</button></div>`).join("")||`<div class="empty">${T("Δεν έχεις προτάσεις ακόμα.")}</div>`)+
       `<div class="inrow" style="margin-top:10px"><input id="tip2_new" placeholder="${T("Νέα πρόταση, π.χ. Ραντεβού")}"><button class="btn ghost" id="tip2_add">${T("Προσθήκη")}</button></div>`});
@@ -456,7 +458,7 @@ $("#photoDlg").addEventListener("click",e=>{if(e.target.id==="photoDlg")closePho
 
 function tipsListHTML(list,dd){
   return panel(list.map((t,i)=>`<div class="row listedit" style="align-items:center">
-      <button class="grow" data-tip="${i}" data-tipdir="${dd}" style="text-align:left;background:none;border:0;font-weight:700;font-size:15.5px;color:var(--ink)">${esc(t)}</button>
+      <button class="grow" data-tip="${i}" data-tipdir="${dd}" style="text-align:left;background:none;border:0;font-weight:700;font-size:15.5px;color:var(--ink)">${esc(T(t))}</button>
       <button class="mv" data-tipmv="${i}" data-tipdir="${dd}" data-mvdir="up">▲</button><button class="mv" data-tipmv="${i}" data-tipdir="${dd}" data-mvdir="down">▼</button>
       <button class="x bin" data-tipdel="${i}" data-tipdir="${dd}" aria-label="${T("Διαγραφή")}">${ic("trash",18)}</button></div>`).join("")||`<div class="empty">${T("Δεν έχεις έτοιμες σημειώσεις.")}</div>`)+
     `<div class="inrow" style="margin:8px 0 4px"><input id="tip_new_${dd}" placeholder="${T("Νέα έτοιμη σημείωση")}"><button class="btn ghost" data-tipadd="${dd}">${T("Προσθήκη")}</button></div>`;
@@ -468,7 +470,7 @@ function tipsSheet(dir,pick,back){
       sec(T("Έσοδα"))+tipsListHTML(S.settings.noteTipsIn,"in")+sec(T("Έξοδα"))+tipsListHTML(S.settings.noteTipsOut,"out")});
   $("#shBody").onclick=e=>{
     const p=e.target.closest("[data-tip]"),m=e.target.closest("[data-tipmv]"),d=e.target.closest("[data-tipdel]"),a=e.target.closest("[data-tipadd]");
-    if(p){const tips=p.dataset.tipdir==="in"?S.settings.noteTipsIn:S.settings.noteTipsOut;const t=tips[+p.dataset.tip];closeSheet();if(pick)pick(t);if(back)back();return}
+    if(p){const tips=p.dataset.tipdir==="in"?S.settings.noteTipsIn:S.settings.noteTipsOut;const t=T(tips[+p.dataset.tip]);closeSheet();if(pick)pick(t);if(back)back();return}
     if(m){const tips=m.dataset.tipdir==="in"?S.settings.noteTipsIn:S.settings.noteTipsOut;const i=+m.dataset.tipmv,j=i+(m.dataset.mvdir==="up"?-1:1);
       if(j<0||j>=tips.length)return;[tips[i],tips[j]]=[tips[j],tips[i]];write();tipsSheet(dir,pick,back);return}
     if(d){const tips=d.dataset.tipdir==="in"?S.settings.noteTipsIn:S.settings.noteTipsOut;const i=+d.dataset.tipdel;if(!confirm(T("Να σβηστεί;")))return;tips.splice(i,1);write();tipsSheet(dir,pick,back);return}

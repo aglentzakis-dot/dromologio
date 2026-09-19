@@ -341,8 +341,8 @@ const PCOLORS=["#7FA8D9","#E8A49C","#8FC7AE","#C0A8DE","#EBC27D","#8FC4CC","#E3A
 function peopleSheet(back){
   openSheet({title:T("Ποιοι δουλεύουν"),cancelLabel:T("Πίσω"),onCancel:back||null,body:
     `<p class="note">${T("Ό,τι προσθέσεις εδώ εμφανίζεται στη νέα εργασία, με το χρώμα του.")}</p>`+
-    panel(people().map((p,i)=>`<div class="row" style="cursor:default;align-items:center"><span class="who" style="background:${p.color};width:26px;height:26px">${esc(initials(p.name))}</span>
-      <div class="grow"><input class="pname" data-i="${i}" value="${esc(p.name)}" style="border:0;padding:6px 0;font-weight:700;background:none"></div>
+    panel(people().map((p,i)=>`<div class="row" style="cursor:default;align-items:center"><span class="who" style="background:${p.color};width:26px;height:26px">${esc(initials(T(p.name)))}</span>
+      <div class="grow"><input class="pname" data-i="${i}" value="${esc(T(p.name))}" style="border:0;padding:6px 0;font-weight:700;background:none"></div>
       <button class="swatch" data-pal="${i}" style="background:${p.color}" aria-label="${T("Χρώμα")}"></button>
       ${people().length>1?`<button class="x bin" data-pdel="${i}" aria-label="${T("Διαγραφή")}">${ic("trash",19)}</button>`:""}</div>`).join(""))+
     `<div class="inrow" style="margin-top:10px"><input id="p_new" placeholder="${T("Όνομα ή ομάδα")}" autocomplete="off"><button class="btn ghost" id="p_add">${T("Προσθήκη")}</button></div>

@@ -368,25 +368,47 @@ function offerOf(x,dr){
 }
 const offerAmt=o=>{const n=parseFloat(String(o.amount??"").replace(/\s/g,"").replace(",","."));return isFinite(n)?n:0};
 const offerUntil=o=>{const d=new Date(o.date||Date.now());d.setDate(d.getDate()+(+o.valid||30));return d};
-function offerChipsHTML(kind,list,sel){
-  const chips=list.map((i,n)=>`<button type="button" class="ochip${sel.includes(i.t)?" on":""}" data-t="${esc(i.t)}" data-n="${n}">
-      <i class="ock">✓</i><span>${esc(T(i.l))}</span>${i.c?`<b class="ocdel" data-del="${n}" aria-label="${T("Διαγραφή")}">×</b>`:""}</button>`).join("");
-  return `<div class="ochips" id="of_${kind}">${chips}</div>
+// Οι λίστες «Τι περιλαμβάνει» / «Δεν περιλαμβάνει»: πάτημα για επιλογή, και «Επεξεργασία λίστας»
+// για μετονομασία, αλλαγή σειράς, διαγραφή (και των βασικών) και επαναφορά των βασικών.
+// Η σειρά της λίστας είναι και η σειρά που τυπώνονται στο έγγραφο της προσφοράς.
+function offerChipsHTML(kind,list,sel,editing){
+  if(editing){
+    const rows=list.map((i,n)=>`<div class="oerow" data-n="${n}">
+        <div class="oefields"><input class="oe_l" data-n="${n}" value="${esc(T(i.l))}" placeholder="${T("Σύντομο όνομα")}" aria-label="${T("Σύντομο όνομα")}" autocomplete="off">
+          <input class="oe_t" data-n="${n}" value="${esc(T(i.t))}" placeholder="${T("Κείμενο στην προσφορά")}" aria-label="${T("Κείμενο στην προσφορά")}" autocomplete="off"></div>
+        <div class="oebtns"><button type="button" class="oemv" data-mv="up" data-n="${n}" aria-label="${T("Πάνω")}" ${n?"":"disabled"}>▲</button>
+          <button type="button" class="oemv" data-mv="down" data-n="${n}" aria-label="${T("Κάτω")}" ${n<list.length-1?"":"disabled"}>▼</button>
+          <button type="button" class="x bin" data-rm="${n}" aria-label="${T("Διαγραφή")}">${ic("trash",17)}</button></div></div>`).join("");
+    return `<div class="oebox" id="ofbox_${kind}">
+      <p class="note" style="margin:0 0 8px">${T("Πάνω: το όνομα στο κουμπί. Κάτω: το κείμενο που γράφεται στην προσφορά. Με τα βελάκια αλλάζεις σειρά.")}</p>
+      ${rows||`<div class="empty">${T("Η λίστα είναι άδεια.")}</div>`}
+      <div class="inrow" style="margin-top:8px"><input id="of_${kind}_new" placeholder="${T("Πρόσθεσε δικό σου…")}" autocomplete="off">
+        <button type="button" class="btn ghost" data-add="${kind}" style="padding:10px 14px">${ic("plus",18)}</button></div>
+      <div class="oefoot"><button type="button" class="linkbtn" data-reset="${kind}">${T("Επαναφορά βασικών")}</button>
+        <button type="button" class="btn primary small" data-editdone="${kind}">${T("Τέλος")}</button></div></div>`;
+  }
+  const chips=list.map((i,n)=>`<button type="button" class="ochip${sel.has(i.t)?" on":""}" data-t="${esc(i.t)}" data-n="${n}">
+      <i class="ock">✓</i><span>${esc(T(i.l))}</span></button>`).join("");
+  return `<div class="oebox" id="ofbox_${kind}"><div class="ochips" id="of_${kind}">${chips}</div>
     <div class="inrow" style="margin-top:8px"><input id="of_${kind}_new" placeholder="${T("Πρόσθεσε δικό σου…")}" autocomplete="off">
-    <button type="button" class="btn ghost" data-add="${kind}" style="padding:10px 14px">${ic("plus",18)}</button></div>`;
+    <button type="button" class="btn ghost" data-add="${kind}" style="padding:10px 14px">${ic("plus",18)}</button></div>
+    <button type="button" class="linkbtn" data-edit="${kind}">${ic("edit",14)} ${T("Επεξεργασία λίστας (όνομα, σειρά, διαγραφή)")}</button></div>`;
 }
 function offerSheet(x,back,dr){
   const o=offerOf(x,dr);
   if(o.sentAt)return offerLockedSheet(x,back,dr);
   const L=offerLists();
   const items=(x.check||[]).map(i=>i.text).filter(Boolean);
+  // Οι επιλογές κρατιούνται εδώ (όχι στα κουμπιά), ώστε να μη χάνονται όσο επεξεργάζεσαι τη λίστα.
+  const sel={incl:new Set(o.incl),excl:new Set(o.excl)},editing={incl:false,excl:false};
+  const picked=k=>L[k].filter(i=>sel[k].has(i.t)).map(i=>i.t);
+  const others=clientOffersHTML(x);
   openSheet({title:o.no?T("Προσφορά Αρ. {n}",{n:o.no}):T("Νέα προσφορά"),cancelLabel:back?T("Πίσω"):T("Κλείσιμο"),onCancel:back||null,
     saveLabel:T("Δες την προσφορά"),saveStyle:"amber",
     onSave:()=>{
-      const pick=k=>[...document.querySelectorAll(`#of_${k} .ochip.on`)].map(b=>b.dataset.t);
       o.client=val("of_client");o.addr=val("of_addr");o.title=val("of_title");
       o.amount=val("of_amount");o.valid=Math.max(1,Math.min(365,+val("of_valid")||30));
-      o.incl=pick("incl");o.excl=pick("excl");
+      o.incl=picked("incl");o.excl=picked("excl");
       o.inclExtra=val("of_inclx");o.exclExtra=val("of_exclx");o.terms=($("#of_terms").value||"").trim();
       o.showItems=!!($("#of_items")&&$("#of_items").checked);
       o.items=o.showItems?items.slice():[];
@@ -408,19 +430,19 @@ function offerSheet(x,back,dr){
       <input id="of_title" value="${esc(o.title)}" autocomplete="off">
       <div class="ofgroup">
         <div class="ofhead">${T("Τι περιλαμβάνει")}<small>${T("πάτα για να το βάλεις ή να το βγάλεις")}</small></div>
-        ${offerChipsHTML("incl",L.incl,o.incl)}
+        ${offerChipsHTML("incl",L.incl,sel.incl,false)}
         <label for="of_inclx">${T("Πρόσθετες λεπτομέρειες")}</label>
         <textarea id="of_inclx" rows="3" placeholder="${T("π.χ. πλακάκια 60×60 της επιλογής του πελάτη, κόλλα, αρμόστοκος…")}">${esc(o.inclExtra)}</textarea>
         ${items.length?`<label class="toggle" style="margin-top:12px"><input type="checkbox" id="of_items" ${o.showItems!==false?"checked":""}>${T("Να μπουν και τα υλικά από τη λίστα ελέγχου")} (${items.length})</label>`:""}
       </div>
       <div class="ofgroup">
         <div class="ofhead">${T("Δεν περιλαμβάνει")}<small>${T("προστατεύει κι εσένα και τον πελάτη")}</small></div>
-        ${offerChipsHTML("excl",L.excl,o.excl)}
+        ${offerChipsHTML("excl",L.excl,sel.excl,false)}
         <label for="of_exclx">${T("Άλλα που δεν περιλαμβάνονται")}</label>
         <textarea id="of_exclx" rows="2">${esc(o.exclExtra)}</textarea>
       </div>
       <label for="of_terms">${T("Όροι")}</label>
-      <textarea id="of_terms" rows="5">${esc(o.terms)}</textarea>
+      <textarea id="of_terms" rows="5">${esc(T(o.terms))}</textarea>
       <button type="button" class="linkbtn" id="of_termsDef">${T("Επαναφορά στους βασικούς όρους")}</button>
       <div class="oftotal">
         <div class="two">
@@ -429,27 +451,58 @@ function offerSheet(x,back,dr){
           <div><label for="of_valid">${T("Ισχύς (ημέρες)")}</label>
             <input id="of_valid" type="number" inputmode="numeric" min="1" max="365" value="${o.valid}"></div>
         </div>
-      </div>`});
+      </div>${others}`});
   const body=$("#shBody");
+  const redraw=kind=>{const box=$("#ofbox_"+kind);if(box)box.outerHTML=offerChipsHTML(kind,L[kind],sel[kind],editing[kind])};
+  // Όταν αλλάζει το κείμενο ενός στοιχείου, η επιλογή και οι «τελευταίες επιλογές» ακολουθούν το νέο κείμενο.
+  const renameSel=(kind,oldT,newT)=>{
+    if(oldT===newT)return;
+    if(sel[kind].has(oldT)){sel[kind].delete(oldT);sel[kind].add(newT)}
+    const lastK=kind==="incl"?"offerInclLast":"offerExclLast",last=S.settings[lastK];
+    if(Array.isArray(last)){const k=last.indexOf(oldT);if(k>=0)last[k]=newT}
+  };
+  body.addEventListener("input",e=>{
+    const inp=e.target.closest(".oe_l,.oe_t");if(!inp)return;
+    const kind=inp.closest(".oebox").id.slice(6),it=L[kind][+inp.dataset.n];if(!it)return;
+    const v=inp.value.trim();if(!v)return;
+    if(inp.classList.contains("oe_l"))it.l=v;
+    else{renameSel(kind,it.t,v);it.t=v}
+    it.c=1;sheetDirty=true;
+  });
   body.addEventListener("click",e=>{
-    const del=e.target.closest("[data-del]");
-    if(del){e.stopPropagation();const box=del.closest(".ochips"),kind=box.id.slice(3),list=L[kind],n=+del.dataset.del;
-      const it=list[n];if(!it||!it.c)return;
-      if(!confirm(T("Να σβηστεί το «{t}» από τις επιλογές;",{t:it.l})))return;
-      list.splice(n,1);persist();
-      box.outerHTML=offerChipsHTML(kind,list,[...box.querySelectorAll(".ochip.on")].map(b=>b.dataset.t)).split('<div class="inrow"')[0];
+    const ed=e.target.closest("[data-edit]");
+    if(ed){const k=ed.dataset.edit;editing[k]=true;redraw(k);return}
+    const dn=e.target.closest("[data-editdone]");
+    if(dn){const k=dn.dataset.editdone;editing[k]=false;persist();redraw(k);return}
+    const mv=e.target.closest("[data-mv]");
+    if(mv){const kind=mv.closest(".oebox").id.slice(6),list=L[kind],i=+mv.dataset.n,j=i+(mv.dataset.mv==="up"?-1:1);
+      if(j<0||j>=list.length)return;[list[i],list[j]]=[list[j],list[i]];persist();redraw(kind);sheetDirty=true;
+      const again=$(`#ofbox_${kind} [data-mv="${mv.dataset.mv}"][data-n="${j}"]`);if(again&&!again.disabled)again.focus();
       return}
+    const rm=e.target.closest("[data-rm]");
+    if(rm){const kind=rm.closest(".oebox").id.slice(6),list=L[kind],n=+rm.dataset.rm,it=list[n];if(!it)return;
+      if(!confirm(T("Να σβηστεί το «{t}» από τις επιλογές;",{t:T(it.l)})))return;
+      sel[kind].delete(it.t);list.splice(n,1);persist();redraw(kind);sheetDirty=true;return}
+    const rs=e.target.closest("[data-reset]");
+    if(rs){const kind=rs.dataset.reset,list=L[kind],defs=kind==="incl"?OFFER_INCL_DEF:OFFER_EXCL_DEF;
+      const have=new Set(list.map(i=>i.t));let added=0;
+      defs.forEach(d=>{if(!have.has(d.t)){list.push({l:d.l,t:d.t});added++}});
+      persist();redraw(kind);toast(added?T("Προστέθηκαν ξανά {n} βασικά στοιχεία στο τέλος της λίστας.",{n:added}):T("Όλα τα βασικά στοιχεία υπάρχουν ήδη."));return}
     const chip=e.target.closest(".ochip");
-    if(chip){chip.classList.toggle("on");sheetDirty=true;return}
+    if(chip){const kind=chip.closest(".oebox").id.slice(6),t=chip.dataset.t;
+      if(sel[kind].has(t))sel[kind].delete(t);else sel[kind].add(t);
+      chip.classList.toggle("on",sel[kind].has(t));sheetDirty=true;return}
     const add=e.target.closest("[data-add]");
     if(add){const kind=add.dataset.add,inp=$("#of_"+kind+"_new"),t=(inp.value||"").trim();if(!t){inp.focus();return}
       const list=L[kind];
       let n=list.findIndex(i=>i.t.toLowerCase()===t.toLowerCase()||i.l.toLowerCase()===t.toLowerCase());
       if(n<0){list.push({l:t,t,c:1});n=list.length-1;persist()}
-      const box=$("#of_"+kind),on=new Set([...box.querySelectorAll(".ochip.on")].map(b=>b.dataset.t));on.add(list[n].t);
-      box.outerHTML=offerChipsHTML(kind,list,[...on]).split('<div class="inrow"')[0];
-      inp.value="";sheetDirty=true;return}
-    if(e.target.closest("#of_termsDef")){$("#of_terms").value=OFFER_TERMS_DEF;sheetDirty=true}
+      sel[kind].add(list[n].t);redraw(kind);sheetDirty=true;
+      const again=$("#of_"+kind+"_new");if(again&&editing[kind])again.focus();
+      return}
+    if(e.target.closest("#of_termsDef")){$("#of_terms").value=T(OFFER_TERMS_DEF);sheetDirty=true;return}
+    const oh=e.target.closest("[data-coffer]");
+    if(oh){const f=offerById(oh.dataset.coffer);if(f)showOffer(f.x,f.o)}
   });
   body.addEventListener("keydown",e=>{if(e.key==="Enter"&&/^of_(incl|excl)_new$/.test(e.target.id)){e.preventDefault();body.querySelector(`[data-add="${e.target.id.slice(3,7)}"]`).click()}});
 }
@@ -476,10 +529,11 @@ function offerLockedSheet(x,back,dr,justSent){
       ${hist.length?sec(T("Προηγούμενες προσφορές"))+panel(hist.map((h,i)=>`<div class="row" data-hist="${hist.length-1-i}" style="align-items:center">
           <div class="avatar" style="font-size:13px">${h.no}</div><div class="grow"><div class="title">${esc(h.title||T("Προσφορά"))}</div>
           <div class="meta"><span>${h.sentAt?T("Στάλθηκε {d}",{d:new Date(h.sentAt).toLocaleDateString(LOC())}):""}</span></div></div>
-          <b class="amt">${money(offerAmt(h))}</b></div>`).join("")):""}`});
+          <b class="amt">${money(offerAmt(h))}</b></div>`).join("")):""}${clientOffersHTML(x)}`});
   $("#of_view").onclick=()=>showOffer(x,o);
   $("#of_ro").onclick=()=>toast(T("Η προσφορά έχει σταλεί και δεν αλλάζει. Για αλλαγές πάτα «Νέα προσφορά»."));
-  $("#shBody").addEventListener("click",e=>{const r=e.target.closest("[data-hist]");if(r)showOffer(x,x.offers[+r.dataset.hist])});
+  $("#shBody").addEventListener("click",e=>{const r=e.target.closest("[data-hist]");if(r){showOffer(x,x.offers[+r.dataset.hist]);return}
+    const oh=e.target.closest("[data-coffer]");if(oh){const f=offerById(oh.dataset.coffer);if(f)showOffer(f.x,f.o)}});
 }
 function drawOfferDoc(ctx,o,W,dry){
   const biz=S.settings.biz||{};
@@ -521,7 +575,7 @@ function drawOfferDoc(ctx,o,W,dry){
   F("19px","#5E7185");txt(T("Ισχύς προσφοράς: {n} ημέρες, έως {d}",{n:+o.valid||30,d:offerUntil(o).toLocaleDateString(LOC())}),40,y);y+=26;
   y+=14;rule(y);y+=36;
   if(o.terms){F("bold 18px","#5E7185");txt(T("Όροι"),40,y);y+=28;
-    F("16.5px","#6E8193");o.terms.split(/\n+/).forEach(p=>{y=wrapText(ctx,p,40,y,W-80,23,dry)+5})}
+    F("16.5px","#6E8193");T(o.terms).split(/\n+/).forEach(p=>{y=wrapText(ctx,p,40,y,W-80,23,dry)+5})}
   return y;
 }
 function offerCanvas(o){
@@ -623,7 +677,7 @@ function taskForm(t0,presetClient,draft){
       <button type="button" class="btn amber wide" id="ai_go" style="margin-top:8px">${T("Αυτόματη συμπλήρωση")}</button></div>`:""}
     <label for="f_title">${T("Τι πρέπει να γίνει")}</label>
     <input id="f_title" value="${esc(v.title)}" autocomplete="off">
-    <div class="quick" id="f_titleTips">${(S.settings.taskTips||[]).map(t=>`<button type="button" data-tip="${esc(t)}">${esc(t)}</button>`).join("")}
+    <div class="quick" id="f_titleTips">${(S.settings.taskTips||[]).map(t=>`<button type="button" data-tip="${esc(T(t))}">${esc(T(t))}</button>`).join("")}
       <button type="button" class="tipedit" data-act="editTaskTips" data-act2="local">${ic("edit",14)} ${T("Αλλαγή")}</button></div>
     <label for="f_client">${T("Πελάτης")}</label>
     <div class="inrow"><select id="f_client"><option value="">${T("Χωρίς πελάτη")}</option><option value="__new">+ ${T("Νέος πελάτης…")}</option>${opts}</select>
@@ -638,7 +692,7 @@ function taskForm(t0,presetClient,draft){
     <label for="f_rb">${T("Υπενθύμιση")}</label><select id="f_rb">${REMB.map(m=>`<option value="${m}">${rbLabel(m)}</option>`).join("")}</select>
     <label for="f_end">${T("Λήξη ή προθεσμία")}</label>${dtHTML("f_end",v.end)}
     <label>${T("Ποιος θα πάει")}</label>
-    <div class="pplrow" id="f_who">${people().map(p=>`<button type="button" class="pbtn" data-p="${p.id}" style="--pc:${p.color}"><span class="dotc" style="background:${p.color}"></span>${esc(p.name)}</button>`).join("")}
+    <div class="pplrow" id="f_who">${people().map(p=>`<button type="button" class="pbtn" data-p="${p.id}" style="--pc:${p.color}"><span class="dotc" style="background:${p.color}"></span>${esc(T(p.name))}</button>`).join("")}
       <button type="button" class="pbtn" data-act="managePeople"><span class="dotc" style="background:var(--muted)">+</span>${T("Άτομα")}</button></div>
     <label for="f_near">${T("Ειδοποίηση όταν πλησιάσω το σημείο")}</label>
     <select id="f_near">${NEARD.map(m=>`<option value="${m}">${nearLabel(m)}</option>`).join("")}</select>

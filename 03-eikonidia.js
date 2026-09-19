@@ -59,7 +59,7 @@ const getClient=id=>S.clients.find(c=>c.id===id);
 const alive=x=>!x.trashed;
 let undoT=null;
 function undoToast(msg,undo){
-  const bar=$("#undoBar");bar.querySelector("span").textContent=msg;
+  const bar=$("#undoBar");bar.querySelector("span").textContent=msg;bar.querySelector("button").textContent=T("Αναίρεση");
   bar.hidden=false;clearTimeout(undoT);undoT=setTimeout(()=>{bar.hidden=true},7000);
   bar.querySelector("button").onclick=()=>{bar.hidden=true;clearTimeout(undoT);undo()};
 }
@@ -182,7 +182,7 @@ const NEARD=[0,300,1000,2000,5000];
 const NEAR_DEFAULT=1000;
 const nearLabel=m=>m?(m<1000?T("{n} μέτρα",{n:m}):T("{n} χλμ.",{n:(m/1000).toLocaleString(LOC(),{maximumFractionDigits:1})})):T("Χωρίς ειδοποίηση");
 function whoHTML(ids){const l=(ids||[]).map(getPerson).filter(Boolean);if(!l.length)return"";
-  return `<span class="whos">${l.map(p=>`<span class="who" style="background:${p.color}" title="${esc(p.name)}">${esc(initials(p.name))}</span>`).join("")}</span>`}
+  return `<span class="whos">${l.map(p=>`<span class="who" style="background:${p.color}" title="${esc(T(p.name))}">${esc(initials(T(p.name)))}</span>`).join("")}</span>`}
 const kinds=()=>S.settings.kinds||DEF_KINDS;
 const getKind=id=>kinds().find(k=>k.id===id)||kinds()[0]||{id:"payment",name:"Πληρωμή",dir:"in"};
 const isIn=k=>getKind(k).dir==="in";

@@ -593,3 +593,16 @@ body.typing[data-view="reminders"] nav{display:none}
 .stopbtn{margin-top:8px;background:none;border:1px solid var(--line);border-radius:8px;padding:5px 10px;font-size:13px;font-weight:700}
 .golink{display:block;text-align:center;text-decoration:none;margin-top:14px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* Επεξεργασία λιστών προσφοράς */
+.oebox .linkbtn{display:inline-flex;align-items:center;gap:5px;margin-top:6px}
+.oerow{display:flex;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.oerow:last-of-type{border-bottom:0}
+.oefields{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.oefields input{margin:0;padding:8px 10px;font-size:14.5px}
+.oefields .oe_l{font-weight:700}
+.oefields .oe_t{font-size:13.5px;color:var(--muted)}
+.oebtns{display:flex;flex-direction:column;gap:4px;align-items:center;flex:none}
+.oemv{width:38px;height:30px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;font-size:12px;padding:0}
+.oemv:disabled{opacity:.3}
+.oemv:active{background:var(--paper)}
+.oefoot{display:flex;justify-content:space-between;align-items:center;margin-top:10px;gap:10px}

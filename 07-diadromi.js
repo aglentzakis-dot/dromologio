@@ -274,7 +274,8 @@ function filterSheet(kind){
   let title,body;
   if(kind==="tasks"){
     title=T("Εμφάνιση εργασιών");
-    body=panel(TF.map(([k,l])=>`<button class="optrow ${taskFilter===k?"on":""}" data-act="filter" data-f="${k}">${T(l)}<span class="n">${cnt(k)}</span>${taskFilter===k?'<span class="tick">✓</span>':""}</button>`).join(""))+
+    body=panel(TF.map(([k,l])=>`<button class="optrow ${taskFilter===k?"on":""}" data-act="filter" data-f="${k}">${T(l)}<span class="n">${cnt(k)}</span>${taskFilter===k?'<span class="tick">✓</span>':""}</button>`+
+        (k==="waiting"?`<button class="optrow" data-act="offerArchive" style="padding-left:30px;color:var(--muted)">${ic("archive",18)}${T("Αρχείο προσφορών")}<span class="n">${offersCount()}</span></button>`:"")).join(""))+
       `<button class="optrow" style="margin-top:10px;border:1px solid var(--line);border-radius:12px" data-act="toggleMove">${ic("tasks",18)}${T("Κουμπιά αλλαγής σειράς")}<span class="tick">${S.settings.showMove?"✓":""}</span></button>`+
       `<button class="optrow" style="margin-top:10px;border:1px solid var(--line);border-radius:12px" data-act="toggleGroup">${ic("filter",18)}${T("Ομαδοποίηση ανά περιοχή")}<span class="tick">${groupByArea?"✓":""}</span></button>`+
       (S.settings.manualOrder?`<button class="optrow" style="margin-top:10px;border:1px solid var(--line);border-radius:12px" data-act="autoOrder">${ic("tasks",18)}${T("Επαναφορά αυτόματης σειράς (κατά ώρα)")}</button>`:"");

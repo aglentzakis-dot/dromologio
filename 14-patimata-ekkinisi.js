@@ -51,6 +51,7 @@ document.addEventListener("click",e=>{
     case"autoOrder":S.settings.manualOrder=false;S.tasks.forEach(x=>x.ord=null);persist();closeSheet();render();toast(T("Επέστρεψε η αυτόματη σειρά."));break;
     case"csort":clientSort=el.dataset.s;closeSheet();render();break;
     case"filterSheet":filterSheet(el.dataset.kind);break;
+    case"offerArchive":offerArchiveSheet(el.dataset.client||"");break;
     case"toggleGroup":groupByArea=!groupByArea;closeSheet();render();break;
     case"toggleMove":S.settings.showMove=!S.settings.showMove;persist();closeSheet();render();
       toast(S.settings.showMove?T("Εμφανίζονται τα βελάκια σειράς."):T("Κρύφτηκαν τα βελάκια σειράς."));break;
