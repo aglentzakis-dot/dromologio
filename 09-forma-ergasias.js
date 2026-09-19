@@ -184,7 +184,7 @@ function drawTaskMoney(x){
     <div class="kv"><span>${T("Υπόλοιπο προς είσπραξη")}</span><b class="${restShown>0.004?"owe":"money"}">${money(restShown)}</b></div>
     <div class="kv"><span>${T("Κέρδος από αυτή")}</span><b class="${rnd(got-sp)<0?"owe":"money"}">${money(rnd(got-sp))}</b></div>
     <div class="kv"><span>${T("Κατάσταση πληρωμής")}</span><b class="${payCls}">${payLabel}</b></div>
-    ${x.offer&&x.offer.no?`<div class="kv"><span>${T("Προσφορά")}</span><b>${T("Αρ. {n}",{n:x.offer.no})} · ${x.offer.sentAt?T("στάλθηκε {d}",{d:new Date(x.offer.sentAt).toLocaleDateString(LOC(),{day:"numeric",month:"short"})}):T("δεν στάλθηκε ακόμα")}</b></div>`:""}
+    ${x.offer&&x.offer.no?`<div class="kv"><span>${T("Προσφορά")}</span><b>${T("Αρ. {n}",{n:x.offer.no})} · ${offerSendText(x.offer)}</b></div>`:""}
     ${warrantyUntil(x)?`<div class="kv"><span>${T("Εγγύηση έως")}</span><b class="${warrantyUntil(x)<new Date()?"owe":""}">${fmtShort(warrantyUntil(x))}${warrantyUntil(x)<new Date()?" · "+T("έληξε"):""}</b></div>`:""}
     <div class="twobtn"><button type="button" class="btn softin" data-tm="in">+ ${T("Είσπραξη")}</button>
       <button type="button" class="btn softout" data-tm="out">+ ${T("Έξοδο")}</button></div>
@@ -194,7 +194,7 @@ function drawTaskMoney(x){
       <button type="button" class="btn ghost" data-tm="offer">${ic("edit",17)} ${T("Προσφορά")}</button>
       <button type="button" class="btn ghost" data-tm="receipt">${ic("archive",17)} ${T("Απόδειξη")}</button></div>`:`<div style="padding:0 14px 12px"><button type="button" class="btn ghost" data-tm="offer" style="width:100%">${ic("edit",17)} ${T("Προσφορά")}</button></div>`}
     ${oldOffersCount(x)?`<div style="padding:0 14px 12px"><button type="button" class="btn ghost" data-tm="oldoffers" style="width:100%">${ic("archive",17)} ${x.clientId?T("Παλιές προσφορές του πελάτη"):T("Παλιές προσφορές")} (${oldOffersCount(x)})</button></div>`:""}
-    <p class="note" style="padding:0 14px 10px">${owedNow?T("Η δουλειά είναι ολοκληρωμένη, οπότε το υπόλοιπο μετράει ως οφειλή του πελάτη."):T("Όσο δεν είναι ολοκληρωμένη, το υπόλοιπο μετράει ως αναμενόμενο και όχι ως οφειλή.")}</p>`;
+    ${owedNow&&rest>0.004?`<p class="note" style="padding:0 14px 10px">${T("Η δουλειά είναι ολοκληρωμένη, οπότε το υπόλοιπο μετράει ως οφειλή του πελάτη.")}</p>`:""}`;
   drawTaskEntries(x);drawCheckBadge(x);
   box.onclick=e=>{
     const del=e.target.closest("[data-tmdel]");
@@ -237,13 +237,32 @@ function drawTaskEntries(x){
   const box=$("#tmEntries");if(!box)return;
   const list=taskEntries(x.id).sort(byNewest);
   if(!list.length){box.innerHTML="";return}
-  box.innerHTML=sec(T("Κινήσεις αυτής της εργασίας"))+panel(list.map(en=>`<div class="row" data-tmedit="${en.id}" style="align-items:center">
+  // Φαίνεται μόνο η τελευταία κίνηση· όλες μαζί ανοίγουν σε αναδυόμενο παράθυρο.
+  const row=en=>`<div class="row" data-tmedit="${en.id}" style="align-items:center">
       <span style="color:${isIn(en.kind)?"var(--green)":"var(--red)"}">${isIn(en.kind)?"+":"−"}</span>
       <div class="grow"><div class="title">${esc(kindName(en.kind))}${en.note?" · "+esc(en.note):""}</div>
       <div class="meta"><span>${fmtDay(en.date)}</span></div></div>
       <b class="${isIn(en.kind)?"money":"owe"}" style="margin-right:6px">${money(en.amount)}</b>
-      <button class="mini del" data-tmdel="${en.id}" aria-label="${T("Διαγραφή")}">${ic("trash",17)}</button></div>`).join(""));
+      <button class="mini del" data-tmdel="${en.id}" aria-label="${T("Διαγραφή")}">${ic("trash",17)}</button></div>`;
+  box.innerHTML=sec(T("Τελευταία κίνηση αυτής της εργασίας"))+panel(row(list[0])+
+    (list.length>1?`<button type="button" class="btn ghost" data-tmall="1" style="margin:4px 14px 12px;width:calc(100% - 28px)">${ic("money",18)} ${T("Όλες οι κινήσεις")} (${list.length})</button>`:""));
+  const all=box.querySelector("[data-tmall]");
+  if(all)all.onclick=e=>{e.stopPropagation();const dr=readTaskDraft();
+    openSheet({title:T("Κινήσεις: {n}",{n:x.title||T("Εργασία")}),cancelLabel:T("Πίσω"),onCancel:()=>taskForm(x,null,dr),
+      body:panel(taskEntries(x.id).sort(byNewest).map(row).join(""))});
+    $("#shBody").onclick=ev=>{
+      const ed=ev.target.closest("[data-tmedit]"),del=ev.target.closest("[data-tmdel]");
+      if(del){const en=S.ledger.find(y=>y.id===del.dataset.tmdel);if(!en)return;trash(en,kindName(en.kind)+" "+money(en.amount));
+        const a2=+x.amount||0;x.paid=a2>0&&taskPaid(x)+0.004>=a2;persist();del.closest(".row").remove();return}
+      if(ed){const en=S.ledger.find(y=>y.id===ed.dataset.tmedit);if(!en)return;
+        entryForm(en,{back:()=>{taskForm(x,null,dr);const a2=+x.amount||0;x.paid=a2>0&&taskPaid(x)+0.004>=a2;persist()}})}
+    }};
 }
+// Χρέωση της δουλειάς: κανονική τιμή, χωρίς χρέωση, ή χωρίς κόστος λόγω εγγύησης (φαίνονται στα στατιστικά).
+const CHARGES=[["normal","Κανονική τιμή","η δουλειά χρεώνεται με την τιμή που γράφεις"],
+  ["free","Χωρίς χρέωση","δωρεάν δουλειά, π.χ. εξυπηρέτηση ή μικρή βοήθεια"],
+  ["warranty","Χωρίς κόστος λόγω εγγύησης","επανέλεγχος ή επισκευή μέσα στην εγγύηση"]];
+const chargeLabel=k=>T(k==="free"?"Χωρίς χρέωση":k==="warranty"?"Εγγύηση":"Χρέωση");
 function wrapText(ctx,text,x,y,maxW,lh,measureOnly){
   const words=String(text||"").split(/\s+/).filter(Boolean);let line="";
   for(const w of words){
@@ -547,26 +566,29 @@ function offerLockedSheet(x,back,dr,justSent){
   openSheet({title:T("Προσφορά Αρ. {n}",{n:o.no}),cancelLabel:back?T("Πίσω"):T("Κλείσιμο"),onCancel:back||null,
     saveLabel:"+ "+T("Νέα προσφορά"),saveStyle:"amber",
     onSave:()=>{
-      if(!confirm(T("Θα ξεκινήσει νέα προσφορά με νέο αριθμό, με αφετηρία τα στοιχεία αυτής. Η Αρ. {n} μένει όπως στάλθηκε, στο ιστορικό. Συνέχεια;",{n:o.no})))return false;
+      if(!confirm(T("Θα ξεκινήσει νέα προσφορά με νέο αριθμό, με αφετηρία τα στοιχεία αυτής. Η Αρ. {n} μένει όπως είναι, στο ιστορικό. Συνέχεια;",{n:o.no})))return false;
       x.offers=x.offers||[];x.offers.push(o);
-      const n=JSON.parse(JSON.stringify(o));delete n.no;delete n.sentAt;delete n.date;n.prevNo=o.no;
+      const n=JSON.parse(JSON.stringify(o));delete n.no;delete n.sentAt;delete n.sharedAt;delete n.savedAt;delete n.sharedManual;delete n.date;n.prevNo=o.no;
       x.offer=n;persist();
       offerSheet(x,back,dr);return "replaced";
     },
-    body:`<div class="oflock">${ic("shield",22)}<div><b>${justSent?T("Η προσφορά στάλθηκε και κλείδωσε."):T("Αυτή η προσφορά έχει σταλεί και δεν αλλάζει.")}</b>
-        <span>${T("Στάλθηκε {d}",{d:when.toLocaleDateString(LOC(),{day:"numeric",month:"short",year:"numeric"})+", "+when.toLocaleTimeString(LOC(),{hour:"2-digit",minute:"2-digit"})})}<br>${T("Αν χρειάζεται αλλαγή, πάτα «Νέα προσφορά» — θα πάρει νέο αριθμό και η παλιά θα μείνει όπως ήταν.")}</span></div></div>
+    body:`<div class="oflock">${ic("shield",22)}<div><b>${T("Η προσφορά κλείδωσε και δεν αλλάζει.")}</b>
+        <span><b style="display:inline;color:${o.sharedAt?"var(--green)":"var(--red)"}">${offerSendText(o,true)}</b><br>${T("Αν χρειάζεται αλλαγή, πάτα «Νέα προσφορά» — θα πάρει νέο αριθμό και η παλιά θα μείνει όπως ήταν.")}</span></div></div>
       ${panel(`<div id="of_ro">
         <div class="kv"><span>${T("Πελάτης")}</span><b>${esc(o.client||T("Ιδιώτης πελάτης"))}</b></div>
         <div class="kv"><span>${T("Εργασία")}</span><b>${esc(o.title||"—")}</b></div>
         <div class="kv"><span>${T("Τελική τιμή")}</span><b class="money">${money(offerAmt(o))}</b></div>
         <div class="kv"><span>${T("Ισχύει έως")}</span><b class="${offerUntil(o)<new Date()?"owe":""}">${offerUntil(o).toLocaleDateString(LOC())}${offerUntil(o)<new Date()?" · "+T("έληξε"):""}</b></div></div>`)}
-      <button type="button" class="btn ghost wide" id="of_view" style="margin-top:12px">${ic("msg",18)} ${T("Δες ή στείλε ξανά")}</button>
+      <button type="button" class="btn ghost wide" id="of_view" style="margin-top:12px">${ic("msg",18)} ${o.sharedAt?T("Δες ή προώθησε ξανά"):T("Δες ή προώθησε στον πελάτη")}</button>
+      ${o.sharedAt?"":`<button type="button" class="btn ghost wide" id="of_mark" style="margin-top:8px">✓ ${T("Την έδωσα στον πελάτη με άλλο τρόπο")}</button>`}
       ${hist.length?sec(T("Προηγούμενες προσφορές"))+panel(hist.map((h,i)=>`<div class="row" data-hist="${hist.length-1-i}" style="align-items:center">
           <div class="avatar" style="font-size:13px">${h.no}</div><div class="grow"><div class="title">${esc(h.title||T("Προσφορά"))}</div>
-          <div class="meta"><span>${h.sentAt?T("Στάλθηκε {d}",{d:new Date(h.sentAt).toLocaleDateString(LOC())}):""}</span></div></div>
+          <div class="meta"><span>${offerSendText(h)}</span></div></div>
           <b class="amt">${money(offerAmt(h))}</b></div>`).join("")):""}${clientOffersHTML(x)}`});
-  $("#of_view").onclick=()=>showOffer(x,o);
-  $("#of_ro").onclick=()=>toast(T("Η προσφορά έχει σταλεί και δεν αλλάζει. Για αλλαγές πάτα «Νέα προσφορά»."));
+  $("#of_view").onclick=()=>showOffer(x,o,null);
+  if($("#of_mark"))$("#of_mark").onclick=()=>{if(!confirm(T("Να σημειωθεί ότι η προσφορά Αρ. {n} δόθηκε στον πελάτη (π.χ. τυπωμένη ή από τον υπολογιστή);",{n:o.no})))return;
+    o.sharedAt=Date.now();o.sharedManual=1;persist();toast(T("Σημειώθηκε ότι δόθηκε στον πελάτη."));offerLockedSheet(x,back,dr)};
+  $("#of_ro").onclick=()=>toast(T("Η προσφορά έχει κλειδώσει και δεν αλλάζει. Για αλλαγές πάτα «Νέα προσφορά»."));
   $("#shBody").addEventListener("click",e=>{const r=e.target.closest("[data-hist]");if(r){showOffer(x,x.offers[+r.dataset.hist]);return}
     const oh=e.target.closest("[data-coffer]");if(oh){const f=offerById(oh.dataset.coffer);if(f)showOffer(f.x,f.o)}});
 }
@@ -630,13 +652,21 @@ async function showOffer(x,o,onSent){
   const cv=offerCanvas(o),url=cv.toDataURL("image/png"),name="prosfora-"+(o.no||"")+".pdf";
   $("#phImg").src=url;$("#phT").textContent=T("Προσφορά Αρ. {n}",{n:o.no||"—"});
   const sent=!!o.sentAt;
-  $("#phBot").innerHTML=`<button class="btn primary" id="rc_share">${ic("msg",18)} ${sent?T("Στείλε ξανά"):T("Αποστολή")}</button>
+  $("#phBot").innerHTML=`<button class="btn primary" id="rc_share">${ic("msg",18)} ${o.sharedAt?T("Προώθηση ξανά"):T("Προώθηση")}</button>
     <button class="btn ghost" id="rc_dl">${ic("archive",18)} ${T("Λήψη PDF")}</button>`;
+  // Καταγράφουμε ΤΙ έγινε: «προωθήθηκε» μόνο όταν δόθηκε σε άλλη εφαρμογή (κοινοποίηση)·
+  // η σκέτη λήψη PDF γράφεται ως «αποθηκεύτηκε, δεν προωθήθηκε». Και στις δύο η προσφορά κλειδώνει.
   const go=async share=>{
-    const ok=await downloadCanvasPdf(cv,name,share);
-    if(ok&&!o.sentAt&&o===x.offer){o.sentAt=Date.now();persist();
-      toast(T("Η προσφορά Αρ. {n} καταχωρήθηκε ως σταλμένη.",{n:o.no}));
-      if(onSent)onSent()}
+    const res=await downloadCanvasPdf(cv,name,share);
+    if(!res)return;
+    const now=Date.now();
+    if(res==="shared")o.sharedAt=now;else o.savedAt=o.savedAt||now;
+    const first=!o.sentAt&&o===x.offer;
+    if(first)o.sentAt=now;
+    persist();
+    if(res==="shared")toast(T("Η προσφορά Αρ. {n} προωθήθηκε ως συνημμένο.",{n:o.no}));
+    else toast(T("Το PDF της προσφοράς Αρ. {n} αποθηκεύτηκε στη συσκευή. Δεν έχει προωθηθεί στον πελάτη.",{n:o.no}));
+    if(first&&onSent)onSent();
   };
   $("#rc_share").onclick=()=>go(true);
   $("#rc_dl").onclick=()=>go(false);
@@ -675,13 +705,13 @@ async function downloadCanvasPdf(cv,filename,share){
   try{
     const blob=canvasToPdfBlob(cv),file=new File([blob],filename,{type:"application/pdf"});
     if(share!==false&&navigator.canShare&&navigator.canShare({files:[file]})){
-      try{await navigator.share({files:[file],title:filename});return true}catch(e){if(e.name==="AbortError")return false}
+      try{await navigator.share({files:[file],title:filename});return "shared"}catch(e){if(e.name==="AbortError")return false}
     }
     const url=URL.createObjectURL(blob),a=document.createElement("a");
     a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();
     setTimeout(()=>URL.revokeObjectURL(url),4000);
     toast(T("Το PDF αποθηκεύτηκε στις λήψεις."));
-    return true;
+    return "saved";
   }catch(e){toast(T("Το PDF δεν δημιουργήθηκε."));return false}
 }
 function showReceiptImage(dataUrl,filename){
@@ -699,7 +729,7 @@ function showReceipt(x){
 function readTaskDraft(){
   if(!$("#f_prio"))return{};
   return{title:val("f_title"),clientId:val("f_client")==="__new"?"":val("f_client"),area:val("f_area"),address:val("lw_addr"),desc:val("f_desc"),start:dtVal("f_start"),end:dtVal("f_end"),
-    remindBefore:+val("f_rb"),nearAlert:+val("f_near"),placeId:val("f_place"),ownLoc:$("#f_own")&&$("#f_own").dataset.on==="1",priority:+($("#f_prio").dataset.v||2),status:val("f_status"),amount:val("f_amount"),
+    remindBefore:+val("f_rb"),nearAlert:+val("f_near"),placeId:val("f_place"),ownLoc:$("#f_own")&&$("#f_own").dataset.on==="1",priority:+($("#f_prio").dataset.v||2),status:val("f_status"),amount:val("f_amount"),charge:val("f_charge")||"normal",
     who:[...($("#f_who")?.querySelectorAll(".pbtn.on")||[])].map(b=>b.dataset.p).filter(Boolean),_loc:LW?LW.loc:null};
 }
 function taskForm(t0,presetClient,draft){
@@ -713,10 +743,8 @@ function taskForm(t0,presetClient,draft){
       <div class="inrow"><textarea id="ai_text" rows="2" placeholder="${T("π.χ. Αύριο 9 το πρωί να πάω στον Κολωνό να πάρω ξύλο")}"></textarea>
       <button type="button" class="micbtn" id="ai_mic" aria-label="${T("Φωνητική υπαγόρευση")}">${ic("mic",20)}</button></div>
       <button type="button" class="btn amber wide" id="ai_go" style="margin-top:8px">${T("Αυτόματη συμπλήρωση")}</button></div>`:""}
-    <label for="f_title">${T("Τι πρέπει να γίνει")}</label>
+    <label for="f_title">${T("Τίτλος εργασίας")}</label>
     <input id="f_title" value="${esc(v.title)}" autocomplete="off">
-    <div class="quick" id="f_titleTips">${(S.settings.taskTips||[]).map(t=>`<button type="button" data-tip="${esc(T(t))}">${esc(T(t))}</button>`).join("")}
-      <button type="button" class="tipedit" data-act="editTaskTips" data-act2="local">${ic("edit",14)} ${T("Αλλαγή")}</button></div>
     <label for="f_client">${T("Πελάτης")}</label>
     <div class="inrow"><select id="f_client"><option value="">${T("Χωρίς πελάτη")}</option><option value="__new">+ ${T("Νέος πελάτης…")}</option>${opts}</select>
     <button type="button" class="btn ghost" id="f_editClient" title="${T("Επεξεργασία πελάτη")}" aria-label="${T("Επεξεργασία πελάτη")}" style="padding:10px">${ic("edit",20)}</button></div>
@@ -736,7 +764,9 @@ function taskForm(t0,presetClient,draft){
     <select id="f_near">${NEARD.map(m=>`<option value="${m}">${nearLabel(m)}</option>`).join("")}</select>
     <label>${T("Προτεραιότητα")}</label><div class="seg prio" id="f_prio"><button type="button" data-v="1">${T("Χαμηλή")}</button><button type="button" data-v="2">${T("Κανονική")}</button><button type="button" data-v="3">${T("Υψηλή")}</button></div>
     <label for="f_amount">${T("Τιμή της δουλειάς")}</label>
-    <span class="curr"><b>€</b><input id="f_amount" inputmode="decimal" placeholder="0,00" value="${esc(v.amount??"")}"></span>
+    <div class="inrow"><span class="curr" style="flex:1"><b>€</b><input id="f_amount" inputmode="decimal" placeholder="0,00" value="${esc(v.charge&&v.charge!=="normal"?"":(v.amount??""))}" ${v.charge&&v.charge!=="normal"?"disabled":""}></span>
+      <button type="button" class="btn ghost chargebtn" id="f_chargeBtn">${chargeLabel(v.charge)} ▾</button></div>
+    <input type="hidden" id="f_charge" value="${esc(v.charge||"normal")}">
     ${isNew?"":`<div class="panel" id="tmoney"></div>`}
     <div class="two"><div><label for="f_warranty">${T("Εγγύηση")}</label>
       <select id="f_warranty"><option value="0">${T("Χωρίς εγγύηση")}</option><option value="3">${T("3 μήνες")}</option>
@@ -759,7 +789,7 @@ function taskForm(t0,presetClient,draft){
       if(!has){LW.attempted=true;LW.upd();if(!confirm(T("Η εργασία δεν έχει τοποθεσία και δεν θα μπαίνει στις διαδρομές. Να αποθηκευτεί έτσι;")))return false}
       const who=[...$("#f_who").querySelectorAll(".pbtn.on")].map(b=>b.dataset.p).filter(Boolean);
       const own=$("#f_own")&&$("#f_own").dataset.on==="1";
-      const d={title,who:who.length?who:[people()[0].id],nearAlert:+val("f_near")||0,warrantyMonths:+val("f_warranty")||0,completedOn:val("f_completed")||"",clientId:cid,placeId:cid&&!own?(val("f_place")||""):"",ownLoc:!!own,desc:val("f_desc"),start,end,remindBefore:rb,priority:+($("#f_prio").dataset.v||2),status,amount:amt?+amt:null,paid:!!(t0&&t0.paid),
+      const d={title,who:who.length?who:[people()[0].id],nearAlert:+val("f_near")||0,warrantyMonths:+val("f_warranty")||0,completedOn:val("f_completed")||"",clientId:cid,placeId:cid&&!own?(val("f_place")||""):"",ownLoc:!!own,desc:val("f_desc"),start,end,remindBefore:rb,priority:+($("#f_prio").dataset.v||2),status,charge:val("f_charge")||"normal",amount:(val("f_charge")||"normal")!=="normal"?0:(amt?+amt:null),paid:!!(t0&&t0.paid),
         area:(cid&&!own)?"":val("f_area"),address:(cid&&!own)?"":val("lw_addr"),
         lat:(cid&&!own)?null:(LW&&LW.loc?LW.loc.lat:null),lng:(cid&&!own)?null:(LW&&LW.loc?LW.loc.lng:null)};
       if(start!==orig.start||rb!==orig.remindBefore||isNew){const at=start?+new Date(start)-Math.max(0,rb)*60000:0;d.startNotified=start&&rb>=0?at<Date.now():false;d.snoozeUntil=null}
@@ -779,6 +809,9 @@ function taskForm(t0,presetClient,draft){
     onDelete:isNew?null:()=>{clearDraft();trashTask(t0)},
     deleteMsg:T("Να πάει η εργασία στον κάδο; Θα πάρει μαζί και τις εισπράξεις ή τα έξοδά της.")});
   $("#f_warranty").value=String(v.warrantyMonths||0);
+  $("#f_chargeBtn").onclick=()=>choicePopup(T("Χρέωση της δουλειάς"),CHARGES.map(([k,l,s])=>({v:k,label:T(l),sub:T(s)})),val("f_charge")||"normal",k=>{
+    $("#f_charge").value=k;$("#f_chargeBtn").textContent=chargeLabel(k)+" ▾";
+    const a=$("#f_amount");a.disabled=k!=="normal";if(k!=="normal")a.value="";else a.focus();sheetDirty=true});
   if(!isNew){drawTaskMoney(t0);drawTaskPhotos(t0)}
   if(!isNew)$("#shBody").insertAdjacentHTML("beforeend",`<button type="button" class="btn ghost wide" id="f_another">${ic("plus",18)} ${T("Νέα εργασία για τον ίδιο πελάτη")}</button>`);
   $("#f_client").value=v.clientId||"";$("#f_status").value=v.status||"pending";
@@ -832,7 +865,7 @@ function taskForm(t0,presetClient,draft){
   };
   $("#shBody").addEventListener("input",keepSafe);
   $("#shBody").addEventListener("change",keepSafe);
-  $("#f_titleTips").onclick=e=>{
+  if($("#f_titleTips"))$("#f_titleTips").onclick=e=>{
     if(e.target.closest("[data-act=editTaskTips]")){const dr=readTaskDraft();taskTipsSheet(()=>taskForm(t0,null,dr));return}
     const b=e.target.closest("[data-tip]");if(!b)return;
     $("#f_title").value=b.dataset.tip;sheetDirty=true};

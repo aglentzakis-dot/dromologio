@@ -128,10 +128,11 @@ function whenText(x){
   }
   return x.start?f(x.start):T("έως")+" "+f(x.end);
 }
-const STATUS_ORDER=["pending","progress","waiting","done","cancelled"];
-const STATUS_NAMES={pending:"Εκκρεμεί",progress:"Σε εξέλιξη",done:"Ολοκληρώθηκε",waiting:"Προσφορά, αναμονή απάντησης",someday:"Όποτε βρω χρόνο",cancelled:"Ακυρώθηκε"};
-const STATUS_ICON={pending:"•",progress:"▶",waiting:"€",someday:"~",done:"✓",cancelled:"✕"};
-const STATUS_DESC={pending:"εκκρεμεί, δεν έχει ξεκινήσει",progress:"η δουλειά τρέχει τώρα",waiting:"της έχεις δώσει τιμή, περιμένεις να την εγκρίνει ο πελάτης",someday:"χωρίς βιασύνη",done:"τελείωσε",cancelled:"δεν θα γίνει"};
+// Σειρά με βάση τη ροή μιας δουλειάς: ραντεβού → έλεγχος → προσφορά → εκτέλεση· το «Ολοκληρώθηκε» τελευταίο.
+const STATUS_ORDER=["appt","inspect","waiting","pending","progress","cancelled","done"];
+const STATUS_NAMES={appt:"Ραντεβού",inspect:"Έλεγχος",pending:"Εκκρεμεί",progress:"Σε εξέλιξη",done:"Ολοκληρώθηκε",waiting:"Προσφορά, αναμονή απάντησης",someday:"Όποτε βρω χρόνο",cancelled:"Ακυρώθηκε"};
+const STATUS_ICON={appt:"◷",inspect:"⌕",pending:"•",progress:"▶",waiting:"€",someday:"~",done:"✓",cancelled:"✕"};
+const STATUS_DESC={appt:"έχεις κλείσει ραντεβού με τον πελάτη",inspect:"αυτοψία ή έλεγχος στον χώρο",pending:"εγκρίθηκε, δεν έχει ξεκινήσει ακόμα",progress:"η δουλειά τρέχει τώρα",waiting:"της έχεις δώσει τιμή, περιμένεις να την εγκρίνει ο πελάτης",someday:"χωρίς βιασύνη",done:"τελείωσε",cancelled:"δεν θα γίνει"};
 const statusOptions=sel=>STATUS_ORDER.map(k=>`<option value="${k}" ${k===sel?"selected":""}>${T(STATUS_NAMES[k])}</option>`).join("");
 function statusSheet(x){
   const opt=st=>`<button class="optrow ${x.status===st?"on":""}" data-act="setStatus" data-id="${x.id}" data-st="${st}">
@@ -142,7 +143,7 @@ function statusSheet(x){
 }
 function taskRow(x,showClient=true,showMove=false,showMoney=false,rowNum=null){
   const c=x.clientId&&getClient(x.clientId),L=taskLoc(x),st=taskState(x);
-  const tags={late:"Εκπρόθεσμη",progress:"Σε εξέλιξη",done:"Ολοκληρώθηκε",cancelled:"Ακυρώθηκε",waiting:"Προσφορά, αναμονή απάντησης",someday:"Όποτε βρω χρόνο"};
+  const tags={appt:"Ραντεβού",inspect:"Έλεγχος",late:"Εκπρόθεσμη",progress:"Σε εξέλιξη",done:"Ολοκληρώθηκε",cancelled:"Ακυρώθηκε",waiting:"Προσφορά, αναμονή απάντησης",someday:"Όποτε βρω χρόνο"};
   const m=[];
   if(showClient&&c)m.push(esc(c.name));
   if(L)m.push(esc(L.label));
@@ -153,6 +154,7 @@ function taskRow(x,showClient=true,showMove=false,showMoney=false,rowNum=null){
   const chips=[];
   if(tags[st])chips.push(`<span class="tag ${st}">${T(tags[st])}</span>`);
   if(!L&&isOpen(x))chips.push(`<span class="tag noloc">${T("Χωρίς τοποθεσία")}</span>`);
+  if(x.charge==="free"||x.charge==="warranty")chips.push(`<span class="tag amt0">${T(x.charge==="free"?"Χωρίς χρέωση":"Εγγύηση")}</span>`);
   if(amt)chips.push(`<span class="tag ${x.paid?"paid":st==="done"?"owe":got>0?"progress":"amt0"}">${money(amt)}${x.paid?" ✓":got>0?" · "+T("έλαβα")+" "+money(got):""}</span>`);
   return `<div class="row task p${x.priority||2} ${st}" data-act="editTask" data-id="${x.id}">
     <button class="check st ${x.status}" data-act="statusMenu" data-id="${x.id}" aria-label="${T("Κατάσταση")}">${

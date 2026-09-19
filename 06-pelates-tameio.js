@@ -234,6 +234,18 @@ function monthlyChartHTML(){
     </div>
     <span class="chart6-lbl">${d.label}</span></div>`).join("")}</div>`;
 }
+// Δουλειές χωρίς χρέωση / λόγω εγγύησης: εμφανίζονται στα στατιστικά μόνο αν υπάρχουν.
+function freeStatsHTML(){
+  const fr=S.tasks.filter(x=>alive(x)&&(x.charge==="free"||x.charge==="warranty")).sort((a,b)=>(b.doneAt||b.createdAt||0)-(a.doneAt||a.createdAt||0));
+  if(!fr.length)return "";
+  const nF=fr.filter(x=>x.charge==="free").length,nW=fr.length-nF,cost=fr.reduce((s,x)=>s+taskSpent(x),0);
+  return sec(T("Δουλειές χωρίς χρέωση"))+panel(
+    (nF?`<div class="kv"><span>${T("Χωρίς χρέωση")}</span><b>${nF}</b></div>`:"")+
+    (nW?`<div class="kv"><span>${T("Χωρίς κόστος λόγω εγγύησης")}</span><b>${nW}</b></div>`:"")+
+    (cost>0.004?`<div class="kv"><span>${T("Έξοδα που έγιναν για αυτές")}</span><b class="owe">${money(cost)}</b></div>`:"")+
+    fr.slice(0,20).map(x=>{const c=x.clientId&&getClient(x.clientId);return `<div class="row" data-act="editTask" data-id="${x.id}" style="align-items:center">
+      <div class="grow"><div class="title">${esc(x.title)}</div><div class="meta">${c?`<span>${esc(c.name)}</span>`:""}<span>${T(x.charge==="free"?"Χωρίς χρέωση":"Εγγύηση")}</span>${x.doneAt?`<span>${fmtDay(x.doneAt)}</span>`:""}</div></div></div>`}).join(""));
+}
 function statsSheet(){
   const cm=S.clients.filter(alive).map(c=>({c,m:cMoney(c)})).filter(x=>x.m.received>0.004).sort((a,b)=>b.m.received-a.m.received).slice(0,8);
   const areaMap=new Map();
@@ -251,7 +263,7 @@ function statsSheet(){
     <b class="statval">${money0(val)}</b></div>${sub?`<div class="statsub">${esc(sub)}</div>`:""}`;
   openSheet({title:T("Στατιστικά"),cancelLabel:T("Κλείσιμο"),body:
     sec(T("Κορυφαίοι πελάτες"))+(cm.length?panel(cm.map(({c,m})=>barRow(c.name,m.received,maxC)).join("")):`<div class="empty">${T("Δεν έχεις ακόμα εισπράξεις.")}</div>`)+
-    sec(T("Πιο κερδοφόρες περιοχές"))+(areas.length?panel(areas.map(a=>barRow(a.area,a.profit,maxA,pl(a.count,"{n} δουλειά","{n} δουλειές"))).join("")):`<div class="empty">${T("Δεν έχεις ακόμα ολοκληρωμένες δουλειές με κέρδος.")}</div>`)});
+    sec(T("Πιο κερδοφόρες περιοχές"))+(areas.length?panel(areas.map(a=>barRow(a.area,a.profit,maxA,pl(a.count,"{n} δουλειά","{n} δουλειές"))).join("")):`<div class="empty">${T("Δεν έχεις ακόμα ολοκληρωμένες δουλειές με κέρδος.")}</div>`)+freeStatsHTML()});
 }
 let moneyOpenMonths=null;
 function monthKey(d){const x=new Date(d);return x.getFullYear()+"-"+pad(x.getMonth()+1)}

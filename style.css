@@ -613,3 +613,16 @@ body.typing[data-view="reminders"] nav{display:none}
 textarea.flash{box-shadow:0 0 0 3px color-mix(in srgb,var(--green) 45%,transparent);transition:box-shadow .3s}
 /* όταν γράφεις μέσα σε αναδυόμενο, αφήνει χώρο κάτω ώστε και το τελευταίο πεδίο να ανεβαίνει πάνω από το πληκτρολόγιο */
 body.typing .sh-body::after{content:"";display:block;height:45vh}
+/* καταστάσεις ραντεβού / έλεγχος */
+.stdot.appt{background:color-mix(in srgb,#8a4fbf 16%,var(--card));color:#8a4fbf}
+.stdot.inspect{background:color-mix(in srgb,#0e7490 16%,var(--card));color:#0e7490}
+.tag.appt{background:color-mix(in srgb,#8a4fbf 15%,var(--card));color:#8a4fbf}
+.tag.inspect{background:color-mix(in srgb,#0e7490 15%,var(--card));color:#0e7490}
+.stsel.st-appt{border-color:#8a4fbf;background:color-mix(in srgb,#8a4fbf 10%,var(--card));color:#8a4fbf}
+.stsel.st-inspect{border-color:#0e7490;background:color-mix(in srgb,#0e7490 10%,var(--card));color:#0e7490}
+/* μικρό αναδυόμενο επιλογής */
+.choicepop{position:fixed;inset:0;z-index:9999;background:rgba(10,20,30,.45);display:flex;align-items:center;justify-content:center;padding:16px}
+.choicebox{background:var(--card);border-radius:18px;padding:16px;width:100%;max-width:420px;box-shadow:0 18px 50px rgba(0,0,0,.3)}
+.choicebox .optrow{border:1px solid var(--line);border-radius:12px;margin-top:8px}
+.choicebox .optrow.on{border-color:var(--green)}
+.chargebtn{white-space:nowrap;padding:10px 12px;font-size:14px}

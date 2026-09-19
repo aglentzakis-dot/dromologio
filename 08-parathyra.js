@@ -336,3 +336,16 @@ function clientForm(c,opts={}){
   };
 }
 
+
+// Μικρό αναδυόμενο παράθυρο επιλογής, πάνω από το ανοιχτό φύλλο (δεν το κλείνει).
+function choicePopup(title,opts,cur,cb){
+  const old=$("#choicePop");if(old)old.remove();
+  const d=document.createElement("div");d.id="choicePop";d.className="choicepop";
+  d.innerHTML=`<div class="choicebox zm" role="dialog" aria-modal="true"><div class="al-title" style="margin-bottom:8px">${esc(title)}</div>
+    ${opts.map(o=>`<button type="button" class="optrow ${o.v===cur?"on":""}" data-v="${esc(o.v)}"><span class="grow"><b>${esc(o.label)}</b>${o.sub?`<small style="display:block;font-weight:500;color:var(--muted);font-size:12.5px">${esc(o.sub)}</small>`:""}</span>${o.v===cur?'<span class="tick">✓</span>':""}</button>`).join("")}
+    <button type="button" class="btn ghost wide" data-x="1" style="margin-top:10px">${T("Άκυρο")}</button></div>`;
+  document.body.appendChild(d);
+  d.onclick=e=>{const b=e.target.closest("[data-v]");
+    if(b){d.remove();cb(b.dataset.v);return}
+    if(e.target===d||e.target.closest("[data-x]"))d.remove()};
+}

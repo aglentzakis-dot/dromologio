@@ -16,11 +16,18 @@ const offerKey=r=>r.x.id+":"+r.o.no;
 function offerById(k){return allOffers().find(r=>offerKey(r)===k)||null}
 const offerClientName=r=>{const c=r.x.clientId&&getClient(r.x.clientId);return c?c.name:(r.o.client||T("Ιδιώτης πελάτης"))};
 
+// Τι έγινε με το έγγραφο: προωθήθηκε (κοινοποίηση ή σημείωση), μόνο αποθηκεύτηκε, ή είναι πρόχειρη.
+function offerSendText(o,long){
+  const f=t=>{const d=new Date(t);return d.toLocaleDateString(LOC(),{day:"numeric",month:"short",year:"numeric"})+(long?", "+d.toLocaleTimeString(LOC(),{hour:"2-digit",minute:"2-digit"}):"")};
+  if(o.sharedAt)return o.sharedManual?T("Δόθηκε στον πελάτη {d}",{d:f(o.sharedAt)}):T("Προωθήθηκε ως συνημμένο {d}",{d:f(o.sharedAt)});
+  if(o.savedAt)return T("Μόνο αποθήκευση PDF {d} · δεν προωθήθηκε",{d:f(o.savedAt)});
+  if(o.sentAt)return T("Κλείδωσε {d} · δεν ξέρουμε αν προωθήθηκε",{d:f(o.sentAt)});
+  return T("Πρόχειρη, δεν έχει βγει PDF");
+}
 // Σύντομη περιγραφή της κατάστασης μιας προσφοράς.
 function offerStateText(r){
   const o=r.o,x=r.x,bits=[];
-  if(o.sentAt)bits.push(T("Στάλθηκε {d}",{d:new Date(o.sentAt).toLocaleDateString(LOC(),{day:"numeric",month:"short",year:"numeric"})}));
-  else bits.push(T("Πρόχειρη, δεν στάλθηκε"));
+  bits.push(offerSendText(o));
   if(r.old)bits.push(T("παλιότερη έκδοση"));
   else if(x.trashed)bits.push(T("η εργασία είναι στον κάδο"));
   else if(x.status==="waiting"){if(o.sentAt&&offerUntil(o)<new Date())bits.push(T("έληξε"));else bits.push(T("περιμένει απάντηση"))}
@@ -59,12 +66,12 @@ function offerArchiveSheet(cid,back,taskId){
       panel(`<div class="empty">${base.length?T("Καμία προσφορά δεν ταιριάζει στην αναζήτηση."):T("Δεν υπάρχουν ακόμα προσφορές.")}</div>`);
     const n=$("#oa_n");if(n)n.textContent=list.length;
   };
-  const sent=base.filter(r=>r.o.sentAt),total=sent.filter(r=>!r.old).reduce((s,r)=>s+offerAmt(r.o),0);
+  const sent=base.filter(r=>r.o.sharedAt),total=base.filter(r=>r.o.sentAt&&!r.old).reduce((s,r)=>s+offerAmt(r.o),0);
   openSheet({title:c?T("Προσφορές στον {c}",{c:c.name}):T("Αρχείο προσφορών"),cancelLabel:back?T("Πίσω"):T("Κλείσιμο"),onCancel:back||null,
     body:`<p class="note">${T("Όλες οι προσφορές που έχεις φτιάξει, και οι παλιότερες εκδόσεις τους. Πάτα μία για να τη δεις, να τη στείλεις ξανά ή να την κατεβάσεις.")}</p>
       ${panel(`<div class="kv"><span>${T("Προσφορές")}</span><b id="oa_n">${base.length}</b></div>
-        <div class="kv"><span>${T("Σταλμένες")}</span><b>${sent.length}</b></div>
-        <div class="kv"><span>${T("Αξία σταλμένων (τωρινές εκδόσεις)")}</span><b class="money">${money(total)}</b></div>`)}
+        <div class="kv"><span>${T("Προωθήθηκαν στον πελάτη")}</span><b>${sent.length}</b></div>
+        <div class="kv"><span>${T("Αξία κλειδωμένων (τωρινές εκδόσεις)")}</span><b class="money">${money(total)}</b></div>`)}
       <input class="search" id="oa_q" type="search" placeholder="${T("Αναζήτηση: αριθμός, πελάτης, εργασία")}" value="${esc(offerArchQ)}" style="margin:12px 0 10px">
       <div id="oa_list"></div>`});
   draw();
