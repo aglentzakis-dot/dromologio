@@ -35,14 +35,14 @@ function applyTrade(id,customName,merge){
   st.trade={id,name:customName||t.n};
   persist();render();
 }
-const tradeName=()=>S.settings.trade?S.settings.trade.name:"";
+const tradeName=()=>S.settings.trade?T(S.settings.trade.name):"";
 
 // Παράθυρο επιλογής: αναζήτηση + λίστα· πάνω πάνω το «Άλλο» για δικό σου επάγγελμα.
 function tradeSheet(back){
   const cur=S.settings.trade&&S.settings.trade.id;
   const list=TRADES.slice().sort((a,b)=>a.n.localeCompare(b.n,"el"));
-  const rows=q=>list.filter(t=>!q||norm(t.n).includes(q)).map(t=>`<button class="optrow ${cur===t.id?"on":""}" data-trade="${t.id}">
-      <span class="grow">${esc(t.n)}</span>${cur===t.id?'<span class="tick">✓</span>':""}</button>`).join("")||`<div class="empty">${T("Δεν βρέθηκε. Γράψ' το στο «Άλλο» από πάνω.")}</div>`;
+  const rows=q=>list.filter(t=>!q||norm(t.n).includes(q)||norm(T(t.n)).includes(q)).map(t=>`<button class="optrow ${cur===t.id?"on":""}" data-trade="${t.id}">
+      <span class="grow">${esc(T(t.n))}</span>${cur===t.id?'<span class="tick">✓</span>':""}</button>`).join("")||`<div class="empty">${T("Δεν βρέθηκε. Γράψ' το στο «Άλλο» από πάνω.")}</div>`;
   openSheet({title:T("Τι δουλειά κάνεις;"),cancelLabel:back?T("Πίσω"):T("Κλείσιμο"),onCancel:back||null,
     body:`<p class="note">${T("Διάλεξε το επάγγελμά σου και η εφαρμογή θα γεμίσει μόνη της με συνηθισμένες δουλειές, λίστες για τις προσφορές, εργαλεία που παίρνεις μαζί και είδη εξόδων. Όλα αλλάζουν μετά όπως θέλεις.")}</p>
       <div class="ofgroup" style="margin-top:6px">
@@ -57,10 +57,10 @@ function tradeSheet(back){
     let merge=false;
     // αν έχεις ήδη δουλέψει την εφαρμογή, ρωτάμε πριν πειράξουμε τις λίστες σου
     if(S.tasks.length||S.clients.length||S.settings.jobTips){
-      merge=!confirm(T("Να αντικατασταθούν οι λίστες σου (προτάσεις εργασιών, «Τι περιλαμβάνει / Δεν περιλαμβάνει», «Τι παίρνω μαζί») με αυτές του επαγγέλματος «{n}»;\n\nΟΚ = αντικατάσταση\nΆκυρο = να προστεθούν δίπλα σε όσα ήδη έχεις",{n:name||t.n}));
+      merge=!confirm(T("Να αντικατασταθούν οι λίστες σου (προτάσεις εργασιών, «Τι περιλαμβάνει / Δεν περιλαμβάνει», «Τι παίρνω μαζί») με αυτές του επαγγέλματος «{n}»;\n\nΟΚ = αντικατάσταση\nΆκυρο = να προστεθούν δίπλα σε όσα ήδη έχεις",{n:name||T(t.n)}));
     }
     applyTrade(id,name,merge);closeSheet();
-    toast(T("Έτοιμο: {n}. Οι λίστες σου γέμισαν με τα βασικά του επαγγέλματος.",{n:name||t.n}));
+    toast(T("Έτοιμο: {n}. Οι λίστες σου γέμισαν με τα βασικά του επαγγέλματος.",{n:name||T(t.n)}));
   };
   $("#shBody").addEventListener("click",e=>{
     const b=e.target.closest("[data-trade]");if(b){choose(b.dataset.trade);return}

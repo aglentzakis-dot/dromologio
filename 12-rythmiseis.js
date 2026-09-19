@@ -41,7 +41,7 @@ function checkSheet(x,back){
       :`<p class="note" style="margin:0">${T("Η λίστα είναι άδεια. Πρόσθεσε ό,τι χρειάζεσαι ή φόρτωσε τη δική σου προεπιλογή.")}</p>`;
     $("#chkList").innerHTML=list.length?panel(list.map((it,i)=>`<div class="row listedit ${it.done?"chkdone":""}" style="align-items:center">
         <button type="button" class="check ${it.done?"on":""}" data-chk="${i}" aria-label="${T("Έγινε")}">${it.done?"✓":""}</button>
-        <div class="grow title">${esc(it.text)}</div>
+        <div class="grow title">${esc(T(it.text))}</div>
         <button class="mv" data-chkmv="${i}" data-dir="up">▲</button><button class="mv" data-chkmv="${i}" data-dir="down">▼</button>
         <button class="x bin" data-chkdel="${i}" aria-label="${T("Διαγραφή")}">${ic("trash",18)}</button></div>`).join("")):"";
   };
