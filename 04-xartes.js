@@ -278,13 +278,15 @@ async function geocodeLW(silent){
 }
 
 /* ---------- Χάρτης δουλειών ---------- */
-let JM=null,jmLayer=null,jmDay=null,jmFilter="all";
+let JM=null,jmLayer=null,jmDay=null,jmFilter="all",jmOwedClosed=false;
 const dayKey=d=>{const x=new Date(d);return x.getFullYear()+"-"+pad(x.getMonth()+1)+"-"+pad(x.getDate())};
 const taskDates=x=>[x.start,x.end,x.doneAt,x.cancelledAt].filter(Boolean).map(dayKey);
-const jmStatus=x=>x.status==="done"?"done":x.status==="cancelled"?"cx":x.status==="waiting"?"wait":taskState(x)==="late"?"late":x.status==="progress"?"prog":"open";
-const JMC={open:"#F2B632",prog:"#2468B5",late:"#C8412B",wait:"#0E7490",done:"#2E7D5B",cx:"#8A96A3",owe:"#8E1F3F"};
+const jmStatus=x=>x.status==="done"?"done":x.status==="cancelled"?"cx":x.status==="waiting"?"wait":taskState(x)==="late"?"late":x.status==="progress"?"prog":x.status==="appt"?"appt":x.status==="inspect"?"insp":"open";
+const JMC={open:"#F2B632",prog:"#2468B5",late:"#C8412B",wait:"#0E7490",done:"#2E7D5B",cx:"#8A96A3",owe:"#8E1F3F",appt:"#8A4FBF",insp:"#B45309"};
 const jmOwedAmt=x=>x.status==="done"&&!x.paid&&(+x.amount||0)>0?Math.max(0,rnd((+x.amount||0)-taskPaid(x))):0;
-const JMF=[["all","Όλες",""],["open","Ανοιχτές",JMC.open],["owed","Οφειλές",JMC.owe],["late","Εκπρόθεσμες",JMC.late],["wait","Αναμονή",JMC.wait],["done","Ολοκληρωμένες",JMC.done]];
+// Φίλτρα = οι ίδιες καταστάσεις με τη φόρμα εργασίας (με την ίδια σειρά), συν «Οφειλές» και «Εκπρόθεσμες».
+const JMF=[["all","Όλες",""],["owed","Οφειλές",JMC.owe],["late","Εκπρόθεσμες",JMC.late],["appt","Ραντεβού",JMC.appt],["insp","Έλεγχος",JMC.insp],
+  ["wait","Προσφορές",JMC.wait],["open","Εκκρεμεί",JMC.open],["prog","Σε εξέλιξη",JMC.prog],["cx","Ακυρωμένες",JMC.cx],["done","Ολοκληρωμένες",JMC.done]];
 function jmMatch(x){
   if(jmFilter==="all")return true;
   if(jmFilter==="owed")return jmOwedAmt(x)>0.004;
@@ -297,6 +299,7 @@ function jmJobs(){
     if(!jmMatch(x))return false;
     if(jmDay)return taskDates(x).includes(jmDay);
     if(jmFilter==="owed")return jmOwedAmt(x)>0.004;
+    if(jmFilter==="done"||jmFilter==="cx")return true;   // τα κλεισμένα φαίνονται όταν τα ζητήσεις ρητά
     return isOpen(x)||jmOwedAmt(x)>0.004;
   });
 }
@@ -337,7 +340,7 @@ function jmDraw(fit){
       html:`<svg viewBox="0 0 24 30" width="34" height="42"><path d="M12 29S3 18.5 3 11.5A9 9 0 0121 11.5C21 18.5 12 29 12 29z" fill="${col}" stroke="#fff" stroke-width="1.6"/><circle cx="12" cy="11.5" r="3.6" fill="#fff"/></svg>`})}).addTo(jmLayer);
     const nav=`https://www.google.com/maps/dir/?api=1&destination=${L.lat},${L.lng}`;
     mk.bindPopup(`<div class="jpop"><b>${esc(x.title)}</b>
-      <div class="meta">${[c?esc(c.name):"",esc(L.label),x.amount?money(x.amount):"",T(({open:"Εκκρεμεί",prog:"Σε εξέλιξη",late:"Εκπρόθεσμη",wait:"Προσφορά, αναμονή απάντησης",done:"Ολοκληρώθηκε",cx:"Ακυρώθηκε",owe:"Χρωστάει"})[st])].filter(Boolean).join(" · ")}</div>
+      <div class="meta">${[c?esc(c.name):"",esc(L.label),x.amount?money(x.amount):"",T(({open:"Εκκρεμεί",prog:"Σε εξέλιξη",late:"Εκπρόθεσμη",wait:"Προσφορά, αναμονή απάντησης",done:"Ολοκληρώθηκε",cx:"Ακυρώθηκε",owe:"Χρωστάει",appt:"Ραντεβού",insp:"Έλεγχος"})[st])].filter(Boolean).join(" · ")}</div>
       ${owe>0.004?`<div class="meta" style="color:var(--red);font-weight:800">${T("Οφείλει")} ${money(owe)}</div>`:""}
       ${whenText(x)?`<div class="meta">${whenText(x)}</div>`:""}
       <div class="row2"><button data-jt="${x.id}">${T("Άνοιγμα εργασίας")}</button>${c?`<button data-jc="${c.id}">${T("Καρτέλα πελάτη")}</button>`:""}<a href="${nav}" target="_blank" rel="noopener">${T("Πλοήγηση")}</a></div></div>`);
@@ -346,7 +349,7 @@ function jmDraw(fit){
     :T("Δουλειές σε εκκρεμότητα ({n})",{n:jobs.length});
   const owedTotal=rnd(jobs.reduce((s,x)=>s+jmOwedAmt(x),0));
   const bar=$("#jmOwed");
-  if(owedTotal>0.004&&S.settings.jmShowOwed){bar.hidden=false;$("#jmOwedTxt").textContent=T("Σου χρωστάνε από αυτές τις δουλειές: {a}",{a:money(owedTotal)})}
+  if(owedTotal>0.004&&!jmOwedClosed){bar.hidden=false;$("#jmOwedTxt").textContent=T("Σου χρωστάνε από αυτές τις δουλειές: {a}",{a:money(owedTotal)})}
   else bar.hidden=true;
   if(fit&&pts.length){
     if(pts.length===1)JM.setView(pts[0],15);
@@ -368,9 +371,9 @@ async function openJobsMap(){
   $("#jmMe").setAttribute("aria-label",T("Η θέση μου"));$("#jmMe").title=T("Η θέση μου");
   $("#jmLbl").textContent=T("Δες μέρα:");$("#jmDate").setAttribute("aria-label",T("Δες μέρα"));
   decorateTime($("#jobsDlg"));
-  jmUpdateOwedToggle();
-  $("#jmOwedToggle").onclick=()=>{S.settings.jmShowOwed=!S.settings.jmShowOwed;write();jmUpdateOwedToggle();jmDraw(false)};
-  $("#jmOwedX").onclick=()=>{S.settings.jmShowOwed=false;write();jmUpdateOwedToggle();$("#jmOwed").hidden=true};
+  // Το παλιό κουμπί «εμφάνιση/απόκρυψη οφειλών» έφυγε: η μπάρα οφειλών κλείνει με το ✕ της και ξαναβγαίνει την επόμενη φορά.
+  jmOwedClosed=false;const tg=$("#jmOwedToggle");if(tg)tg.style.display="none";
+  $("#jmOwedX").onclick=()=>{jmOwedClosed=true;$("#jmOwed").hidden=true};
   jmRenderFilters();
   $("#jobsDlg").classList.add("open");
   if(!JM){

@@ -4,8 +4,18 @@ let sheetCancel=null,sheetDirty=false,sheetHasSave=false,sheetAutoSave=null; // 
 function freshSheetBody(){
   const old=$("#shBody"),n=old.cloneNode(false);n.id="shBody";old.replaceWith(n);return n;
 }
+// Όταν ένα αναδυόμενο ανοίγει πάνω από άλλο, κρατάμε πού είχες φτάσει στο προηγούμενο·
+// όταν ξαναγυρίσεις σε αυτό (ίδιος τίτλος), ανοίγει στο ίδιο σημείο και όχι από την αρχή.
+const sheetStack=[];let sheetPending=null,sheetClearT=null;
 function openSheet({title,body,onSave,onDelete,deleteMsg,onCancel,saveLabel,saveStyle,saveClass="",cancelLabel,fixed="",noFoot=false,overNav=false}){
+  const cur=$("#modal").classList.contains("open")&&$("#shBody")?{t:$("#shTitle").textContent,y:$("#shBody").scrollTop}:sheetPending;
+  sheetPending=null;clearTimeout(sheetClearT);
+  let restoreY=null;const top=sheetStack[sheetStack.length-1];
+  if(top&&top.t===title){restoreY=top.y;sheetStack.pop()}      // επιστροφή σε προηγούμενο φύλλο
+  else if(cur&&cur.t===title)restoreY=cur.y;                     // ανανέωση του ίδιου φύλλου
+  else if(cur)sheetStack.push(cur);                               // πάμε μπροστά σε νέο φύλλο
   $("#shTitle").textContent=title;freshSheetBody().innerHTML=body;$("#shBody").scrollTop=0;
+  if(restoreY)requestAnimationFrame(()=>{const b=$("#shBody");if(b)b.scrollTop=restoreY;setTimeout(()=>{const b2=$("#shBody");if(b2&&b2.scrollTop<restoreY-5)b2.scrollTop=restoreY},80)});
   $("#shFixed").innerHTML=fixed;$("#shFixed").classList.toggle("last",noFoot);
   $("#shClose").hidden=!noFoot;$("#shClose").setAttribute("aria-label",T("Κλείσιμο"));$("#shFoot").style.display=noFoot?"none":"";
   $("#shFoot").innerHTML=`${onDelete?`<button class="btn danger" id="sDel">${T("Διαγραφή")}</button>`:""}<span class="grow"></span>
@@ -24,7 +34,10 @@ document.addEventListener("input",e=>{if(e.target.closest&&(e.target.closest("#s
 $("#shClose").onclick=()=>cancelSheet();
 function unfade(){const a=document.activeElement;
   if(!a||!/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))document.body.classList.remove("typing")}
-function closeSheet(){document.body.classList.remove("typing");const wasNav=document.body.classList.contains("overnav");
+function closeSheet(){
+  // κρατάμε για λίγο το σημείο του φύλλου που κλείνει, μήπως ανοίξει αμέσως το επόμενο (π.χ. «Πίσω»)
+  if($("#modal").classList.contains("open")&&$("#shBody")){sheetPending={t:$("#shTitle").textContent,y:$("#shBody").scrollTop};
+    clearTimeout(sheetClearT);sheetClearT=setTimeout(()=>{sheetPending=null;if(!$("#modal").classList.contains("open"))sheetStack.length=0},400)}document.body.classList.remove("typing");const wasNav=document.body.classList.contains("overnav");
   document.body.classList.remove("overnav");$("#modal").classList.remove("open","overnav");$("#shFixed").innerHTML="";
   if(wasNav)setTimeout(render,0);sheetCancel=null;sheetDirty=false;sheetHasSave=false;sheetAutoSave=null}
 function cancelSheet(){

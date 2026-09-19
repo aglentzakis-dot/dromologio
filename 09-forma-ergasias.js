@@ -565,6 +565,8 @@ function offerLockedSheet(x,back,dr,justSent){
   const when=new Date(o.sentAt);
   openSheet({title:T("Προσφορά Αρ. {n}",{n:o.no}),cancelLabel:back?T("Πίσω"):T("Κλείσιμο"),onCancel:back||null,
     saveLabel:"+ "+T("Νέα προσφορά"),saveStyle:"amber",
+    onDelete:()=>{deleteOffer(x,o,false);render();if(x.offer&&x.offer.no)offerLockedSheet(x,back,dr);else if(back)back();else closeSheet();return "replaced"},
+    deleteMsg:T("Να σβηστεί οριστικά η προσφορά Αρ. {n} ({t});",{n:o.no,t:o.title||x.title||""}),
     onSave:()=>{
       if(!confirm(T("Θα ξεκινήσει νέα προσφορά με νέο αριθμό, με αφετηρία τα στοιχεία αυτής. Η Αρ. {n} μένει όπως είναι, στο ιστορικό. Συνέχεια;",{n:o.no})))return false;
       x.offers=x.offers||[];x.offers.push(o);
@@ -584,12 +586,14 @@ function offerLockedSheet(x,back,dr,justSent){
       ${hist.length?sec(T("Προηγούμενες προσφορές"))+panel(hist.map((h,i)=>`<div class="row" data-hist="${hist.length-1-i}" style="align-items:center">
           <div class="avatar" style="font-size:13px">${h.no}</div><div class="grow"><div class="title">${esc(h.title||T("Προσφορά"))}</div>
           <div class="meta"><span>${offerSendText(h)}</span></div></div>
-          <b class="amt">${money(offerAmt(h))}</b></div>`).join("")):""}${clientOffersHTML(x)}`});
+          <b class="amt">${money(offerAmt(h))}</b><button type="button" class="x bin" data-histdel="${hist.length-1-i}" aria-label="${T("Διαγραφή")}" style="margin-left:6px">${ic("trash",17)}</button></div>`).join("")):""}${clientOffersHTML(x)}`});
   $("#of_view").onclick=()=>showOffer(x,o,null);
   if($("#of_mark"))$("#of_mark").onclick=()=>{if(!confirm(T("Να σημειωθεί ότι η προσφορά Αρ. {n} δόθηκε στον πελάτη (π.χ. τυπωμένη ή από τον υπολογιστή);",{n:o.no})))return;
     o.sharedAt=Date.now();o.sharedManual=1;persist();toast(T("Σημειώθηκε ότι δόθηκε στον πελάτη."));offerLockedSheet(x,back,dr)};
   $("#of_ro").onclick=()=>toast(T("Η προσφορά έχει κλειδώσει και δεν αλλάζει. Για αλλαγές πάτα «Νέα προσφορά»."));
-  $("#shBody").addEventListener("click",e=>{const r=e.target.closest("[data-hist]");if(r){showOffer(x,x.offers[+r.dataset.hist]);return}
+  $("#shBody").addEventListener("click",e=>{
+    const hd=e.target.closest("[data-histdel]");if(hd){e.stopPropagation();const h=x.offers[+hd.dataset.histdel];if(h&&deleteOffer(x,h))offerLockedSheet(x,back,dr);return}
+    const r=e.target.closest("[data-hist]");if(r){showOffer(x,x.offers[+r.dataset.hist]);return}
     const oh=e.target.closest("[data-coffer]");if(oh){const f=offerById(oh.dataset.coffer);if(f)showOffer(f.x,f.o)}});
 }
 function drawOfferDoc(ctx,o,W,dry){

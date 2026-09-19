@@ -213,7 +213,11 @@ function vMoney(){
       <b class="amt out">${money(m.owed)}</b></div>`).join("")+orphanRow)
     :`<div class="owednone">${sec(T("Σου χρωστάνε"))}<small>✓ ${T("κανείς δεν σου χρωστάει")}</small></div>`;
   h+=`<div class="sec-row">${sec(T("Κινήσεις"))}<button class="btn ghost small" style="margin-bottom:8px" data-act="exportCsv">${ic("archive",16)} ${T("Εξαγωγή")}</button></div>`;
-  h+=moneyEntriesHTML(ent);
+  // Φαίνονται οι 10 πιο πρόσφατες· όλες μαζί (ανά μήνα) σε αναδυόμενο παράθυρο.
+  const entS=ent.slice().sort(byNewest);
+  h+=entS.length?panel(entS.slice(0,10).map(e=>entryRow(e,true)).join("")+
+      (entS.length>10?`<button class="btn ghost" data-act="allEntries" style="margin:4px 14px 12px;width:calc(100% - 28px)">${ic("money",18)} ${T("Όλες οι κινήσεις της περιόδου")} (${entS.length})</button>`:"")):
+    panel(`<div class="empty">${T("Καμία κίνηση σε αυτή την περίοδο.")}</div>`);
   return h;
 }
 function monthlyChartHTML(){
@@ -268,6 +272,16 @@ function statsSheet(){
 let moneyOpenMonths=null;
 function monthKey(d){const x=new Date(d);return x.getFullYear()+"-"+pad(x.getMonth()+1)}
 function monthLabel(k){const[y,m]=k.split("-");return cap(new Date(+y,+m-1,1).toLocaleDateString(LOC(),{month:"long",year:"numeric"}))}
+function moneyPeriodEntries(){const[from,to]=periodRange();
+  return S.ledger.filter(alive).filter(e=>{const x=new Date(e.date);return(!from||x>=from)&&(!to||x<to)})}
+function allEntriesSheet(){
+  const ent=moneyPeriodEntries().slice().sort(byNewest),groups=new Map();
+  ent.forEach(e=>{const k=monthKey(e.date);if(!groups.has(k))groups.set(k,[]);groups.get(k).push(e)});
+  openSheet({title:T("Κινήσεις")+" · "+periodLabel(moneyPeriod),cancelLabel:T("Κλείσιμο"),
+    body:[...groups.entries()].map(([k,list])=>{const sum=list.reduce((s,e)=>s+(isIn(e.kind)?e.amount:-e.amount),0);
+      return `<div class="sec-row">${sec(monthLabel(k)+" · "+pl(list.length,"{n} κίνηση","{n} κινήσεις"))}<b class="msum ${sum>=0?"in":"out"}" style="margin-bottom:8px">${sum>=0?"+":"−"}${money0(Math.abs(sum))}</b></div>`+
+        panel(list.map(e=>entryRow(e,true)).join(""))}).join("")||panel(`<div class="empty">${T("Καμία κίνηση σε αυτή την περίοδο.")}</div>`)});
+}
 function moneyEntriesHTML(ent){
   if(!ent.length)return panel(`<div class="empty">${T("Καμία κίνηση σε αυτή την περίοδο.")}</div>`);
   const groups=new Map();
@@ -491,18 +505,24 @@ function tipsSheet(dir,pick,back){
     if(a){const tips=a.dataset.tipadd==="in"?S.settings.noteTipsIn:S.settings.noteTipsOut;const v=val("tip_new_"+a.dataset.tipadd);if(!v)return;tips.push(v);write();tipsSheet(dir,pick,back)}
   };
 }
+// Είδη που χρησιμοποιεί η ίδια η εφαρμογή (εξόφληση, προκαταβολή κ.λπ.): δεν σβήνονται και δεν αλλάζουν κατεύθυνση.
+const KIND_LOCKED=new Set(["advance","payment","extra","material"]);
 function kindsSheet(back){
   const ks=kinds();
+  const used=k=>S.ledger.filter(en=>en.kind===k.id).length;
   openSheet({title:T("Είδη κινήσεων"),cancelLabel:T("Πίσω"),onCancel:back||null,
     body:`<div class="inrow" style="margin-bottom:10px"><input id="k_new" placeholder="${T("Νέο είδος, π.χ. Υλικά")}" autocomplete="off"><button class="btn amber" id="k_add">${T("Προσθήκη")}</button></div>
-      <p class="note">${T("Άλλαξε ονόματα, σειρά και αν είναι έσοδο ή έξοδο. Το νέο μπαίνει ως έξοδο, πάτα «Έσοδο/Έξοδο» για να το αλλάξεις.")}</p>`+
+      <p class="note">${T("Άλλαξε ονόματα, σειρά και αν είναι έσοδο ή έξοδο. Το νέο μπαίνει ως έξοδο, πάτα «Έσοδο/Έξοδο» για να το αλλάξεις.")}</p>
+      <p class="note">${T("🔒 = βασικό είδος που χρησιμοποιεί η εφαρμογή στους υπολογισμούς, δεν σβήνεται. Ο αριθμός δείχνει σε πόσες κινήσεις χρησιμοποιείται ένα είδος· όσο χρησιμοποιείται, δεν σβήνεται.")}</p>`+
       panel(ks.map((k,i)=>`<div class="kindrow">
         <input class="kname" data-i="${i}" value="${esc(k.name)}" autocomplete="off">
         <div class="kindacts">
-          <button class="dirbtn ${k.dir}" data-kdir="${i}">${k.dir==="in"?T("Έσοδο"):T("Έξοδο")}</button>
+          <button class="dirbtn ${k.dir}" ${KIND_LOCKED.has(k.id)?"disabled":`data-kdir="${i}"`}>${k.dir==="in"?T("Έσοδο"):T("Έξοδο")}</button>
           <span class="grow"></span>
           <button class="mv" data-kmv="${i}" data-dir="up">▲</button><button class="mv" data-kmv="${i}" data-dir="down">▼</button>
-          ${ks.length>2?`<button class="x bin" data-kdel="${i}" aria-label="${T("Διαγραφή")}">${ic("trash",18)}</button>`:""}
+          ${KIND_LOCKED.has(k.id)?`<span class="klock" title="${T("Βασικό είδος της εφαρμογής, δεν σβήνεται")}">🔒</span>`
+            :used(k)?`<span class="klock" title="${T("Χρησιμοποιείται σε κινήσεις, δεν σβήνεται")}">${used(k)}</span>`
+            :ks.length>2?`<button class="x bin" data-kdel="${i}" aria-label="${T("Διαγραφή")}">${ic("trash",18)}</button>`:""}
         </div></div>`).join(""))+
       ""});
   $("#shBody").addEventListener("change",e=>{const n=e.target.closest(".kname");if(n){ks[+n.dataset.i].name=n.value.trim()||T("Κίνηση");write();render()}});

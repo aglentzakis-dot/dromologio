@@ -35,12 +35,23 @@ function offerStateText(r){
   else bits.push(T("εγκρίθηκε"));
   return bits.join(" · ");
 }
-function offerRowHTML(r,showClient=true){
+// Διαγραφή προσφοράς (μετά από επιβεβαίωση). Αν σβηστεί η τωρινή, τη θέση της παίρνει η πιο πρόσφατη παλιότερη·
+// αν δεν υπάρχει άλλη, η εργασία μένει χωρίς προσφορά (φεύγει και η γραμμή «Προσφορά Αρ. …» από την εργασία).
+function deleteOffer(x,o,ask=true){
+  if(ask&&!confirm(T("Να σβηστεί οριστικά η προσφορά Αρ. {n} ({t});",{n:o.no,t:o.title||x.title||""})))return false;
+  if(o===x.offer){
+    if(Array.isArray(x.offers)&&x.offers.length)x.offer=x.offers.pop();
+    else{delete x.offer;delete x.offerNo}
+  }else if(Array.isArray(x.offers)){const i=x.offers.indexOf(o);if(i>=0)x.offers.splice(i,1)}
+  persist();toast(T("Η προσφορά Αρ. {n} σβήστηκε.",{n:o.no}));
+  return true;
+}
+function offerRowHTML(r,showClient=true,canDel=false){
   return `<div class="row" data-coffer="${esc(offerKey(r))}" style="align-items:center">
     <div class="avatar" style="font-size:13px">${esc(String(r.o.no))}</div>
     <div class="grow"><div class="title">${esc(r.o.title||r.x.title||T("Προσφορά"))}</div>
       <div class="meta">${showClient?`<span>${esc(offerClientName(r))}</span>`:""}<span>${offerStateText(r)}</span></div></div>
-    <b class="amt">${money(offerAmt(r.o))}</b></div>`;
+    <b class="amt">${money(offerAmt(r.o))}</b>${canDel?`<button type="button" class="x bin" data-odel="${esc(offerKey(r))}" aria-label="${T("Διαγραφή")}" style="margin-left:6px">${ic("trash",17)}</button>`:""}</div>`;
 }
 
 // Μέσα στη φόρμα προσφοράς: οι προσφορές από ΑΛΛΕΣ εργασίες του ίδιου πελάτη.
@@ -62,7 +73,7 @@ function offerArchiveSheet(cid,back,taskId){
     const q=norm(offerArchQ);
     const list=base.filter(r=>!q||norm([r.o.no,r.o.title,r.x.title,offerClientName(r),r.o.addr].join(" ")).includes(q));
     const box=$("#oa_list");if(!box)return;
-    box.innerHTML=list.length?panel(list.map(r=>offerRowHTML(r,!cid)).join("")):
+    box.innerHTML=list.length?panel(list.map(r=>offerRowHTML(r,!cid,true)).join("")):
       panel(`<div class="empty">${base.length?T("Καμία προσφορά δεν ταιριάζει στην αναζήτηση."):T("Δεν υπάρχουν ακόμα προσφορές.")}</div>`);
     const n=$("#oa_n");if(n)n.textContent=list.length;
   };
@@ -77,6 +88,8 @@ function offerArchiveSheet(cid,back,taskId){
   draw();
   $("#oa_q").oninput=e=>{offerArchQ=e.target.value;draw()};
   $("#shBody").addEventListener("click",e=>{
+    const del=e.target.closest("[data-odel]");
+    if(del){e.stopPropagation();const f=offerById(del.dataset.odel);if(f&&deleteOffer(f.x,f.o)){render();offerArchiveSheet(cid,back,taskId)}return}
     const r=e.target.closest("[data-coffer]");if(!r)return;
     const f=offerById(r.dataset.coffer);if(!f)return;
     // Πρόχειρη τωρινή προσφορά: ανοίγει για συμπλήρωση· όλες οι άλλες ανοίγουν για προβολή/αποστολή.
