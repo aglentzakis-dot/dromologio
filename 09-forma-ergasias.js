@@ -485,7 +485,7 @@ function offerSheet(x,back,dr){
       <textarea id="of_terms" rows="5">${esc(T(o.terms))}</textarea>
       <p class="note" style="margin:4px 0 0">${T("Ό,τι γράψεις στους όρους αποθηκεύεται μόνο του και μπαίνει σε κάθε νέα προσφορά.")}</p>
       <button type="button" class="linkbtn" id="of_termsDef">${T("Επαναφορά στους αρχικούς όρους της εφαρμογής")}</button>
-      ${wmPanelHTML()}
+      ${wmPanelHTML(o)}
       <div class="oftotal">
         <div class="two">
           <div><label for="of_amount">${T("Τελική τιμή")}</label>
@@ -602,7 +602,7 @@ function drawOfferDoc(ctx,o,W,dry){
   const txt=(t,x,y)=>{if(!dry)ctx.fillText(t,x,y)};
   const rule=y=>{if(!dry){ctx.strokeStyle="#D6DEE3";ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(40,y);ctx.lineTo(W-40,y);ctx.stroke()}};
   if(!dry){ctx.fillStyle="#ffffff";ctx.fillRect(0,0,W,ctx.canvas.height);ctx.fillStyle="#17324D";ctx.fillRect(0,0,W,140);
-    wmDraw(ctx,W,ctx.canvas.height)}
+    wmDraw(ctx,W,ctx.canvas.height,o)}
   ctx.textAlign="left";
   F("bold 38px","#ffffff");txt(biz.name||T("Δρομολόγιο"),40,64);
   F("19px","#ffffff");
@@ -644,7 +644,7 @@ function offerCanvas(o){
   const W=900;
   const probe=document.createElement("canvas");probe.width=W;probe.height=10;
   // Με φόντο σελίδας, το έγγραφο έχει σχήμα Α4 ώστε η εικόνα να ταιριάζει ακριβώς.
-  const need=Math.max(wmOn()?Math.round(W*297/210):760,Math.round(drawOfferDoc(probe.getContext("2d"),o,W,true)+60));
+  const need=Math.max(wmOn(o)?Math.round(W*297/210):760,Math.round(drawOfferDoc(probe.getContext("2d"),o,W,true)+60));
   const cv=document.createElement("canvas");cv.width=W;cv.height=need;
   drawOfferDoc(cv.getContext("2d"),o,W,false);
   return cv;
@@ -652,7 +652,7 @@ function offerCanvas(o){
 function closePreview(){$("#photoDlg").classList.remove("open")}
 async function showOffer(x,o,onSent){
   o=o||x.offer;
-  await wmReady();
+  await wmReady(o);
   const cv=offerCanvas(o),url=cv.toDataURL("image/png"),name="prosfora-"+(o.no||"")+".pdf";
   $("#phImg").src=url;$("#phT").textContent=T("Προσφορά Αρ. {n}",{n:o.no||"—"});
   const sent=!!o.sentAt;

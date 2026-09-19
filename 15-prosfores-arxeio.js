@@ -102,50 +102,65 @@ const oldOffersCount=x=>x.clientId?offersCount(x.clientId):(x.offers||[]).length
 const offersCount=cid=>allOffers().filter(r=>!cid||r.x.clientId===cid).length;
 
 /* ---------- Υδατογράφημα (φόντο σελίδας Α4 πίσω από την προσφορά) ----------
-   Αποθηκεύεται χωριστά από τα υπόλοιπα δεδομένα (κλειδί stodromo-wm), ώστε η εικόνα να μη
-   μεγαλώνει τα αντίγραφα ασφαλείας που στέλνονται με ταχυδρομείο. */
+   Δύο είδη: το ΑΠΟΘΗΚΕΥΜΕΝΟ (για όλες τις προσφορές, όλων των πελατών) και, αν θέλεις,
+   ένα ξεχωριστό μόνο για μία προσφορά. Μια προσφορά μπορεί επίσης να βγει χωρίς φόντο.
+   Οι εικόνες αποθηκεύονται χωριστά από τα υπόλοιπα δεδομένα (κλειδιά stodromo-wm…), ώστε
+   να μη μεγαλώνουν τα αντίγραφα ασφαλείας που στέλνονται με ταχυδρομείο. */
 const WM_KEY="stodromo-wm";
-let wmCache=null,wmImg=null,wmLoading=null;
-function wmGet(){
-  if(wmCache)return wmCache;
-  try{wmCache=JSON.parse(localStorage.getItem(WM_KEY)||"null")}catch(e){wmCache=null}
-  if(!wmCache||typeof wmCache!=="object")wmCache={img:"",op:0.15};
-  if(!(wmCache.op>=0.02&&wmCache.op<=1))wmCache.op=0.15;
-  return wmCache;
+const wmStore={},wmImgs={};
+const wmKeyOf=o=>o&&o.wmKey?WM_KEY+"-"+o.wmKey:WM_KEY;
+function wmEntry(key){
+  if(wmStore[key])return wmStore[key];
+  let e=null;try{e=JSON.parse(localStorage.getItem(key)||"null")}catch(x){}
+  if(!e||typeof e!=="object")e={img:"",op:0.15};
+  if(!(e.op>=0.02&&e.op<=1))e.op=0.15;
+  return wmStore[key]=e;
 }
-function wmSave(){try{localStorage.setItem(WM_KEY,JSON.stringify(wmGet()));return true}
+function wmSaveEntry(key){try{localStorage.setItem(key,JSON.stringify(wmEntry(key)));return true}
   catch(e){toast(T("Η εικόνα είναι πολύ μεγάλη για να αποθηκευτεί. Δοκίμασε μικρότερη."));return false}}
-// Φορτώνει την εικόνα μία φορά· η προσφορά περιμένει να είναι έτοιμη πριν σχεδιαστεί.
-function wmReady(){
-  const w=wmGet();
-  if(!w.img){wmImg=null;return Promise.resolve(null)}
-  if(wmImg&&wmImg._src===w.img&&wmImg.complete)return Promise.resolve(wmImg);
-  if(wmLoading&&wmLoading._src===w.img)return wmLoading;
-  const im=new Image();im._src=w.img;
-  wmLoading=new Promise(res=>{im.onload=()=>{wmImg=im;res(im)};im.onerror=()=>{wmImg=null;res(null)}});
-  wmLoading._src=w.img;im.src=w.img;return wmLoading;
+// Ποια εικόνα ισχύει για μια προσφορά (ή καμία).
+function wmFor(o){
+  if(o&&o.noWm)return null;
+  if(o&&o.wmKey){const e=wmEntry(wmKeyOf(o));if(e.img)return{key:wmKeyOf(o),e}}
+  const g=wmEntry(WM_KEY);return g.img?{key:WM_KEY,e:g}:null;
 }
-// Σχεδιάζει το φόντο σε όλη τη σελίδα, με τη διαφάνεια που έχεις ορίσει.
-function wmDraw(ctx,W,H){
-  const w=wmGet();if(!w.img||!wmImg||wmImg._src!==w.img||!wmImg.complete)return;
-  ctx.save();ctx.globalAlpha=w.op;ctx.drawImage(wmImg,0,0,W,H);ctx.restore();
+const wmOn=o=>!!wmFor(o);
+// Φορτώνει την εικόνα· η προσφορά περιμένει να είναι έτοιμη πριν σχεδιαστεί.
+function wmReady(o){
+  const w=wmFor(o);if(!w)return Promise.resolve(null);
+  const have=wmImgs[w.key];
+  if(have&&have._src===w.e.img&&have.complete)return Promise.resolve(have);
+  return new Promise(res=>{const im=new Image();im._src=w.e.img;
+    im.onload=()=>{wmImgs[w.key]=im;res(im)};im.onerror=()=>res(null);im.src=w.e.img});
 }
-const wmOn=()=>!!wmGet().img;
-function wmPanelHTML(){
-  const w=wmGet(),pc=Math.round(w.op*100);
+function wmDraw(ctx,W,H,o){
+  const w=wmFor(o);if(!w)return;const im=wmImgs[w.key];
+  if(!im||im._src!==w.e.img||!im.complete)return;
+  ctx.save();ctx.globalAlpha=w.e.op;ctx.drawImage(im,0,0,W,H);ctx.restore();
+}
+let wmCur=null; // η προσφορά που είναι ανοιχτή στη φόρμα
+function wmPanelHTML(o){
+  wmCur=o||null;
+  const own=o&&o.wmKey&&wmEntry(wmKeyOf(o)).img,g=wmEntry(WM_KEY),w=wmFor(o)||(own?{key:wmKeyOf(o),e:wmEntry(wmKeyOf(o))}:g.img?{key:WM_KEY,e:g}:null);
+  const pc=w?Math.round(w.e.op*100):15;
+  const which=own?`<b style="color:var(--loc)">${T("Ξεχωριστό φόντο μόνο για αυτή την προσφορά.")}</b>`:g.img?`<b style="color:var(--green)">✓ ${T("Αποθηκευμένο φόντο: μπαίνει σε όλες τις προσφορές, σε όλους τους πελάτες.")}</b>`:"";
   return `<div class="ofgroup" id="wm_box">
     <div class="ofhead">${T("Φόντο σελίδας (υδατογράφημα)")}<small>${T("μια εικόνα Α4, π.χ. επιστολόχαρτο ή λογότυπο, που μπαίνει αχνά πίσω από την προσφορά")}</small></div>
-    ${w.img?`<div class="wmrow"><img class="wmthumb" src="${w.img}" alt="" style="opacity:${Math.max(.25,w.op)}">
+    ${w?`<p class="note" style="margin:0 0 8px">${which}</p>
+      <div class="wmrow"><img class="wmthumb" src="${w.e.img}" alt="" style="opacity:${o&&o.noWm?.12:Math.max(.25,w.e.op)}">
         <div class="grow"><label for="wm_op" style="margin-top:0">${T("Διαφάνεια")}: <b id="wm_opv">${pc}%</b></label>
-        <input type="range" id="wm_op" min="3" max="60" step="1" value="${pc}" style="width:100%">
+        <input type="range" id="wm_op" min="3" max="60" step="1" value="${pc}" style="width:100%" ${o&&o.noWm?"disabled":""}>
         <small class="note">${T("Μικρότερο ποσοστό = πιο αχνό. Πάτα «Δες την προσφορά» για να δεις το αποτέλεσμα.")}</small></div></div>
+      ${o?`<label class="toggle" style="margin-top:10px"><input type="checkbox" id="wm_none" ${o.noWm?"checked":""}> ${T("Χωρίς φόντο σε αυτή την προσφορά")}</label>`:""}
+      ${own?`<button type="button" class="btn ghost wide" id="wm_mkall" style="margin-top:8px">✓ ${T("Αποθήκευσέ το για όλες τις μελλοντικές προσφορές")}</button>`:""}
       <div class="twobtn" style="padding:0;margin-top:8px"><button type="button" class="btn ghost" id="wm_pick">${T("Άλλαξε εικόνα")}</button>
         <button type="button" class="btn ghost" id="wm_del">${T("Αφαίρεση")}</button></div>`
     :`<button type="button" class="btn ghost wide" id="wm_pick">${ic("plus",18)} ${T("Ανέβασε εικόνα φόντου")}</button>`}
     <input type="file" id="wm_file" accept="image/*" hidden></div>`;
 }
-function wmRefresh(){const b=$("#wm_box");if(b)b.outerHTML=wmPanelHTML()}
-// Μικραίνει την εικόνα (έως 1240 εικονοστοιχεία στη μεγάλη πλευρά) για να χωράει στη μνήμη του κινητού.
+function wmRefresh(){const b=$("#wm_box");if(b)b.outerHTML=wmPanelHTML(wmCur)}
+// Μικραίνει την εικόνα (έως 1240 εικονοστοιχεία στη μεγάλη πλευρά) για να χωράει στη μνήμη του κινητού,
+// και ρωτά αν θα αποθηκευτεί για όλες τις προσφορές ή μόνο για αυτή.
 function wmFromFile(file){
   const rd=new FileReader();
   rd.onload=()=>{const im=new Image();
@@ -155,9 +170,16 @@ function wmFromFile(file){
       cv.getContext("2d").drawImage(im,0,0,cv.width,cv.height);
       let url=cv.toDataURL("image/webp",0.85);
       if(!/^data:image\/webp/.test(url))url=/png/i.test(file.type)?cv.toDataURL("image/png"):cv.toDataURL("image/jpeg",0.85);
-      const w=wmGet(),prev=w.img;w.img=url;
-      if(!wmSave()){w.img=prev;return}
-      wmReady().then(wmRefresh);toast(T("Το φόντο αποθηκεύτηκε. Θα μπαίνει σε κάθε προσφορά."));
+      const o=wmCur;
+      const forAll=!o||confirm(T("Να αποθηκευτεί αυτό το φόντο για ΟΛΕΣ τις μελλοντικές προσφορές, σε όλους τους πελάτες;\n\nΟΚ = για όλες τις προσφορές\nΆκυρο = μόνο για αυτή την προσφορά"));
+      let key;
+      if(forAll){key=WM_KEY;if(o){if(o.wmKey){try{localStorage.removeItem(wmKeyOf(o))}catch(e){}delete o.wmKey}delete o.noWm}}
+      else{if(!o.wmKey)o.wmKey=uid();key=wmKeyOf(o);delete o.noWm}
+      const e=wmEntry(key),prev=e.img;e.img=url;
+      if(!wmSaveEntry(key)){e.img=prev;return}
+      if(o)persist();
+      wmReady(o).then(wmRefresh);
+      toast(forAll?T("Το φόντο αποθηκεύτηκε και θα μπαίνει σε όλες τις προσφορές."):T("Το φόντο μπήκε μόνο σε αυτή την προσφορά."));
     };
     im.onerror=()=>toast(T("Η εικόνα δεν διαβάστηκε."));
     im.src=rd.result;};
@@ -165,11 +187,26 @@ function wmFromFile(file){
 }
 document.addEventListener("click",e=>{
   if(e.target.closest("#wm_pick")){$("#wm_file").click();return}
-  if(e.target.closest("#wm_del")){if(!confirm(T("Να αφαιρεθεί το φόντο από τις προσφορές;")))return;
-    const w=wmGet();w.img="";wmSave();wmImg=null;wmRefresh();toast(T("Το φόντο αφαιρέθηκε."))}
+  const o=wmCur;
+  if(e.target.closest("#wm_mkall")&&o&&o.wmKey){
+    const mine=wmEntry(wmKeyOf(o)),g=wmEntry(WM_KEY);
+    if(g.img&&!confirm(T("Θα αντικαταστήσει το φόντο που έχεις αποθηκευμένο για όλες τις προσφορές. Συνέχεια;")))return;
+    g.img=mine.img;g.op=mine.op;if(!wmSaveEntry(WM_KEY))return;
+    try{localStorage.removeItem(wmKeyOf(o))}catch(x){}delete wmStore[wmKeyOf(o)];delete o.wmKey;persist();
+    wmReady(o).then(wmRefresh);toast(T("Το φόντο αποθηκεύτηκε και θα μπαίνει σε όλες τις προσφορές."));return}
+  if(e.target.closest("#wm_del")){
+    const own=o&&o.wmKey;
+    if(!confirm(own?T("Να αφαιρεθεί το ξεχωριστό φόντο αυτής της προσφοράς;"):T("Να αφαιρεθεί το αποθηκευμένο φόντο από όλες τις προσφορές;")))return;
+    if(own){try{localStorage.removeItem(wmKeyOf(o))}catch(x){}delete wmStore[wmKeyOf(o)];delete o.wmKey;persist()}
+    else{const g=wmEntry(WM_KEY);g.img="";wmSaveEntry(WM_KEY)}
+    wmRefresh();toast(T("Το φόντο αφαιρέθηκε."))}
 });
-document.addEventListener("change",e=>{if(e.target.id==="wm_file"&&e.target.files&&e.target.files[0])wmFromFile(e.target.files[0])});
+document.addEventListener("change",e=>{
+  if(e.target.id==="wm_file"&&e.target.files&&e.target.files[0]){wmFromFile(e.target.files[0]);return}
+  if(e.target.id==="wm_none"&&wmCur){if(e.target.checked)wmCur.noWm=true;else delete wmCur.noWm;persist();wmRefresh()}
+});
 document.addEventListener("input",e=>{if(e.target.id!=="wm_op")return;
-  const w=wmGet();w.op=Math.max(.03,Math.min(.6,(+e.target.value||15)/100));wmSave();
-  const v=$("#wm_opv");if(v)v.textContent=Math.round(w.op*100)+"%";
-  const th=document.querySelector(".wmthumb");if(th)th.style.opacity=Math.max(.25,w.op)});
+  const w=wmFor(wmCur);if(!w)return;
+  w.e.op=Math.max(.03,Math.min(.6,(+e.target.value||15)/100));wmSaveEntry(w.key);
+  const v=$("#wm_opv");if(v)v.textContent=Math.round(w.e.op*100)+"%";
+  const th=document.querySelector(".wmthumb");if(th)th.style.opacity=Math.max(.25,w.e.op)});
