@@ -656,3 +656,5 @@ body.demo main{padding-top:40px}
 .ident-wait{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700}
 .ident-wait[hidden]{display:none}
 body.identopen{overflow:hidden}
+/* δική του όψη για το κουμπί Identify-AI, να ξεχωρίζει από τη ΦωτοΜέτρα */
+.fotocta.identcta{background:linear-gradient(135deg,#1F4E79 0%,#2F7FA8 55%,#E0892B 100%)}
