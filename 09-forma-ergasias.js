@@ -748,7 +748,8 @@ function taskForm(t0,presetClient,draft){
       <button type="button" class="micbtn" id="ai_mic" aria-label="${T("Φωνητική υπαγόρευση")}">${ic("mic",20)}</button></div>
       <button type="button" class="btn amber wide" id="ai_go" style="margin-top:8px">${T("Αυτόματη συμπλήρωση")}</button></div>`:""}
     <label for="f_title">${T("Τίτλος εργασίας")}</label>
-    <input id="f_title" value="${esc(v.title)}" autocomplete="off">
+    <input id="f_title" value="${esc(v.title)}" autocomplete="off" list="jobList">
+    <datalist id="jobList">${(S.settings.jobTips||[]).map(j=>`<option value="${esc(j)}"></option>`).join("")}</datalist>
     <label for="f_client">${T("Πελάτης")}</label>
     <div class="inrow"><select id="f_client"><option value="">${T("Χωρίς πελάτη")}</option><option value="__new">+ ${T("Νέος πελάτης…")}</option>${opts}</select>
     <button type="button" class="btn ghost" id="f_editClient" title="${T("Επεξεργασία πελάτη")}" aria-label="${T("Επεξεργασία πελάτη")}" style="padding:10px">${ic("edit",20)}</button></div>

@@ -25,6 +25,8 @@ document.addEventListener("click",e=>{
     case"openClient":navPush();clientId=id;view="client";render();window.scrollTo(0,0);break;
     case"allEntries":allEntriesSheet();break;
     case"demoOn":enterDemo();break;
+    case"tradePick":tradeSheet($("#modal").classList.contains("open")?()=>settingsGroupSheet("work"):null);break;
+    case"tradeSkip":S.settings.tradeSkip=true;persist();render();toast(T("Μπορείς να το διαλέξεις όποτε θέλεις από τις Ρυθμίσεις."));break;
     case"demoOff":exitDemo();break;
     case"editClient":clientForm(getClient(id));break;
     case"newPlace":{const c=getClient(id);if(c)clientPlaceForm(c,null,null);break}

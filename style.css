@@ -637,3 +637,4 @@ body.typing .sh-body::after{content:"";display:block;height:45vh}
 .demobar span{display:flex;align-items:center;gap:5px}
 .demobar button{border:0;background:#fff;color:#8A4FBF;border-radius:999px;padding:5px 10px;font-weight:800;font-size:12px}
 body.demo main{padding-top:40px}
+.tradecard{border-color:var(--loc);background:color-mix(in srgb,var(--loc) 8%,var(--card))}

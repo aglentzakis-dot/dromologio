@@ -193,7 +193,7 @@ function settingsGroupSheet(group){
     <div class="seg" id="lk_dt"><button type="button" data-v="0">${T("Ενιαίο πεδίο")}</button><button type="button" data-v="1">${T("Ημέρα + ώρα ξεχωριστά")}</button></div>
     <h3 class="sub">${T("Γλώσσα")}</h3>
     <div class="seg" id="s_lang"><button type="button" data-v="el">🇬🇷 Ελληνικά</button><button type="button" data-v="en">🇬🇧 English</button></div>
-    `:""}${group==="work"?`<h3 class="sub">${T("Στοιχεία επιχείρησης")}</h3>
+    `:""}${group==="work"?tradeSettingsHTML():""}${group==="work"?`<h3 class="sub">${T("Στοιχεία επιχείρησης")}</h3>
     <p class="note">${T("Εμφανίζονται στην κορυφή κάθε ψηφιακής απόδειξης.")}</p>
     <button class="btn ghost" data-act="bizSheet" style="width:100%">${ic("edit",18)} ${(S.settings.biz&&S.settings.biz.name)?esc(S.settings.biz.name):T("Συμπλήρωσε στοιχεία επιχείρησης")}</button>
     <h3 class="sub">${T("Σπίτι ή έδρα")}</h3>
