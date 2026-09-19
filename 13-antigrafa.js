@@ -156,10 +156,12 @@ function backupSheet(){
     </details>
     <h3 class="sub">${T("Αρχείο στη συσκευή")}</h3>
     <button class="btn primary wide gobtn" id="b_share" style="margin-top:4px">${ic("msg",20)}${T("Κοινοποίηση σε άλλη εφαρμογή")}</button>
-    <button class="btn ghost wide gobtn" id="b_save" style="margin-top:8px;border:1.5px solid var(--line)">${ic("archive",20)}${T("Αποθήκευση αρχείου στο κινητό")}</button>
+    <button class="btn ghost wide gobtn" id="b_save" data-fdsave style="margin-top:8px;border:1.5px solid var(--line)">${ic("archive",20)}${fdRoot?T("Αποθήκευση στον φάκελο {f}",{f:esc(fdLabel())}):T("Αποθήκευση αρχείου στο κινητό")}</button>
+    ${fdSettingsHTML()}
     <div class="danger-zone">
       <div class="dz-head">⚠ ${T("Επαναφορά δεδομένων")}</div>
       <p class="note">${T("Η επαναφορά σβήνει ό,τι υπάρχει τώρα στην εφαρμογή και βάζει στη θέση του το περιεχόμενο του αντιγράφου. Δεν αναιρείται.")}</p>
+      ${fdSupported()?`<button type="button" class="btn dzbtn" id="b_fdRest" style="margin-bottom:8px">📁 ${T("Επαναφορά από τον φάκελο")}</button>`:""}
       <label class="btn dzbtn filebtn">${T("Επαναφορά από αρχείο")}<input type="file" id="b_imp" hidden></label>
       <details class="det"><summary>${T("Επικόλληση αντιγράφου από το ταχυδρομείο")}</summary>
         <textarea id="b_paste" rows="4"></textarea><button type="button" class="btn dzbtn" id="b_pasteGo">${T("Επαναφορά από το κείμενο")}</button></details>
@@ -173,7 +175,8 @@ function backupSheet(){
   $("#b_share").onclick=async()=>{const file=new File([backupPayload()],fileName("txt"),{type:"text/plain"});
     if(navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],title:T("Αντίγραφο ασφαλείας")});markBackup();toast(T("Το αντίγραφο κοινοποιήθηκε."))}catch(e){if(e.name!=="AbortError")toast(T("Η κοινοποίηση δεν ολοκληρώθηκε."))}}
     else downloadBackup()};
-  $("#b_save").onclick=downloadBackup;
+  $("#b_save").onclick=saveBackupFile;
+  if($("#b_fdRest"))$("#b_fdRest").onclick=fdRestoreSheet;
   $("#b_imp").onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>restoreFrom(rd.result);rd.onerror=()=>toast(T("Το αρχείο δεν διαβάστηκε."));rd.readAsText(f);e.target.value=""};
   $("#b_pasteGo").onclick=()=>restoreFrom(val("b_paste"));
 }

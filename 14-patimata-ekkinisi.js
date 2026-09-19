@@ -156,6 +156,8 @@ document.addEventListener("click",e=>{
     case"managePeople":peopleSheet();break;
     case"placeEdit":placeSheet(el.dataset.kind,el.dataset.i!=null?+el.dataset.i:null);break;
     case"backup":backupSheet();break;
+    case"fdChoose":fdChoose();break;
+    case"fdClear":fdClear();break;
     case"fab":fabAction();break;
     case"pickDest":destSheet(el.dataset.mode);break;
     case"fromTyped":closeSheet();setTimeout(()=>{const f=$("#rFrom");if(f){f.value="";route.from="";route.fromGeo=null;f.focus()}},120);break;

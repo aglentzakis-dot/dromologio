@@ -658,3 +658,6 @@ body.demo main{padding-top:40px}
 body.identopen{overflow:hidden}
 /* δική του όψη για το κουμπί Identify-AI, να ξεχωρίζει από τη ΦωτοΜέτρα */
 .fotocta.identcta{background:linear-gradient(135deg,#1F4E79 0%,#2F7FA8 55%,#E0892B 100%)}
+/* Φάκελος αντιγράφων */
+.fdrow .fdname{flex:1;min-width:0;padding:11px 12px;border:1.5px solid var(--line);border-radius:12px;font-weight:700;overflow-wrap:anywhere}
+.fdrow .btn{flex:0 0 auto;min-width:48px;height:46px;padding:0 14px;font-size:18px;border:1.5px solid var(--line);border-radius:12px}

@@ -130,6 +130,7 @@ const SETTINGS_INDEX=[
   ["work","Ποιοι δουλεύουν","άτομα, συνεργάτες, χρώματα ατόμων"],
   ["work","Ειδοποιήσεις και ήχος","ήχος, δόνηση, ξυπνητήρι, ειδοποιήσεις, υπενθυμίσεις"],
   ["data","Αντίγραφο ασφαλείας","backup, επαναφορά, αποθήκευση, email, αρχείο"],
+  ["data","Φάκελος αντιγράφων","φάκελος, backup, λήψεις, κοινός φάκελος, αντίγραφα"],
   ["data","Κάδος","διαγραμμένα, επαναφορά, σβήσιμο, μέρες"],
   ["data","Εγκατάσταση εφαρμογής","εγκατάσταση, αρχική οθόνη, εικονίδιο, iphone"],
   ["data","Έλεγχος για νεότερη έκδοση","αναβάθμιση, έκδοση, ενημέρωση"],
@@ -240,6 +241,7 @@ function settingsGroupSheet(group){
     <button class="btn ghost" data-act="look" style="width:100%">${T("Χρώματα, γράμματα και όνομα")}</button>
     `:""}${group==="data"?`<h3 class="sub">${T("Αντίγραφο ασφαλείας")}</h3><p class="note">${backupStatus()}</p>
     <button class="btn amber" data-act="backup" style="width:100%">${T("Αντίγραφο ασφαλείας και επαναφορά")}</button>
+    ${fdSettingsHTML()}
     `:""}${group==="data"?`<h3 class="sub">${T("Τοποθεσία")}</h3>
     <button class="btn ghost" id="s_geo" style="width:100%">${ic("pin",18)} ${T("Έλεγχος άδειας τοποθεσίας")}</button>
     <div id="s_geoOut" class="lw-status"></div>
