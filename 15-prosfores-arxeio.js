@@ -48,9 +48,9 @@ function clientOffersHTML(x){
 
 // Το αρχείο προσφορών (όλων ή ενός πελάτη).
 let offerArchQ="";
-function offerArchiveSheet(cid){
+function offerArchiveSheet(cid,back,taskId){
   const c=cid&&getClient(cid);
-  const base=allOffers().filter(r=>!cid||r.x.clientId===cid);
+  const base=allOffers().filter(r=>(!cid||r.x.clientId===cid)&&(!taskId||r.x.id===taskId));
   const draw=()=>{
     const q=norm(offerArchQ);
     const list=base.filter(r=>!q||norm([r.o.no,r.o.title,r.x.title,offerClientName(r),r.o.addr].join(" ")).includes(q));
@@ -60,7 +60,7 @@ function offerArchiveSheet(cid){
     const n=$("#oa_n");if(n)n.textContent=list.length;
   };
   const sent=base.filter(r=>r.o.sentAt),total=sent.filter(r=>!r.old).reduce((s,r)=>s+offerAmt(r.o),0);
-  openSheet({title:c?T("Προσφορές στον {c}",{c:c.name}):T("Αρχείο προσφορών"),cancelLabel:T("Κλείσιμο"),
+  openSheet({title:c?T("Προσφορές στον {c}",{c:c.name}):T("Αρχείο προσφορών"),cancelLabel:back?T("Πίσω"):T("Κλείσιμο"),onCancel:back||null,
     body:`<p class="note">${T("Όλες οι προσφορές που έχεις φτιάξει, και οι παλιότερες εκδόσεις τους. Πάτα μία για να τη δεις, να τη στείλεις ξανά ή να την κατεβάσεις.")}</p>
       ${panel(`<div class="kv"><span>${T("Προσφορές")}</span><b id="oa_n">${base.length}</b></div>
         <div class="kv"><span>${T("Σταλμένες")}</span><b>${sent.length}</b></div>
@@ -73,8 +73,10 @@ function offerArchiveSheet(cid){
     const r=e.target.closest("[data-coffer]");if(!r)return;
     const f=offerById(r.dataset.coffer);if(!f)return;
     // Πρόχειρη τωρινή προσφορά: ανοίγει για συμπλήρωση· όλες οι άλλες ανοίγουν για προβολή/αποστολή.
-    if(!f.old&&!f.o.sentAt&&!f.x.trashed)offerSheet(f.x,()=>offerArchiveSheet(cid));
+    if(!f.old&&!f.o.sentAt&&!f.x.trashed)offerSheet(f.x,()=>offerArchiveSheet(cid,back,taskId));
     else showOffer(f.x,f.o);
   });
 }
+// Για το κουμπί «Παλιές προσφορές» μέσα στην εργασία: όλες του πελάτη, ή αν δεν έχει πελάτη, όσες έχει η ίδια η εργασία.
+const oldOffersCount=x=>x.clientId?offersCount(x.clientId):(x.offers||[]).length+(x.offer&&x.offer.no?1:0);
 const offersCount=cid=>allOffers().filter(r=>!cid||r.x.clientId===cid).length;

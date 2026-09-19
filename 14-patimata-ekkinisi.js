@@ -57,6 +57,13 @@ document.addEventListener("click",e=>{
       toast(S.settings.showMove?T("Εμφανίζονται τα βελάκια σειράς."):T("Κρύφτηκαν τα βελάκια σειράς."));break;
     case"period":moneyPeriod=el.dataset.p;closeSheet();render();break;
     case"exportCsv":exportSheet(el.dataset.id||"");break;
+    case"clientEntries":{const c=getClient(id);if(!c)break;
+      const list=cMoney(c).ent.slice().sort(byNewest);
+      openSheet({title:T("Κινήσεις: {n}",{n:c.name}),cancelLabel:T("Κλείσιμο"),
+        body:(list.length?`<div class="twobtn" style="margin-bottom:10px">
+            <button class="btn ghost" data-act="sendEntries" data-id="${c.id}">${ic("shareios",17)} ${T("Αποστολή")}</button>
+            <button class="btn ghost" data-act="exportCsv" data-id="${c.id}">${ic("archive",17)} ${T("Εξαγωγή")}</button></div>`+panel(list.map(e=>entryRow(e,false)).join("")):`<div class="empty">${T("Δεν υπάρχουν κινήσεις.")}</div>`)});
+      break}
     case"clientExpenses":{const c=getClient(id);if(!c)break;
       const list=cEntries(c.id).filter(e=>!isIn(e.kind)).sort(byNewest);
       openSheet({title:T("Έξοδα για {n}",{n:c.name}),cancelLabel:T("Κλείσιμο"),

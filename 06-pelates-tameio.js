@@ -70,7 +70,9 @@ function vClient(){
      <div class="kv"><span>${T("Καθαρό κέρδος")}</span><b class="money">${money(M.profit)}</b></div>`:""}
      <div class="twobtn"><button class="btn softin" data-act="newEntry" data-client="${c.id}" data-kind="advance">+ ${T("Είσπραξη")}</button>
      <button class="btn softout" data-act="newEntry" data-client="${c.id}" data-kind="material">+ ${T("Έξοδο")}</button></div>`);
-  if(M.ent.length)h+=panel(M.ent.map(e=>entryRow(e,false)).join(""));
+  if(M.ent.length){const ents=M.ent.slice().sort(byNewest);
+    h+=panel(`<div class="kvhead" style="padding:10px 14px 0;font-size:12.5px;font-weight:700;color:var(--muted)">${T("Τελευταία κίνηση")}</div>`+entryRow(ents[0],false)+
+      (ents.length>1?`<button class="btn ghost wide" data-act="clientEntries" data-id="${c.id}" style="margin:4px 14px 12px;width:calc(100% - 28px)">${ic("money",18)} ${T("Όλες οι κινήσεις")} (${ents.length})</button>`:""))}
   const info=[];
   if(addr)info.push([T("Διεύθυνση"),addr]);if(c.floor)info.push([T("Όροφος, κουδούνι"),c.floor]);
   if(c.hours)info.push([T("Ωράριο"),c.hours]);if(c.mobile)info.push([T("Κινητό"),c.mobile]);if(c.phone)info.push([T("Σταθερό"),c.phone]);

@@ -193,6 +193,7 @@ function drawTaskMoney(x){
     ${(amt>0||got>0.004)?`<div class="twobtn" style="padding:0 14px 12px">
       <button type="button" class="btn ghost" data-tm="offer">${ic("edit",17)} ${T("Προσφορά")}</button>
       <button type="button" class="btn ghost" data-tm="receipt">${ic("archive",17)} ${T("Απόδειξη")}</button></div>`:`<div style="padding:0 14px 12px"><button type="button" class="btn ghost" data-tm="offer" style="width:100%">${ic("edit",17)} ${T("Προσφορά")}</button></div>`}
+    ${oldOffersCount(x)?`<div style="padding:0 14px 12px"><button type="button" class="btn ghost" data-tm="oldoffers" style="width:100%">${ic("archive",17)} ${x.clientId?T("Παλιές προσφορές του πελάτη"):T("Παλιές προσφορές")} (${oldOffersCount(x)})</button></div>`:""}
     <p class="note" style="padding:0 14px 10px">${owedNow?T("Η δουλειά είναι ολοκληρωμένη, οπότε το υπόλοιπο μετράει ως οφειλή του πελάτη."):T("Όσο δεν είναι ολοκληρωμένη, το υπόλοιπο μετράει ως αναμενόμενο και όχι ως οφειλή.")}</p>`;
   drawTaskEntries(x);drawCheckBadge(x);
   box.onclick=e=>{
@@ -222,6 +223,7 @@ function drawTaskMoney(x){
       return;
     }
     if(tm==="receipt"){showReceipt(x);return}
+    if(tm==="oldoffers"){const dr=readTaskDraft();offerArchiveSheet(x.clientId||"",()=>taskForm(x,null,dr),x.clientId?"":x.id);return}
     if(tm==="offer"){const dr=readTaskDraft();
       // Η τιμή της προσφοράς περνά στη φόρμα μόνο αν η εργασία δεν είχε τιμή· αποθηκεύεται με το «Αποθήκευση».
       offerSheet(x,()=>{const o=x.offer||{};
