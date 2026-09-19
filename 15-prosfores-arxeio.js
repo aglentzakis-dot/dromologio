@@ -80,3 +80,76 @@ function offerArchiveSheet(cid,back,taskId){
 // Για το κουμπί «Παλιές προσφορές» μέσα στην εργασία: όλες του πελάτη, ή αν δεν έχει πελάτη, όσες έχει η ίδια η εργασία.
 const oldOffersCount=x=>x.clientId?offersCount(x.clientId):(x.offers||[]).length+(x.offer&&x.offer.no?1:0);
 const offersCount=cid=>allOffers().filter(r=>!cid||r.x.clientId===cid).length;
+
+/* ---------- Υδατογράφημα (φόντο σελίδας Α4 πίσω από την προσφορά) ----------
+   Αποθηκεύεται χωριστά από τα υπόλοιπα δεδομένα (κλειδί stodromo-wm), ώστε η εικόνα να μη
+   μεγαλώνει τα αντίγραφα ασφαλείας που στέλνονται με ταχυδρομείο. */
+const WM_KEY="stodromo-wm";
+let wmCache=null,wmImg=null,wmLoading=null;
+function wmGet(){
+  if(wmCache)return wmCache;
+  try{wmCache=JSON.parse(localStorage.getItem(WM_KEY)||"null")}catch(e){wmCache=null}
+  if(!wmCache||typeof wmCache!=="object")wmCache={img:"",op:0.15};
+  if(!(wmCache.op>=0.02&&wmCache.op<=1))wmCache.op=0.15;
+  return wmCache;
+}
+function wmSave(){try{localStorage.setItem(WM_KEY,JSON.stringify(wmGet()));return true}
+  catch(e){toast(T("Η εικόνα είναι πολύ μεγάλη για να αποθηκευτεί. Δοκίμασε μικρότερη."));return false}}
+// Φορτώνει την εικόνα μία φορά· η προσφορά περιμένει να είναι έτοιμη πριν σχεδιαστεί.
+function wmReady(){
+  const w=wmGet();
+  if(!w.img){wmImg=null;return Promise.resolve(null)}
+  if(wmImg&&wmImg._src===w.img&&wmImg.complete)return Promise.resolve(wmImg);
+  if(wmLoading&&wmLoading._src===w.img)return wmLoading;
+  const im=new Image();im._src=w.img;
+  wmLoading=new Promise(res=>{im.onload=()=>{wmImg=im;res(im)};im.onerror=()=>{wmImg=null;res(null)}});
+  wmLoading._src=w.img;im.src=w.img;return wmLoading;
+}
+// Σχεδιάζει το φόντο σε όλη τη σελίδα, με τη διαφάνεια που έχεις ορίσει.
+function wmDraw(ctx,W,H){
+  const w=wmGet();if(!w.img||!wmImg||wmImg._src!==w.img||!wmImg.complete)return;
+  ctx.save();ctx.globalAlpha=w.op;ctx.drawImage(wmImg,0,0,W,H);ctx.restore();
+}
+const wmOn=()=>!!wmGet().img;
+function wmPanelHTML(){
+  const w=wmGet(),pc=Math.round(w.op*100);
+  return `<div class="ofgroup" id="wm_box">
+    <div class="ofhead">${T("Φόντο σελίδας (υδατογράφημα)")}<small>${T("μια εικόνα Α4, π.χ. επιστολόχαρτο ή λογότυπο, που μπαίνει αχνά πίσω από την προσφορά")}</small></div>
+    ${w.img?`<div class="wmrow"><img class="wmthumb" src="${w.img}" alt="" style="opacity:${Math.max(.25,w.op)}">
+        <div class="grow"><label for="wm_op" style="margin-top:0">${T("Διαφάνεια")}: <b id="wm_opv">${pc}%</b></label>
+        <input type="range" id="wm_op" min="3" max="60" step="1" value="${pc}" style="width:100%">
+        <small class="note">${T("Μικρότερο ποσοστό = πιο αχνό. Πάτα «Δες την προσφορά» για να δεις το αποτέλεσμα.")}</small></div></div>
+      <div class="twobtn" style="padding:0;margin-top:8px"><button type="button" class="btn ghost" id="wm_pick">${T("Άλλαξε εικόνα")}</button>
+        <button type="button" class="btn ghost" id="wm_del">${T("Αφαίρεση")}</button></div>`
+    :`<button type="button" class="btn ghost wide" id="wm_pick">${ic("plus",18)} ${T("Ανέβασε εικόνα φόντου")}</button>`}
+    <input type="file" id="wm_file" accept="image/*" hidden></div>`;
+}
+function wmRefresh(){const b=$("#wm_box");if(b)b.outerHTML=wmPanelHTML()}
+// Μικραίνει την εικόνα (έως 1240 εικονοστοιχεία στη μεγάλη πλευρά) για να χωράει στη μνήμη του κινητού.
+function wmFromFile(file){
+  const rd=new FileReader();
+  rd.onload=()=>{const im=new Image();
+    im.onload=()=>{
+      const k=Math.min(1,1240/Math.max(im.width,im.height)),cv=document.createElement("canvas");
+      cv.width=Math.round(im.width*k);cv.height=Math.round(im.height*k);
+      cv.getContext("2d").drawImage(im,0,0,cv.width,cv.height);
+      let url=cv.toDataURL("image/webp",0.85);
+      if(!/^data:image\/webp/.test(url))url=/png/i.test(file.type)?cv.toDataURL("image/png"):cv.toDataURL("image/jpeg",0.85);
+      const w=wmGet(),prev=w.img;w.img=url;
+      if(!wmSave()){w.img=prev;return}
+      wmReady().then(wmRefresh);toast(T("Το φόντο αποθηκεύτηκε. Θα μπαίνει σε κάθε προσφορά."));
+    };
+    im.onerror=()=>toast(T("Η εικόνα δεν διαβάστηκε."));
+    im.src=rd.result;};
+  rd.readAsDataURL(file);
+}
+document.addEventListener("click",e=>{
+  if(e.target.closest("#wm_pick")){$("#wm_file").click();return}
+  if(e.target.closest("#wm_del")){if(!confirm(T("Να αφαιρεθεί το φόντο από τις προσφορές;")))return;
+    const w=wmGet();w.img="";wmSave();wmImg=null;wmRefresh();toast(T("Το φόντο αφαιρέθηκε."))}
+});
+document.addEventListener("change",e=>{if(e.target.id==="wm_file"&&e.target.files&&e.target.files[0])wmFromFile(e.target.files[0])});
+document.addEventListener("input",e=>{if(e.target.id!=="wm_op")return;
+  const w=wmGet();w.op=Math.max(.03,Math.min(.6,(+e.target.value||15)/100));wmSave();
+  const v=$("#wm_opv");if(v)v.textContent=Math.round(w.op*100)+"%";
+  const th=document.querySelector(".wmthumb");if(th)th.style.opacity=Math.max(.25,w.op)});

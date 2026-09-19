@@ -1,6 +1,6 @@
 /* Δρομολόγιο — Αναδυόμενο φύλλο, ρολόι, επαφές, φόρμα πελάτη. */
 /* ---------- Αναδυόμενο φύλλο ---------- */
-let sheetCancel=null,sheetDirty=false,sheetHasSave=false;
+let sheetCancel=null,sheetDirty=false,sheetHasSave=false,sheetAutoSave=null; // sheetAutoSave: αν υπάρχει, το κλείσιμο αποθηκεύει σιωπηλά αντί να ρωτάει
 function freshSheetBody(){
   const old=$("#shBody"),n=old.cloneNode(false);n.id="shBody";old.replaceWith(n);return n;
 }
@@ -15,7 +15,7 @@ function openSheet({title,body,onSave,onDelete,deleteMsg,onCancel,saveLabel,save
   $("#modal").classList.add("open");
   document.body.classList.toggle("overnav",!!overNav);$("#modal").classList.toggle("overnav",!!overNav);
   if(overNav)render();
-  sheetCancel=onCancel||null;sheetDirty=false;sheetHasSave=!!onSave;
+  sheetCancel=onCancel||null;sheetDirty=false;sheetHasSave=!!onSave;sheetAutoSave=null;
   $("#sCancel").onclick=cancelSheet;
   if(onSave)$("#sSave").onclick=()=>{const r=onSave();if(r===false)return;if(r!=="replaced")closeSheet()};
   if(onDelete)$("#sDel").onclick=()=>{if(confirm(deleteMsg||T("Να διαγραφεί;"))){const r=onDelete();if(r!=="replaced")closeSheet()}};
@@ -26,8 +26,9 @@ function unfade(){const a=document.activeElement;
   if(!a||!/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))document.body.classList.remove("typing")}
 function closeSheet(){document.body.classList.remove("typing");const wasNav=document.body.classList.contains("overnav");
   document.body.classList.remove("overnav");$("#modal").classList.remove("open","overnav");$("#shFixed").innerHTML="";
-  if(wasNav)setTimeout(render,0);sheetCancel=null;sheetDirty=false;sheetHasSave=false}
+  if(wasNav)setTimeout(render,0);sheetCancel=null;sheetDirty=false;sheetHasSave=false;sheetAutoSave=null}
 function cancelSheet(){
+  if(sheetAutoSave){try{sheetAutoSave()}catch(e){}sheetDirty=false}
   if(sheetHasSave&&sheetDirty&&!confirm(T("Να κλείσει χωρίς να αποθηκευτούν οι αλλαγές;")))return;
   const cb=sheetCancel;closeSheet();if(cb)cb();
 }

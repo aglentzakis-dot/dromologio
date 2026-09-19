@@ -606,3 +606,10 @@ body.typing[data-view="reminders"] nav{display:none}
 .oemv:disabled{opacity:.3}
 .oemv:active{background:var(--paper)}
 .oefoot{display:flex;justify-content:space-between;align-items:center;margin-top:10px;gap:10px}
+.oedef{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--muted);margin:2px 0 0;padding:0}
+.oedef input{width:18px;height:18px;margin:0;flex:none}
+.wmrow{display:flex;gap:12px;align-items:center}
+.wmthumb{width:70px;height:99px;object-fit:fill;border:1px solid var(--line);border-radius:6px;background:#fff;flex:none}
+textarea.flash{box-shadow:0 0 0 3px color-mix(in srgb,var(--green) 45%,transparent);transition:box-shadow .3s}
+/* όταν γράφεις μέσα σε αναδυόμενο, αφήνει χώρο κάτω ώστε και το τελευταίο πεδίο να ανεβαίνει πάνω από το πληκτρολόγιο */
+body.typing .sh-body::after{content:"";display:block;height:45vh}

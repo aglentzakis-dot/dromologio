@@ -331,13 +331,26 @@ const OFFER_EXCL_DEF=[
   {l:"Απρόβλεπτα υλικά",t:"Πρόσθετα υλικά που θα απαιτηθούν λόγω απρόβλεπτων συνθηκών",on:1},
   {l:"Επιπλέον εργασίες",t:"Εργασίες που θα ζητηθούν επιπλέον από τον πελάτη",on:1},
   {l:"Βάψιμο και αποκατάσταση",t:"Βάψιμο και αποκατάσταση επιφανειών",on:0},
-  {l:"Άδειες και τέλη",t:"Άδειες, μελέτες και τέλη",on:0}];
+  {l:"Άδειες και τέλη",t:"Άδειες, μελέτες και τέλη",on:0},
+  {l:"Ηλεκτρολογικά",t:"Ηλεκτρολογικές εργασίες και υλικά",on:0},
+  {l:"Υδραυλικά",t:"Υδραυλικές εργασίες και υλικά",on:0}];
 const OFFER_FIRST_NO=500;
 function offerLists(){
   const st=S.settings;
   if(!Array.isArray(st.offerIncl))st.offerIncl=OFFER_INCL_DEF.map(i=>({l:i.l,t:i.t}));
   if(!Array.isArray(st.offerExcl))st.offerExcl=OFFER_EXCL_DEF.map(i=>({l:i.l,t:i.t}));
   if(!st.offerTerms||st.offerTerms===OFFER_TERMS_OLD)st.offerTerms=OFFER_TERMS_DEF;
+  // Μία φορά: κάθε στοιχείο αποκτά σημάδι «προεπιλογή» (d) από τις τελευταίες επιλογές σου,
+  // και στα «Δεν περιλαμβάνει» μπαίνουν τα Ηλεκτρολογικά, Υδραυλικά (και το Βάψιμο αν είχε σβηστεί).
+  if(!st.offerDefV2){
+    const li=Array.isArray(st.offerInclLast)?new Set(st.offerInclLast):null,le=Array.isArray(st.offerExclLast)?new Set(st.offerExclLast):null;
+    st.offerIncl.forEach(i=>{if(i.d==null)i.d=li?(li.has(i.t)?1:0):1});
+    const exDef=new Map(OFFER_EXCL_DEF.map(d=>[d.t,d.on]));
+    st.offerExcl.forEach(i=>{if(i.d==null)i.d=le?(le.has(i.t)?1:0):(exDef.get(i.t)?1:0)});
+    const have=new Set(st.offerExcl.map(i=>i.t));
+    OFFER_EXCL_DEF.filter(d=>/^(Βάψιμο|Ηλεκτρολογικά|Υδραυλικά)/.test(d.l)&&!have.has(d.t)).forEach(d=>st.offerExcl.push({l:d.l,t:d.t,d:0}));
+    st.offerDefV2=true;
+  }
   return{incl:st.offerIncl,excl:st.offerExcl};
 }
 function nextOfferNo(){
@@ -361,8 +374,8 @@ function offerOf(x,dr){
   if(o.title==null)o.title=dr.title||x.title||"";
   if(o.amount==null||o.amount===""){const a=dr.amount!=null&&dr.amount!==""?dr.amount:x.amount;o.amount=a!=null&&a!==""?String(a):""}
   if(o.valid==null)o.valid=+st.offerValid||30;
-  if(!Array.isArray(o.incl))o.incl=Array.isArray(st.offerInclLast)?st.offerInclLast.slice():L.incl.map(i=>i.t);
-  if(!Array.isArray(o.excl))o.excl=Array.isArray(st.offerExclLast)?st.offerExclLast.slice():OFFER_EXCL_DEF.filter(i=>i.on).map(i=>i.t);
+  if(!Array.isArray(o.incl))o.incl=L.incl.filter(i=>i.d).map(i=>i.t);   // νέα προσφορά: ξεκινά με όσα έχεις ορίσει ως προεπιλογή
+  if(!Array.isArray(o.excl))o.excl=L.excl.filter(i=>i.d).map(i=>i.t);
   if(o.inclExtra==null)o.inclExtra="";
   if(o.exclExtra==null)o.exclExtra="";
   if(!o.terms||o.terms===OFFER_TERMS_OLD)o.terms=st.offerTerms;
@@ -377,12 +390,13 @@ function offerChipsHTML(kind,list,sel,editing){
   if(editing){
     const rows=list.map((i,n)=>`<div class="oerow" data-n="${n}">
         <div class="oefields"><input class="oe_l" data-n="${n}" value="${esc(T(i.l))}" placeholder="${T("Σύντομο όνομα")}" aria-label="${T("Σύντομο όνομα")}" autocomplete="off">
-          <input class="oe_t" data-n="${n}" value="${esc(T(i.t))}" placeholder="${T("Κείμενο στην προσφορά")}" aria-label="${T("Κείμενο στην προσφορά")}" autocomplete="off"></div>
+          <input class="oe_t" data-n="${n}" value="${esc(T(i.t))}" placeholder="${T("Κείμενο στην προσφορά")}" aria-label="${T("Κείμενο στην προσφορά")}" autocomplete="off">
+          <label class="oedef"><input type="checkbox" data-def="${n}" ${i.d?"checked":""}> ${T("Επιλεγμένο από την αρχή σε κάθε νέα προσφορά")}</label></div>
         <div class="oebtns"><button type="button" class="oemv" data-mv="up" data-n="${n}" aria-label="${T("Πάνω")}" ${n?"":"disabled"}>▲</button>
           <button type="button" class="oemv" data-mv="down" data-n="${n}" aria-label="${T("Κάτω")}" ${n<list.length-1?"":"disabled"}>▼</button>
           <button type="button" class="x bin" data-rm="${n}" aria-label="${T("Διαγραφή")}">${ic("trash",17)}</button></div></div>`).join("");
     return `<div class="oebox" id="ofbox_${kind}">
-      <p class="note" style="margin:0 0 8px">${T("Πάνω: το όνομα στο κουμπί. Κάτω: το κείμενο που γράφεται στην προσφορά. Με τα βελάκια αλλάζεις σειρά.")}</p>
+      <p class="note" style="margin:0 0 8px">${T("Πάνω: το όνομα στο κουμπί. Κάτω: το κείμενο που γράφεται στην προσφορά. Με τα βελάκια αλλάζεις σειρά. Με το τετραγωνάκι ορίζεις τι είναι ήδη επιλεγμένο σε κάθε νέα προσφορά.")}</p>
       ${rows||`<div class="empty">${T("Η λίστα είναι άδεια.")}</div>`}
       <div class="inrow" style="margin-top:8px"><input id="of_${kind}_new" placeholder="${T("Πρόσθεσε δικό σου…")}" autocomplete="off">
         <button type="button" class="btn ghost" data-add="${kind}" style="padding:10px 14px">${ic("plus",18)}</button></div>
@@ -405,15 +419,20 @@ function offerSheet(x,back,dr){
   const sel={incl:new Set(o.incl),excl:new Set(o.excl)},editing={incl:false,excl:false};
   const picked=k=>L[k].filter(i=>sel[k].has(i.t)).map(i=>i.t);
   const others=clientOffersHTML(x);
+  // Μαζεύει ό,τι γράφτηκε στη φόρμα μέσα στην προσφορά (χωρίς να της δώσει αριθμό ή να τη «στείλει»).
+  const collect=()=>{
+    if(!$("#of_client"))return;
+    o.client=val("of_client");o.addr=val("of_addr");o.title=val("of_title");
+    o.amount=val("of_amount");o.valid=Math.max(1,Math.min(365,+val("of_valid")||30));
+    o.incl=picked("incl");o.excl=picked("excl");
+    o.inclExtra=val("of_inclx");o.exclExtra=val("of_exclx");o.terms=($("#of_terms").value||"").trim();
+    o.showItems=!!($("#of_items")&&$("#of_items").checked);
+    o.items=o.showItems?items.slice():[];
+  };
   openSheet({title:o.no?T("Προσφορά Αρ. {n}",{n:o.no}):T("Νέα προσφορά"),cancelLabel:back?T("Πίσω"):T("Κλείσιμο"),onCancel:back||null,
     saveLabel:T("Δες την προσφορά"),saveStyle:"amber",
     onSave:()=>{
-      o.client=val("of_client");o.addr=val("of_addr");o.title=val("of_title");
-      o.amount=val("of_amount");o.valid=Math.max(1,Math.min(365,+val("of_valid")||30));
-      o.incl=picked("incl");o.excl=picked("excl");
-      o.inclExtra=val("of_inclx");o.exclExtra=val("of_exclx");o.terms=($("#of_terms").value||"").trim();
-      o.showItems=!!($("#of_items")&&$("#of_items").checked);
-      o.items=o.showItems?items.slice():[];
+      collect();
       if(!(offerAmt(o)>0)&&!confirm(T("Η προσφορά δεν έχει τιμή. Να συνεχίσω έτσι;")))return false;
       if(!o.no)o.no=nextOfferNo();
       o.date=Date.now();
@@ -445,7 +464,9 @@ function offerSheet(x,back,dr){
       </div>
       <label for="of_terms">${T("Όροι")}</label>
       <textarea id="of_terms" rows="5">${esc(T(o.terms))}</textarea>
-      <button type="button" class="linkbtn" id="of_termsDef">${T("Επαναφορά στους βασικούς όρους")}</button>
+      <p class="note" style="margin:4px 0 0">${T("Ό,τι γράψεις στους όρους αποθηκεύεται μόνο του και μπαίνει σε κάθε νέα προσφορά.")}</p>
+      <button type="button" class="linkbtn" id="of_termsDef">${T("Επαναφορά στους αρχικούς όρους της εφαρμογής")}</button>
+      ${wmPanelHTML()}
       <div class="oftotal">
         <div class="two">
           <div><label for="of_amount">${T("Τελική τιμή")}</label>
@@ -454,6 +475,8 @@ function offerSheet(x,back,dr){
             <input id="of_valid" type="number" inputmode="numeric" min="1" max="365" value="${o.valid}"></div>
         </div>
       </div>${others}`});
+  // Κλείσιμο χωρίς ερώτηση: ό,τι έγραψες μένει αποθηκευμένο στην πρόχειρη προσφορά.
+  sheetAutoSave=()=>{if(o.sentAt)return;collect();persist()};
   const body=$("#shBody");
   const redraw=kind=>{const box=$("#ofbox_"+kind);if(box)box.outerHTML=offerChipsHTML(kind,L[kind],sel[kind],editing[kind])};
   // Όταν αλλάζει το κείμενο ενός στοιχείου, η επιλογή και οι «τελευταίες επιλογές» ακολουθούν το νέο κείμενο.
@@ -463,7 +486,13 @@ function offerSheet(x,back,dr){
     const lastK=kind==="incl"?"offerInclLast":"offerExclLast",last=S.settings[lastK];
     if(Array.isArray(last)){const k=last.indexOf(oldT);if(k>=0)last[k]=newT}
   };
+  body.addEventListener("change",e=>{
+    const cb=e.target.closest("[data-def]");
+    if(cb){const kind=cb.closest(".oebox").id.slice(6),it=L[kind][+cb.dataset.def];if(it){it.d=cb.checked?1:0;persist()}return}
+    if(e.target.id==="of_terms"){const v=(e.target.value||"").trim();if(v){S.settings.offerTerms=v;persist()}}
+  });
   body.addEventListener("input",e=>{
+    if(e.target.id==="of_terms"){const v=(e.target.value||"").trim();if(v)S.settings.offerTerms=v;return}
     const inp=e.target.closest(".oe_l,.oe_t");if(!inp)return;
     const kind=inp.closest(".oebox").id.slice(6),it=L[kind][+inp.dataset.n];if(!it)return;
     const v=inp.value.trim();if(!v)return;
@@ -488,7 +517,7 @@ function offerSheet(x,back,dr){
     const rs=e.target.closest("[data-reset]");
     if(rs){const kind=rs.dataset.reset,list=L[kind],defs=kind==="incl"?OFFER_INCL_DEF:OFFER_EXCL_DEF;
       const have=new Set(list.map(i=>i.t));let added=0;
-      defs.forEach(d=>{if(!have.has(d.t)){list.push({l:d.l,t:d.t});added++}});
+      defs.forEach(d=>{if(!have.has(d.t)){list.push({l:d.l,t:d.t,d:kind==="incl"?1:(d.on?1:0)});added++}});
       persist();redraw(kind);toast(added?T("Προστέθηκαν ξανά {n} βασικά στοιχεία στο τέλος της λίστας.",{n:added}):T("Όλα τα βασικά στοιχεία υπάρχουν ήδη."));return}
     const chip=e.target.closest(".ochip");
     if(chip){const kind=chip.closest(".oebox").id.slice(6),t=chip.dataset.t;
@@ -498,11 +527,15 @@ function offerSheet(x,back,dr){
     if(add){const kind=add.dataset.add,inp=$("#of_"+kind+"_new"),t=(inp.value||"").trim();if(!t){inp.focus();return}
       const list=L[kind];
       let n=list.findIndex(i=>i.t.toLowerCase()===t.toLowerCase()||i.l.toLowerCase()===t.toLowerCase());
-      if(n<0){list.push({l:t,t,c:1});n=list.length-1;persist()}
+      if(n<0){list.push({l:t,t,c:1,d:0});n=list.length-1;persist()}
       sel[kind].add(list[n].t);redraw(kind);sheetDirty=true;
       const again=$("#of_"+kind+"_new");if(again&&editing[kind])again.focus();
       return}
-    if(e.target.closest("#of_termsDef")){$("#of_terms").value=T(OFFER_TERMS_DEF);sheetDirty=true;return}
+    if(e.target.closest("#of_termsDef")){const ta=$("#of_terms"),def=T(OFFER_TERMS_DEF);
+      if((ta.value||"").trim()===def.trim()){toast(T("Οι όροι είναι ήδη οι αρχικοί της εφαρμογής."));return}
+      if(!confirm(T("Να σβηστούν οι όροι που έχεις γράψει και να μπουν οι αρχικοί της εφαρμογής;")))return;
+      ta.value=def;S.settings.offerTerms=OFFER_TERMS_DEF;persist();sheetDirty=true;
+      ta.classList.add("flash");setTimeout(()=>ta.classList.remove("flash"),900);toast(T("Μπήκαν οι αρχικοί όροι."));return}
     const oh=e.target.closest("[data-coffer]");
     if(oh){const f=offerById(oh.dataset.coffer);if(f)showOffer(f.x,f.o)}
   });
@@ -542,7 +575,8 @@ function drawOfferDoc(ctx,o,W,dry){
   const F=(f,c)=>{ctx.font=f+" system-ui,sans-serif";if(c)ctx.fillStyle=c};
   const txt=(t,x,y)=>{if(!dry)ctx.fillText(t,x,y)};
   const rule=y=>{if(!dry){ctx.strokeStyle="#D6DEE3";ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(40,y);ctx.lineTo(W-40,y);ctx.stroke()}};
-  if(!dry){ctx.fillStyle="#ffffff";ctx.fillRect(0,0,W,ctx.canvas.height);ctx.fillStyle="#17324D";ctx.fillRect(0,0,W,140)}
+  if(!dry){ctx.fillStyle="#ffffff";ctx.fillRect(0,0,W,ctx.canvas.height);ctx.fillStyle="#17324D";ctx.fillRect(0,0,W,140);
+    wmDraw(ctx,W,ctx.canvas.height)}
   ctx.textAlign="left";
   F("bold 38px","#ffffff");txt(biz.name||T("Δρομολόγιο"),40,64);
   F("19px","#ffffff");
@@ -583,14 +617,16 @@ function drawOfferDoc(ctx,o,W,dry){
 function offerCanvas(o){
   const W=900;
   const probe=document.createElement("canvas");probe.width=W;probe.height=10;
-  const need=Math.max(760,Math.round(drawOfferDoc(probe.getContext("2d"),o,W,true)+60));
+  // Με φόντο σελίδας, το έγγραφο έχει σχήμα Α4 ώστε η εικόνα να ταιριάζει ακριβώς.
+  const need=Math.max(wmOn()?Math.round(W*297/210):760,Math.round(drawOfferDoc(probe.getContext("2d"),o,W,true)+60));
   const cv=document.createElement("canvas");cv.width=W;cv.height=need;
   drawOfferDoc(cv.getContext("2d"),o,W,false);
   return cv;
 }
 function closePreview(){$("#photoDlg").classList.remove("open")}
-function showOffer(x,o,onSent){
+async function showOffer(x,o,onSent){
   o=o||x.offer;
+  await wmReady();
   const cv=offerCanvas(o),url=cv.toDataURL("image/png"),name="prosfora-"+(o.no||"")+".pdf";
   $("#phImg").src=url;$("#phT").textContent=T("Προσφορά Αρ. {n}",{n:o.no||"—"});
   const sent=!!o.sentAt;
