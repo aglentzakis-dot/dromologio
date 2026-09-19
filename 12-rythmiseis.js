@@ -134,13 +134,15 @@ const SETTINGS_INDEX=[
   ["data","Εγκατάσταση εφαρμογής","εγκατάσταση, αρχική οθόνη, εικονίδιο, iphone"],
   ["data","Έλεγχος για νεότερη έκδοση","αναβάθμιση, έκδοση, ενημέρωση"],
   ["apps","Φωτόμετρηση - Σημειώσεις","φωτογραφίες, μετρήσεις, διαστάσεις, φωτομέτρα"],
+  ["apps","Αναγνώριση εξαρτήματος","εξάρτημα, ανταλλακτικό, identify, αναγνώριση, κατάστημα, βίδα"],
   ["apps","Σημειώσεις με ημερομηνία","σημειώσεις, κείμενο, ημερομηνία"]
 ];
 const GROUP_NAME={work:"Στοιχεία και ρυθμίσεις",look:"Εμφάνιση",data:"Δεδομένα",
   apps:"Ρυθμίσεις εφαρμογών",notes:"Ρυθμίσεις εφαρμογών",tools:"Τα εργαλεία μου",ours:"Οι εφαρμογές μας"};
 // Δικές μας εφαρμογές — πρόσθεσε εδώ όποια θέλεις να προβάλλεται μέσα από το Δρομολόγιο
 const OUR_APPS=[
-  {icon:"📏",name:"ΦωτοΜέτρα",desc:"φωτογραφίες με σημειώσεις και διαστάσεις",url:"https://aglentzakis-dot.github.io/fotometra/"}
+  {icon:"📏",name:"ΦωτοΜέτρα",desc:"φωτογραφίες με σημειώσεις και διαστάσεις",url:"https://aglentzakis-dot.github.io/fotometra/"},
+  {icon:"🔩",name:"Identify-AI",desc:"αναγνώριση εξαρτήματος από φωτογραφία",url:"https://aglentzakis-dot.github.io/Identify-AI/",inapp:"openIdent"}
 ];
 function settingsSheet(group){
   if(!group){
@@ -174,16 +176,19 @@ function settingsGroupSheet(group){
   const backTo=(group==="tools"||group==="ours")?(()=>settingsGroupSheet("apps")):(()=>settingsSheet());
   openSheet({title:T(GROUP_NAME[group]||"Δεδομένα"),cancelLabel:T("Πίσω"),onCancel:backTo,body:`${(group==="apps"||group==="notes")?`
     <div class="choose">
-      <button data-act="settingsGroup" data-g="tools">${ic("measure")}<span>${T("Τα εργαλεία μου")}<small>${T("φωτόμετρηση, γραπτές σημειώσεις")}</small></span></button>
+      <button data-act="settingsGroup" data-g="tools">${ic("measure")}<span>${T("Τα εργαλεία μου")}<small>${T("φωτόμετρηση, αναγνώριση εξαρτήματος, γραπτές σημειώσεις")}</small></span></button>
       <button data-act="settingsGroup" data-g="ours">${ic("plus")}<span>${T("Οι εφαρμογές μας")}<small>${T("δες και δοκίμασε τις άλλες μας εφαρμογές")}</small></span></button>
     </div>`:""}${group==="tools"?`<h3 class="sub">${T("Φωτόμετρηση - Σημειώσεις")}</h3>
     <p class="note">${T("Ανοίγει τη ΦωτοΜέτρα, τη δεύτερη εφαρμογή σου για φωτογραφίες με σημειώσεις και διαστάσεις.")}</p>
     ${fotoBtnHTML("*","Φωτόμετρηση - Σημειώσεις","Φωτόμετρηση - Σημειώσεις")}
+    <h3 class="sub" style="margin-top:22px">🔩 ${T("Αναγνώριση εξαρτήματος")} (Identify-AI)</h3>
+    <p class="note">${T("Φωτογραφίζεις ένα εξάρτημα και σου λέει τι είναι, πιθανές διαστάσεις, πού χρησιμοποιείται, τι χρειάζεται μαζί του και τι να ζητήσεις στο κατάστημα. Ανοίγει μέσα στο Δρομολόγιο.")}</p>
+    ${identBtnHTML("")}
     <h3 class="sub" style="margin-top:22px">${T("Γραπτές σημειώσεις")}</h3>
     <p class="note">${T("Απλό κείμενο με ημερομηνία, χωρίς φωτογραφία.")}</p>
     <button class="btn ghost wide" data-act="notesSheet" style="width:100%">${ic("edit",18)} ${T("Σημειώσεις με ημερομηνία")}${(S.notes&&S.notes.filter(alive).length)?` (${S.notes.filter(alive).length})`:""}</button>`:""}${group==="ours"?`<h3 class="sub">${T("Άλλες εφαρμογές μας")}</h3>
     <p class="note">${T("Δοκίμασέ τες, ανοίγουν σε δικό τους παράθυρο.")}</p>
-    ${panel(OUR_APPS.map(a=>`<a class="row" href="${a.url}" target="_blank" rel="noopener" style="align-items:center;text-decoration:none;color:inherit">
+    ${panel(OUR_APPS.map(a=>`<a class="row" href="${a.url}" ${a.inapp?`data-act="${a.inapp}"`:`target="_blank" rel="noopener"`} style="align-items:center;text-decoration:none;color:inherit">
         <span style="font-size:22px">${a.icon}</span>
         <div class="grow"><div class="title">${T(a.name)}</div><div class="meta"><span>${T(a.desc)}</span></div></div>
         <span class="note">↗</span></a>`).join(""))}`:""}${group==="look"?`<h3 class="sub">${T("Ώρα και ρολόι")}</h3>

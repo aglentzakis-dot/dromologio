@@ -90,6 +90,7 @@ function vClient(){
        <button class="btn ghost" data-act="findLoc" data-id="${c.id}">${ic("search",18)} ${T("Βρες θέση")}</button></div>
        <div style="padding:0 14px 14px"><button class="contactsbtn" data-act="syncContact" data-id="${c.id}" style="margin:0"><span class="cicon">${ic("book",19)}</span>${T("Ανανέωση από τις επαφές του κινητού")}</button></div>`);
   h+=panel(fotoBtnHTML("pelatis:"+c.id,c.name));
+  h+=panel(identBtnHTML(c.name));
   if(Array.isArray(c.photos)&&c.photos.length)
     h+=sec(T("Φωτογραφίες"))+`<div class="panel pad"><div class="phogrid" id="cphogrid"></div></div>`;
   h+=sec(T("Στοιχεία"))+panel(info.map(([k,v])=>`<div class="kv"><span>${k}</span><b>${esc(v)}</b></div>`).join(""));

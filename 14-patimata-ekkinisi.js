@@ -25,6 +25,7 @@ document.addEventListener("click",e=>{
     case"openClient":navPush();clientId=id;view="client";render();window.scrollTo(0,0);break;
     case"allEntries":allEntriesSheet();break;
     case"demoOn":enterDemo();break;
+    case"openIdent":if(el.tagName==="A")e.preventDefault();openIdent(el.dataset.cname||"");break;
     case"tradePick":tradeSheet($("#modal").classList.contains("open")?()=>settingsGroupSheet("work"):null);break;
     case"tradeSkip":S.settings.tradeSkip=true;persist();render();toast(T("Μπορείς να το διαλέξεις όποτε θέλεις από τις Ρυθμίσεις."));break;
     case"demoOff":exitDemo();break;
@@ -222,7 +223,7 @@ document.addEventListener("click",e=>{
     case"toggleStop":{const k=el.dataset.key;route.off.has(k)?route.off.delete(k):route.off.add(k);$("#routeRes").innerHTML=routeResultHTML();break}
   }
 });
-document.addEventListener("keydown",e=>{if(e.key==="Escape"){if(photoOpen())closePhotoView();else if(jobsMapOpen())closeJobsMap();else if(mapOpen())closeMap();else if($("#modal").classList.contains("open"))cancelSheet()}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){if(identOpen())closeIdent();else if(photoOpen())closePhotoView();else if(jobsMapOpen())closeJobsMap();else if(mapOpen())closeMap();else if($("#modal").classList.contains("open"))cancelSheet()}});
 document.addEventListener("visibilitychange",()=>{if(!document.hidden){render();checkDue()}});
 
 /* ---------- Μνήμη πλοήγησης: το «πίσω» γυρνά στην προηγούμενη οθόνη, στο ίδιο ύψος που ήσουν ---------- */
@@ -246,6 +247,7 @@ window.addEventListener("popstate",e=>{
   if(leaving)return;
   if(exitTried)return;   // δεύτερο πάτημα: αφήνουμε το Chrome να κάνει τη δουλειά του
   if($("#exitDlg").classList.contains("open")){$("#exitDlg").classList.remove("open");return}
+  if(identOpen()){closeIdent();return}
   if(photoOpen()){closePhotoView();return}
   if(jobsMapOpen()){closeJobsMap();return}
   if(mapOpen()){closeMap();return}
