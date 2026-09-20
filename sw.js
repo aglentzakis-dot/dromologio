@@ -2,40 +2,17 @@
    Ρόλος: 1) η εφαρμογή να ανοίγει έστω και χωρίς σύνδεση στο διαδίκτυο,
           2) να δέχεται ειδοποιήσεις στο Android.
    ΣΗΜΑΝΤΙΚΟ: όποτε αλλάζει οτιδήποτε στην εφαρμογή, αύξησε τον αριθμό
-   στη γραμμή CACHE παρακάτω (π.χ. "dromologio-7.8" -> "dromologio-7.8").
+   στη γραμμή CACHE παρακάτω (π.χ. "dromologio-5.7" -> "dromologio-5.8").
    Έτσι το κινητό καταλαβαίνει ότι υπάρχει νέα έκδοση και δεν μένει
    κολλημένο στην παλιά. Δεν χρειάζεται να ταιριάζει ακριβώς με το
    APP_VERSION μέσα στο index.html, αρκεί να ΑΛΛΑΖΕΙ κάθε φορά. */
-const CACHE = "dromologio-7.8";
+const CACHE = "dromologio-6.3";
 
 // Το βασικό «σκελετό» της εφαρμογής: αποθηκεύεται με την εγκατάσταση,
 // ώστε να ανοίγει η εφαρμογή ακόμη και την πρώτη φορά χωρίς σύνδεση.
-// Αν προστεθεί νέο αρχείο στην εφαρμογή, γράψ' το και εδώ.
 const SHELL = [
   "./",
   "./index.html",
-  "./style.css",
-  "./eikones.js",
-  "./lexiko-agglika.js",
-  "./01-vasika.js",
-  "./02-glossa-apothikeusi.js",
-  "./03-eikonidia.js",
-  "./04-xartes.js",
-  "./05-simera-listes.js",
-  "./06-pelates-tameio.js",
-  "./07-diadromi.js",
-  "./08-parathyra.js",
-  "./09-forma-ergasias.js",
-  "./10-ypenthymiseis.js",
-  "./11-fotometra.js",
-  "./12-rythmiseis.js",
-  "./13-antigrafa.js",
-  "./14-patimata-ekkinisi.js",
-  "./15-prosfores-arxeio.js",
-  "./16-epideixi.js",
-  "./17-epaggelmata-data.js",
-  "./18-epaggelma.js",
-  "./19-identify.js","./20-fakelos.js",
   "./manifest.json",
   "./icon-192.png",
   "./icon-512.png",
@@ -85,9 +62,7 @@ self.addEventListener("fetch", e => {
     return;
   }
 
-  // Ό,τι άλλο (κομμάτια της εφαρμογής, εικονίδια, manifest κ.λπ.): πρώτα δίκτυο,
-  // αλλιώς ό,τι έχει μείνει στη μνήμη. Τα αρχεία ζητούνται με «?v=έκδοση» στο τέλος,
-  // οπότε χωρίς σύνδεση ψάχνουμε και το ίδιο αρχείο χωρίς αυτή την προσθήκη.
+  // Ό,τι άλλο (εικονίδια, manifest κ.λπ.): πρώτα δίκτυο, αλλιώς ό,τι έχει μείνει στη μνήμη.
   e.respondWith(
     fetch(r)
       .then(res => {
@@ -95,7 +70,7 @@ self.addEventListener("fetch", e => {
         caches.open(CACHE).then(c => c.put(r, copy)).catch(() => {});
         return res;
       })
-      .catch(() => caches.match(r).then(m => m || caches.match(r, { ignoreSearch: true })))
+      .catch(() => caches.match(r))
   );
 });
 
