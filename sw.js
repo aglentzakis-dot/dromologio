@@ -6,7 +6,7 @@
    Έτσι το κινητό καταλαβαίνει ότι υπάρχει νέα έκδοση και δεν μένει
    κολλημένο στην παλιά. Δεν χρειάζεται να ταιριάζει ακριβώς με το
    APP_VERSION μέσα στο index.html, αρκεί να ΑΛΛΑΖΕΙ κάθε φορά. */
-const CACHE = "dromologio-10.6";
+const CACHE = "dromologio-10.9";
 
 // Το βασικό «σκελετό» της εφαρμογής: αποθηκεύεται με την εγκατάσταση,
 // ώστε να ανοίγει η εφαρμογή ακόμη και την πρώτη φορά χωρίς σύνδεση.
@@ -51,11 +51,17 @@ self.addEventListener("fetch", e => {
     // Η σελίδα ζητείται πάντα φρέσκια από το δίκτυο όταν υπάρχει σύνδεση,
     // ώστε να βλέπεις πάντα την τελευταία έκδοση· η μνήμη είναι μόνο
     // εφεδρεία για όταν δεν υπάρχει καθόλου σύνδεση.
+    // Προσοχή: μόνο η ίδια η εφαρμογή κρατιέται ως "index.html" στη μνήμη.
+    // Άλλες σελίδες του φακέλου (π.χ. lipsi.html, η σελίδα εγκατάστασης)
+    // δεν πρέπει να πάρουν τη θέση της, αλλιώς εκτός σύνδεσης θα άνοιγε λάθος σελίδα.
+    const isApp = /(\/|\/index\.html)$/.test(new URL(r.url).pathname);
     e.respondWith(
       fetch(new Request(r.url, { cache: "reload", credentials: "same-origin" }))
         .then(res => {
-          const copy = res.clone();
-          caches.open(CACHE).then(c => c.put("./index.html", copy)).catch(() => {});
+          if (isApp) {
+            const copy = res.clone();
+            caches.open(CACHE).then(c => c.put("./index.html", copy)).catch(() => {});
+          }
           return res;
         })
         .catch(() => caches.match("./index.html").then(m => m || caches.match("./")).then(m => m || Response.error()))
