@@ -109,7 +109,7 @@ const DEF_PKINDS=[
   ["family","👨‍👩‍👧","Οικογένεια","out",["Παιδιά","Σχολείο","Φροντιστήριο","Δώρα"]],
   ["loans","💳","Δάνεια, δόσεις","out",["Στεγαστικό","Καταναλωτικό","Δόση αυτοκινήτου","Πιστωτική κάρτα"]],
   ["shop","🛍️","Αγορές","out",["Ρούχα","Παπούτσια","Ηλεκτρονικά","Για το σπίτι"]],
-  ["fuel","⛽","Καύσιμα","out",["Βενζίνη","Πετρέλαιο","Υγραέριο"]],
+  ["fuel","⛽","Καύσιμα","out",["Βενζίνη","Πετρέλαιο κίνησης","Υγραέριο (LPG)","Φυσικό αέριο (CNG)","Φόρτιση ηλεκτρικού","AdBlue"]],
   ["health","🩺","Υγεία","out",["Γιατρός","Φάρμακα","Οδοντίατρος","Ασφάλεια υγείας"]],
   ["subs","📱","Συνδρομές","out",["Netflix","ChatGPT","Spotify","Κινητό","Γυμναστήριο"]],
   ["other","📦","Άλλο","out",[]]
@@ -117,18 +117,25 @@ const DEF_PKINDS=[
 // παλιές κατηγορίες (15.3) → νέες, για όσους είχαν ήδη περάσει κινήσεις
 const PK_OLD={market:["market",""],smoke:["fun","Τσιγάρα"],drinks:["fun","Ποτά"],eatout:["food","Φαγητό έξω"],pfuel:["fuel",""],bills:["home",""],
   home:["home","Ενοίκιο σπιτιού"],insur:["car","Ασφάλεια"],clothes:["shop","Ρούχα"],kids:["family","Παιδιά"],gifts:["family","Δώρα"],poutother:["other",""]};
+const FUEL_SUBS=["Βενζίνη","Πετρέλαιο κίνησης","Υγραέριο (LPG)","Φυσικό αέριο (CNG)","Φόρτιση ηλεκτρικού","AdBlue"];
 function pMigrate(){
+  if(S.settings.pkV>=4)return;
+  if(S.settings.pkV===3&&Array.isArray(S.settings.pkinds)){ // 17.4: καύσιμα με υγραέριο, φυσικό αέριο, φόρτιση ηλεκτρικού
+    const f=S.settings.pkinds.find(k=>k.id==="fuel");
+    if(f){f.subs=(f.subs||[]).map(x=>x==="Υγραέριο"?"Υγραέριο (LPG)":x==="Πετρέλαιο"?"Πετρέλαιο κίνησης":x);
+      FUEL_SUBS.forEach(n=>{if(!f.subs.some(x=>norm(x)===norm(n)))f.subs.push(n)})}
+    S.settings.pkV=4;write();return}
   if(S.settings.pkV>=3)return;
   if(S.settings.pkV===2&&Array.isArray(S.settings.pkinds)){ // 16.3: «Χαρτζιλίκι» και «Άλλα έσοδα»
     const ks=S.settings.pkinds,o=ks.find(k=>k.id==="pinother");
     if(o&&o.name==="Άλλο έσοδο")o.name="Άλλα έσοδα";
     if(!ks.some(k=>k.id==="pocket")){const i=o?ks.indexOf(o):ks.length;ks.splice(i,0,{id:"pocket",emoji:"💶",name:"Χαρτζιλίκι",dir:"in",subs:[]})}
-    S.settings.pkV=3;write();return}
+    S.settings.pkV=3;write();pMigrate();return}
   const old=S.settings.pkinds;
   const fresh=DEF_PKINDS.map(k=>Object.assign({},k,{subs:k.subs.slice()}));
   if(Array.isArray(old))old.forEach(k=>{if(!fresh.some(f=>f.id===k.id)&&!PK_OLD[k.id])fresh.push({id:k.id,emoji:"📦",name:k.name,dir:k.dir,subs:[]})});
   (S.personal||[]).forEach(e=>{const m=PK_OLD[e.kind];if(m){e.kind=m[0];if(m[1]&&!e.sub)e.sub=m[1]}});
-  S.settings.pkinds=fresh;S.settings.pkV=3;write();
+  S.settings.pkinds=fresh;S.settings.pkV=4;write();
 }
 let moneyBook="work";
 // Τι δείχνει το Ταμείο όταν ανοίγεις την εφαρμογή (ρύθμιση): "work" ή "personal"
@@ -149,11 +156,15 @@ function pLongPress(box,sel,fire,skip){
 // Ξεκίνημα: το Ταμείο ανοίγει στην προεπιλογή και οι υπενθυμίσεις των πάγιων συγχρονίζονται
 function pStartup(){
   moneyBook=pDefBook();
-  (S.pfixed||[]).forEach(f=>{if(f.remind)syncFixReminder(f)});
+  // οι υπενθυμίσεις πληρωμής των παγίων χτυπάνε το πολύ μία μέρα πριν
+  (S.pfixed||[]).forEach(f=>{if((+f.before||0)>1)f.before=1;if(f.remind)syncFixReminder(f)});
 }
 // Υπενθύμιση πάγιου που πληρώθηκε ήδη αυτόν τον μήνα: δεν φαίνεται στις λίστες μέχρι να έρθει η ώρα της
 const pFixOfRem=r=>(S.pfixed||[]).find(f=>f.remId===r.id);
-function pRemHidden(r){const f=pFixOfRem(r);return !!f&&f.paid===ymKey(new Date())&&remDue(r)>new Date()}
+function pRemHidden(r){const f=pFixOfRem(r);if(!f||remDue(r)<=new Date())return false;
+  if(f.paid===ymKey(new Date()))return true;
+  return fixNextDue(f)-Date.now()>864e5+36e5; // εμφανίζεται από την προηγούμενη μέρα της πληρωμής
+}
 // Ολοκλήρωση υπενθύμισης πάγιου από τις Υπενθυμίσεις = «Πληρώθηκε» / «Εισπράχθηκε»
 function pRemDone(r){const f=pFixOfRem(r);if(!f)return false;
   if(f.paid!==ymKey(new Date()))pFixPay(f);else{syncFixReminder(f);persist();render()}
@@ -388,7 +399,7 @@ function pEntryForm(e,dir0,draft){
       if($("#p_fix")&&$("#p_fix").checked&&!tgt.fixId){
         const dt=new Date(d.date),name=d.sub||T(pKind(d.kind).name);
         const ex=(S.pfixed||[]).find(f=>(f.dir||"out")===d.dir&&f.kind===d.kind&&norm(f.name)===norm(name));
-        const f=ex||{id:uid(),dir:d.dir,name,kind:d.kind,remind:d.dir==="out",before:3};
+        const f=ex||{id:uid(),dir:d.dir,name,kind:d.kind,remind:d.dir==="out",before:1};
         f.amount=d.amount;f.day=dt.getDate();if(ymKey(dt)===ymKey(new Date()))f.paid=ymKey(dt);
         if(!ex)S.pfixed.push(f);syncFixReminder(f);tgt.fixId=f.id;
         persist();render();toast(T("Καταχωρήθηκε και μπήκε στα πάγια κάθε μήνα."));return}
@@ -510,7 +521,7 @@ function subListSheet(kindId,onPick,back){
 function pFixForm(f0,draft){
   pMigrate();
   const isNew=!f0;
-  const v=Object.assign({dir:"out",name:"",amount:"",day:new Date().getDate(),kind:"home",remind:true,before:3},f0||{},draft||{});
+  const v=Object.assign({dir:"out",name:"",amount:"",day:new Date().getDate(),kind:"home",remind:true,before:1},f0||{},draft||{});
   if(!pkinds().some(k=>k.id===v.kind&&k.dir===v.dir))v.kind=(pkinds().find(k=>k.dir===v.dir)||{}).id;
   const read=()=>({dir:v.dir,name:val("fx_name"),amount:val("fx_amt"),day:+val("fx_day"),kind:val("fx_kind"),remind:$("#fx_rem").checked,before:+val("fx_bef")});
   const reopen=d=>pFixForm(f0,d);
@@ -524,7 +535,7 @@ function pFixForm(f0,draft){
       <label for="fx_amt">${T("Ποσό κάθε μήνα")}</label><span class="curr"><b>€</b><input id="fx_amt" inputmode="decimal" placeholder="0,00" value="${esc(String(v.amount))}"></span>
       <label for="fx_day">${inc?T("Μέρα του μήνα που έρχεται"):T("Μέρα του μήνα που λήγει")}</label><select id="fx_day">${Array.from({length:31},(_,i)=>`<option value="${i+1}" ${+v.day===i+1?"selected":""}>${i+1}</option>`).join("")}</select>
       <label class="toggle"><input type="checkbox" id="fx_rem" ${v.remind?"checked":""}>🔔 ${inc?T("Υπενθύμιση να το ελέγξεις"):T("Υπενθύμιση πριν τη λήξη")}</label>
-      <label for="fx_bef">${T("Πόσες μέρες πριν")}</label><select id="fx_bef">${[0,1,2,3,5,7].map(n=>`<option value="${n}" ${+v.before===n?"selected":""}>${n?T("{n} μέρες πριν",{n}):T("Την ίδια μέρα")}</option>`).join("")}</select>
+      <label for="fx_bef">${T("Πόσες μέρες πριν")}</label><select id="fx_bef">${[0,1].map(n=>`<option value="${n}" ${+v.before===n?"selected":""}>${n?T("{n} μέρες πριν",{n}):T("Την ίδια μέρα")}</option>`).join("")}</select>
       <p class="note">${inc?T("Με το «Εισπράχθηκε» μπαίνει αυτόματα στα έσοδα. Κάθε μήνα ξαναμπαίνει μόνο του μέχρι να το σταματήσεις με το ✕."):T("Με το «Πληρώθηκε» μπαίνει αυτόματα στα έξοδα. Κάθε μήνα ξαναμπαίνει μόνο του μέχρι να το σταματήσεις με το ✕.")}</p>`,
     onSave:()=>{
       const d=read();if(!d.name){toast(inc?T("Γράψε τι εισπράττεις."):T("Γράψε τι πληρώνεις."));return false}
@@ -562,7 +573,7 @@ function pFixQuick(){
         const amt=raw===""?0:+raw,day=+v.day||0;
         if(amt>0){
           if(f){if(+f.amount!==amt||(day&&+f.day!==day)){f.amount=amt;if(day)f.day=day;syncFixReminder(f);upd++}}
-          else{const t={id:uid(),dir,name,amount:amt,day:day||today,kind:k.id,remind:dir==="out",before:3};fx.push(t);syncFixReminder(t);add++}
+          else{const t={id:uid(),dir,name,amount:amt,day:day||today,kind:k.id,remind:dir==="out",before:1};fx.push(t);syncFixReminder(t);add++}
         }else if(f){f.remind=false;syncFixReminder(f);fx.splice(fx.indexOf(f),1);del++}
       }
       S.settings.pqHide=[...hid];persist();render();
