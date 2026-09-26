@@ -85,7 +85,7 @@
 .pcask{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 12px;margin:0 0 10px;border-radius:12px;background:color-mix(in srgb,var(--red) 9%,var(--card))}
 .pickbox .pcask{margin:0;border-radius:0;border-bottom:1px solid var(--line)}
 .pcask span{flex:1 1 100%;font-weight:800}.pcask small{display:block;font-weight:650;color:var(--muted);margin-top:2px}
-.pbookdef{display:flex;align-items:center;gap:8px;justify-content:center;margin:12px 0 0;font-size:12.5px;color:var(--muted);font-weight:700}
+.pbookdef{margin:16px 0 0;padding:12px 14px;border:1.5px dashed var(--line);border-radius:14px}.pbookdef b{display:block;font-size:14.5px;margin-bottom:8px}.pbookdef .seg{margin:0}.pbookdef .note{margin:8px 0 0}
 .pqrow.qoff{opacity:.45}.pqrow.qoff .qn,.pqrow.qoff .qeye{color:var(--pfaint)}
 .qhidn,.qoffl{color:var(--pfaint)!important;font-weight:600!important;font-style:italic}
 .qhidn{font-size:12px!important;border-top-color:color-mix(in srgb,var(--line) 60%,transparent)!important}
@@ -276,7 +276,9 @@ function vPersonal(){
       <b class="amt ${pIn(e)?"in":"out"}">${pIn(e)?"+":"−"}${money(e.amount)}</b></div>`).join(""))
     :panel(`<div class="empty">${ent.length?T("Καμία κίνηση με αυτά τα φίλτρα."):T("Δεν έχεις προσωπικές κινήσεις σε αυτό το διάστημα. Πάτα «+ Έξοδο» ή «+ Έσοδο».")}</div>`);
   if((S.personal||[]).length)h+=`<button type="button" class="pwipe" data-act="pWipe">🗑 ${T("Διαγραφή όλων των κινήσεων ενός μήνα")}</button>`;
-  h+=`<label class="pbookdef"><input type="checkbox" data-pbdef="1" ${pDefBook()==="personal"?"checked":""}> ${T("Το Ταμείο να ανοίγει στα Προσωπικά")}</label>`;
+  h+=`<div class="pbookdef"><b>📌 ${T("Τι να βλέπεις πρώτο όταν ανοίγεις το Ταμείο;")}</b>
+    <div class="seg"><button type="button" class="${pDefBook()==="work"?"on":""}" data-pbdef="work">💼 ${T("Εργασία")}</button><button type="button" class="${pDefBook()==="personal"?"on":""}" data-pbdef="personal">👤 ${T("Προσωπικά")}</button></div>
+    <p class="note">${T("Κάθε φορά που ανοίγεις την εφαρμογή και πατάς «Ταμείο» κάτω, σου δείχνει πρώτα αυτό που διάλεξες εδώ. Όσο είσαι μέσα, αλλάζεις όποτε θες με τα κουμπιά «Εργασία» και «Προσωπικά» πάνω δεξιά.")}</p></div>`;
   h+=`<p class="note" style="margin:10px 2px 0">${T("Τα προσωπικά είναι εντελώς χωριστά από την εργασία: δεν μετράνε στο Ταμείο, στους πελάτες ή στο κέρδος.")}</p>`;
   return h;
 }
@@ -610,21 +612,26 @@ function pWipeSheet(mk){
   const months=[...new Set([ymKey(new Date()),...all.map(e=>ymKey(e.date))])].sort().reverse();
   mk=mk||months[0];
   const mName=k=>{const[y,m]=k.split("-");return monthName(new Date(+y,+m-1,15))+" "+y};
-  const ofDir=d=>all.filter(e=>ymKey(e.date)===mk&&e.dir===d);
-  const btn=(d,lbl)=>{const l=ofDir(d);return `<button type="button" class="btn ${d==="in"?"softin":"softout"} wide" data-pw="${d}" ${l.length?"":"disabled"} style="width:100%;margin-top:10px">🗑 ${lbl}<br><small style="font-weight:700">${l.length?pl(l.length,"{n} κίνηση","{n} κινήσεις")+" · "+money(pSum(l,d)):T("Δεν υπάρχουν")}</small></button>`};
+  // in / out: όλα τα έσοδα ή όλα τα έξοδα του μήνα · nofix: όλα (έσοδα και έξοδα) εκτός από όσα ήρθαν από πάγια
+  const ofDir=d=>all.filter(e=>ymKey(e.date)===mk&&(d==="nofix"?!e.fixId:e.dir===d));
+  const sumTxt=l=>{const i=pSum(l,"in"),o=pSum(l,"out");return [i?"+"+money(i):"",o?"−"+money(o):""].filter(Boolean).join(" · ")};
+  const btn=(d,lbl)=>{const l=ofDir(d);return `<button type="button" class="btn ${d==="in"?"softin":d==="out"?"softout":"ghost"} wide" data-pw="${d}" ${l.length?"":"disabled"} style="width:100%;margin-top:10px;${d==="nofix"?"border:1.5px solid var(--line)":""}">🗑 ${lbl}<br><small style="font-weight:700">${l.length?pl(l.length,"{n} κίνηση","{n} κινήσεις")+" · "+sumTxt(l):T("Δεν υπάρχουν")}</small></button>`};
   openSheet({title:`🗑 ${T("Διαγραφή μήνα")}`,cancelLabel:T("Κλείσιμο"),
     body:`<label for="pw_m">${T("Μήνας")}</label><select id="pw_m">${months.map(k=>`<option value="${k}" ${k===mk?"selected":""}>${esc(mName(k))}</option>`).join("")}</select>
       ${btn("in",T("Διαγραφή όλων των εσόδων του μήνα"))}${btn("out",T("Διαγραφή όλων των εξόδων του μήνα"))}
+      ${btn("nofix",T("Διαγραφή όλων εκτός από τα πάγια"))}
+      <p class="note" style="margin-top:6px">${T("Το τελευταίο σβήνει έσοδα και έξοδα του μήνα, αλλά κρατάει όσα πέρασαν από πάγια (ΔΕΗ, ενοίκιο, μισθός κ.λπ.).")}</p>
       <p class="note" style="margin-top:12px">${T("Σβήνονται μόνο οι κινήσεις. Τα πάγια μένουν και ξαναμπαίνουν κανονικά τον επόμενο μήνα.")}</p>`});
   $("#pw_m").onchange=()=>pWipeSheet(val("pw_m"));
   $("#shBody").onclick=e=>{const b=e.target.closest("[data-pw]");if(!b||b.disabled)return;const d=b.dataset.pw,l=ofDir(d);if(!l.length)return;
     const msg=d==="in"?T("Να διαγραφούν ΟΛΑ τα έσοδα του μήνα {m}; ({n} κινήσεις, {a})",{m:mName(mk),n:l.length,a:money(pSum(l,d))})
-      :T("Να διαγραφούν ΟΛΑ τα έξοδα του μήνα {m}; ({n} κινήσεις, {a})",{m:mName(mk),n:l.length,a:money(pSum(l,d))});
+      :d==="out"?T("Να διαγραφούν ΟΛΑ τα έξοδα του μήνα {m}; ({n} κινήσεις, {a})",{m:mName(mk),n:l.length,a:money(pSum(l,d))})
+      :T("Να διαγραφούν όλες οι κινήσεις του μήνα {m} εκτός από τα πάγια; ({n} κινήσεις)",{m:mName(mk),n:l.length});
     if(!confirm(msg))return;
     const before=S.personal.slice(),fx=(S.pfixed||[]).filter(f=>f.paid===mk&&l.some(e=>e.fixId===f.id));
     S.personal=S.personal.filter(e=>!l.includes(e));fx.forEach(f=>{f.paid="";syncFixReminder(f)});
     persist();closeSheet();render();
-    undoToast(d==="in"?T("Διαγράφηκαν {n} έσοδα.",{n:l.length}):T("Διαγράφηκαν {n} έξοδα.",{n:l.length}),
+    undoToast(d==="in"?T("Διαγράφηκαν {n} έσοδα.",{n:l.length}):d==="out"?T("Διαγράφηκαν {n} έξοδα.",{n:l.length}):pl(l.length,"Διαγράφηκε {n} κίνηση.","Διαγράφηκαν {n} κινήσεις."),
       ()=>{S.personal=before;fx.forEach(f=>{f.paid=mk;syncFixReminder(f)});persist();render()})};
 }
 function pFixStop(f,noAsk){
@@ -640,9 +647,9 @@ function pFixPay(f){
   undoToast(inc?T("«{n}» εισπράχθηκε και μπήκε στα έσοδα.",{n:f.name}):T("«{n}» πληρώθηκε και μπήκε στα έξοδα.",{n:f.name}),()=>{const i=S.personal.indexOf(e);if(i>=0)S.personal.splice(i,1);f.paid=was;syncFixReminder(f);persist();render()});
 }
 
-document.addEventListener("change",e=>{const c=e.target.closest("[data-pbdef]");if(!c)return;
-  S.settings.defaultBook=c.checked?"personal":"work";write();
-  toast(c.checked?T("Το Ταμείο θα ανοίγει στα Προσωπικά."):T("Το Ταμείο θα ανοίγει στην Εργασία."))});
+document.addEventListener("click",e=>{const c=e.target.closest("[data-pbdef]");if(!c)return;
+  S.settings.defaultBook=c.dataset.pbdef==="personal"?"personal":"work";write();render();
+  toast(S.settings.defaultBook==="personal"?T("Το Ταμείο θα ανοίγει στα Προσωπικά."):T("Το Ταμείο θα ανοίγει στην Εργασία."))});
 /* ---------- Κουμπιά (data-act) των Προσωπικών ----------
    Καλείται από τον κεντρικό χειριστή κλικ του index.html· επιστρέφει true
    όταν η ενέργεια ανήκει εδώ. */

@@ -201,8 +201,11 @@ function fbExpKinds(back){
   const ks=kinds().filter(k=>k.dir==="out");
   openSheet({title:`🧾 ${T("Τι έξοδο;")}`,cancelLabel:T("Πίσω"),onCancel:back||null,
     body:`<div class="fbgrid">${ks.map(k=>`<button type="button" class="fout" data-fbk2="${k.id}"><span class="fe">${EM[k.id]||"🧾"}</span>${esc(T(k.name))}</button>`).join("")}</div>
-      <p class="note" style="font-size:14.5px;margin-top:12px">${T("Ο «Εξοπλισμός επιχείρησης» είναι για αγορές που δεν αφορούν συγκεκριμένο πελάτη, π.χ. τρυπάνι, μηχάνημα, σκάλα.")}</p>`});
-  $("#shBody").onclick=e=>{const b=e.target.closest("[data-fbk2]");if(!b)return;closeSheet();entryForm(null,{kind:b.dataset.fbk2})};
+      <button type="button" class="btn ghost fbbig" data-fbked="1" style="border:1.5px solid var(--line)">✎ ${T("Σειρά, ονόματα και νέα είδη")}</button>
+      <p class="note" style="font-size:14.5px;margin-top:10px">${T("Είναι η ίδια λίστα με τα «Είδη κινήσεων» του Ταμείου: ό,τι αλλάζεις εδώ αλλάζει παντού, και το αντίστροφο.")}</p>`});
+  $("#shBody").onclick=e=>{
+    if(e.target.closest("[data-fbked]")){kindsSheet(()=>fbExpKinds(back));return}
+    const b=e.target.closest("[data-fbk2]");if(!b)return;closeSheet();entryForm(null,{kind:b.dataset.fbk2})};
 }
 
 /* ---------- Ρύθμιση: τι δείχνει και με ποια σειρά ---------- */
