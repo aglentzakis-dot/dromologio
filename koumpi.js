@@ -36,21 +36,32 @@
 
 /* ---------- Οι ενέργειες ---------- */
 // [id, εικονίδιο, όνομα, χρώμα (in/out/""), αρχικά ενεργή]
+// Η σειρά εδώ είναι και η αρχική σειρά του μενού· true = ενεργή από την αρχή (έως 10)
 const FB_ACTS=[
-  ["pay","💶","Πήρα λεφτά","in",true],
+  ["pexp","🛒","Προσωπικό έξοδο","out",true],
   ["exp","🧾","Έξοδο δουλειάς","out",true],
-  ["fuel","⛽","Καύσιμα","out",false],
-  ["photo","📷","Φωτογραφία σε εργασία","",true],
-  ["next","🧭","Επόμενη δουλειά","",true],
+  ["pay","💶","Πήρα λεφτά","in",true],
   ["call","📞","Κλήση πελάτη","",true],
-  ["done","✅","Τελείωσα δουλειά","",true],
-  ["map","🗺️","Χάρτης εργασιών","",false],
   ["rem","🔔","Υπενθύμιση","",true],
   ["note","📝","Σημείωση","",true],
-  ["task","🛠️","Νέα εργασία","",true],
-  ["client","👤","Νέος πελάτης","",false],
-  ["pexp","🛒","Προσωπικό έξοδο","out",true],
   ["pinc","💰","Προσωπικό έσοδο","in",false],
+  ["photo","📷","Φωτογραφία σε εργασία","",false],
+  ["next","🧭","Επόμενη δουλειά","",false],
+  ["start","▶️","Ξεκίνησα δουλειά","",false],
+  ["done","✅","Τελείωσα δουλειά","",false],
+  ["fuel","⛽","Καύσιμα","out",false],
+  ["equip","🧰","Εξοπλισμός επιχείρησης","out",false],
+  ["task","🛠️","Νέα εργασία","",false],
+  ["client","👤","Νέος πελάτης","",false],
+  ["fixq","📅","Προσωπικά πάγια","",false],
+  ["map","🗺️","Χάρτης εργασιών","",false],
+  ["goRoute","🛣️","Πού πηγαίνεις;","",false],
+  ["goTasks","📋","Εργασίες","",false],
+  ["goClients","👥","Πελάτες","",false],
+  ["goMoney","🏦","Ταμείο εργασίας","",false],
+  ["goPers","👤","Προσωπικά","",false],
+  ["goRem","⏰","Όλες οι υπενθυμίσεις","",false],
+  ["foto","📐","Φωτομέτρηση","",false],
   ["search","🔍","Αναζήτηση","",false]
 ];
 function fbCfg(){
@@ -81,14 +92,22 @@ function fbMenu(){
 function fbRun(id){
   const back=()=>fbMenu();
   switch(id){
-    case"pay":fbPickClient(`💶 ${T("Από ποιον πήρες λεφτά;")}`,c=>{closeSheet();entryForm(null,{kind:"payment",client:c?c.id:""})},back,true);break;
+    case"pay":fbPickClient(`💶 ${T("Από ποιον πήρες λεφτά;")}`,c=>{closeSheet();entryForm(null,{kind:"payment",client:c?c.id:""})},back,true,"pay");break;
+    case"equip":closeSheet();entryForm(null,{kind:"equipment"});break;
+    case"start":fbPickTask(T("Ποια δουλειά ξεκίνησες;"),x=>{closeSheet();fbFire({act:"setStatus",id:x.id,st:"progress"})},back,x=>x.status!=="progress");break;
+    case"fixq":case"goPers":{closeSheet();const locked=S.settings.pLock&&S.settings.pLock.on&&!pUnlocked;
+      view="money";moneyBook="personal";clientId=null;render();window.scrollTo(0,0);
+      if(id==="fixq"){if(locked)toast(T("Γράψε τον κωδικό των Προσωπικών."));else pFixQuick()}break}
+    case"goRoute":case"goTasks":case"goClients":case"goMoney":case"goRem":closeSheet();
+      if(id==="goMoney")moneyBook="work";
+      view={goRoute:"route",goTasks:"tasks",goClients:"clients",goMoney:"money",goRem:"reminders"}[id];clientId=null;if(view==="tasks")taskFilter="open";render();window.scrollTo(0,0);break;
+    case"foto":closeSheet();fbFire({act:"openFoto",owner:"*",title:T("Φωτομέτρηση")});break;
     case"exp":fbExpKinds(back);break;
     case"fuel":closeSheet();entryForm(null,{kind:"fuel"});break;
     case"photo":fbPickTask(T("Σε ποια εργασία;"),fbPhoto,back);break;
     case"next":fbNext(null);break;
-    case"call":fbPickClient(`📞 ${T("Κλήση πελάτη")}`,null,back);break;
-    case"done":fbPickTask(T("Ποια δουλειά τελείωσε;"),x=>{closeSheet();
-      const b=document.createElement("button");b.dataset.act="setStatus";b.dataset.id=x.id;b.dataset.st="done";b.hidden=true;document.body.appendChild(b);b.click();b.remove()},back);break;
+    case"call":fbPickClient(`📞 ${T("Κλήση πελάτη")}`,null,back,false,"call");break;
+    case"done":fbPickTask(T("Ποια δουλειά τελείωσε;"),x=>{closeSheet();fbFire({act:"setStatus",id:x.id,st:"done"})},back);break;
     case"map":closeSheet();openJobsMap();break;
     case"rem":{closeSheet();view="reminders";clientId=null;render();window.scrollTo(0,0);const t=$("#r_text");if(t)setTimeout(()=>t.focus(),60);break}
     case"note":noteEditSheet(null);break;
@@ -102,6 +121,8 @@ function fbRun(id){
 }
 
 /* ---------- Βοηθητικά ---------- */
+// Πυροδοτεί μια υπάρχουσα ενέργεια της εφαρμογής (data-act) σαν να πατήθηκε το κουμπί της
+function fbFire(d){const b=document.createElement("button");Object.entries(d).forEach(([k,v])=>b.dataset[k]=v);b.hidden=true;document.body.appendChild(b);b.click();b.remove()}
 // Ανοιχτές εργασίες: πρώτα όσες είναι σε εξέλιξη, μετά με σειρά ώρας, μετά οι υπόλοιπες
 function fbOpenTasks(){
   const t=S.tasks.filter(isOpen);
@@ -110,8 +131,8 @@ function fbOpenTasks(){
 }
 const fbTaskLine=x=>{const c=x.clientId&&getClient(x.clientId),L=taskLoc(x);
   return [x.status==="progress"?"▶ "+T("Σε εξέλιξη"):x.start?fmt(x.start):"",c?c.name:"",L?L.label:""].filter(Boolean).join(" · ")};
-function fbPickTask(title,cb,back){
-  const list=fbOpenTasks();
+function fbPickTask(title,cb,back,filter){
+  const list=fbOpenTasks().filter(filter||(()=>true));
   openSheet({title,cancelLabel:T("Πίσω"),onCancel:back||null,
     body:list.length?`<div class="fbpick">${panel(list.map(x=>`<div class="row" data-fbt="${x.id}" style="cursor:pointer"><div class="grow"><div class="title">${esc(x.title)}</div><div class="meta"><span>${esc(fbTaskLine(x))}</span></div></div><span style="color:var(--muted);font-size:22px">›</span></div>`).join(""))}</div>`
       :`<div class="empty">${T("Δεν έχεις ανοιχτές εργασίες.")}</div>`});
@@ -149,8 +170,8 @@ function fbNext(x){
 }
 // Επιλογή πελάτη: πρώτα μόνο οι ενεργοί (ανοιχτή δουλειά, χρωστάνε, κίνηση τον τελευταίο μήνα).
 // Με την αναζήτηση βρίσκεις και όλους τους άλλους. Χωρίς cb: κλήση στο τηλέφωνό του.
-function fbPickClient(title,cb,back,allowNone){
-  const act=activeClientIds(),openT=new Set(S.tasks.filter(isOpen).map(x=>x.clientId));
+function fbPickClient(title,cb,back,allowNone,mode){
+  const act=mode==="pay"?activeClientIds():workClientIds(),openT=workClientIds();
   const all=S.clients.filter(c=>alive(c)&&(cb||c.mobile||c.phone));
   const owed=c=>{try{return cMoney(c).owed||0}catch(_){return 0}};
   const rank=c=>(openT.has(c.id)?2:0)+(owed(c)>0.004?1:0);
@@ -166,8 +187,9 @@ function fbPickClient(title,cb,back,allowNone){
     let l;
     if(q)l=all.filter(c=>norm(c.name).includes(q)||String(c.mobile||c.phone||"").replace(/\s/g,"").includes(q.replace(/\s/g,""))).slice(0,40);
     else l=all.filter(c=>act.has(c.id)).sort((a,b)=>rank(b)-rank(a)||a.name.localeCompare(b.name,LOC()));
-    $("#fb_cl").innerHTML=(q?"":`<div class="psub" style="margin-top:0">${T("Ενεργοί αυτή την περίοδο")}</div>`)+
-      (l.length?panel(l.map(row).join("")):`<div class="empty">${q?T("Δεν βρέθηκε πελάτης."):T("Κανένας ενεργός πελάτης αυτή την περίοδο. Γράψε όνομα για να ψάξεις σε όλους.")}</div>`)};
+    $("#fb_cl").innerHTML=(q?"":`<div class="psub" style="margin-top:0">${mode==="pay"?T("Χρωστάνε ή έχουν δουλειά σε εξέλιξη"):T("Με δουλειά σε εξέλιξη")}</div>`)+
+      (l.length?panel(l.map(row).join("")):`<div class="empty">${q?T("Δεν βρέθηκε πελάτης."):mode==="pay"?T("Κανένας πελάτης δεν σου χρωστάει ούτε έχει δουλειά σε εξέλιξη."):T("Κανένας πελάτης με δουλειά σε εξέλιξη αυτή την περίοδο.")}</div>`)+
+      (q?"":`<p class="note" style="font-size:14px;margin-top:8px">${T("Για κάποιον άλλον, γράψε το όνομά του στην αναζήτηση.")}</p>`)};
   paint();$("#fb_q").oninput=paint;
   $("#shBody").onclick=e=>{
     if(e.target.closest("[data-fbnone]")){cb(null);return}
@@ -198,6 +220,7 @@ function fbSetup(back){
         <button type="button" class="fbchk" data-fbk="${id}"><i>${on?"✓":""}</i><span class="fe">${a[1]}</span><span>${esc(T(a[2]))}</span></button>
         <button type="button" class="mini" data-fbu="${i}" ${i?"":"disabled"} aria-label="${T("Πιο πάνω")}">▲</button>
         <button type="button" class="mini" data-fbd="${i}" ${i<c.order.length-1?"":"disabled"} aria-label="${T("Πιο κάτω")}">▼</button></div>`}).join(""))}</div>
+      <p class="note" style="font-size:14px;margin-top:10px">${T("Εκτός από ενέργειες, μπορείς να βάλεις και συντομεύσεις για να πηγαίνεις κατευθείαν σε μια οθόνη: Εργασίες, Πελάτες, Ταμείο, Προσωπικά, Διαδρομή.")}</p>
       <button type="button" class="btn ghost wide" data-fbreset="1" style="width:100%;margin-top:10px;border:1.5px solid var(--line)">↺ ${T("Επαναφορά αρχικών")}</button>`;
     $("#fb_on").onchange=e=>{c.on=e.target.checked;write();render();toast(c.on?T("Το κίτρινο κουμπί φαίνεται."):T("Το κίτρινο κουμπί κρύφτηκε. Το ξαναβάζεις από τις Ρυθμίσεις."))};
   };
