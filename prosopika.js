@@ -44,7 +44,7 @@
 .pqrow.has .qn{color:var(--ink)}.pqrow.has{background:color-mix(in srgb,var(--green) 7%,transparent)}
 .pqrow .qa{margin:0}.pqrow .qa input{padding:8px 6px 8px 28px!important;font-size:15px}.pqrow select{margin:0;padding:8px 4px;font-size:14px}
 .psub{font-size:12.5px;font-weight:800;color:var(--muted);margin:10px 2px 6px;text-transform:uppercase;letter-spacing:.3px}
-.pstop{flex:none;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--line);background:var(--card);color:var(--red);font-weight:900;margin-left:4px}
+.pstop{flex:none;width:22px;height:22px;padding:0;border-radius:50%;border:0;background:none;color:var(--pfaint);font-size:11px;font-weight:700;line-height:22px;margin-left:2px;opacity:.8}.pstop:active{background:var(--line)}
 .slrow{display:flex;align-items:center;gap:6px;padding:6px 10px;border-bottom:1px solid var(--line)}
 .slrow .slpick{flex:1;text-align:left;border:0;background:none;padding:8px 4px;font-weight:750;font-size:15px;color:var(--ink)}
 .slrow .mini[disabled]{opacity:.3}
@@ -77,8 +77,15 @@
 .pkgrid button.add{border-style:dashed;color:var(--muted)}
 .pqrow .qn{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 .pqrow.pressing{background:color-mix(in srgb,var(--red) 12%,var(--card));transition:background .9s}
-.pqrow.qask{grid-template-columns:minmax(0,1fr) auto auto!important;background:color-mix(in srgb,var(--red) 8%,var(--card))}
-.pqrow.qask .qn{color:var(--ink);white-space:normal}
+.pqrow.qask{display:flex!important;flex-wrap:wrap;gap:8px;background:color-mix(in srgb,var(--red) 8%,var(--card))}
+.pqrow.qask .qn{color:var(--ink);white-space:normal;flex-basis:100%}
+.qaskb{display:flex;gap:6px;justify-content:flex-end;width:100%}.qaskb .btn{padding:7px 10px;font-size:13px;white-space:nowrap}
+.pcatgrid button.pressing,.pickrow.pressing{background:color-mix(in srgb,var(--red) 14%,var(--card));transition:background .9s}
+.pcatgrid button,.pickrow{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.pcask{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 12px;margin:0 0 10px;border-radius:12px;background:color-mix(in srgb,var(--red) 9%,var(--card))}
+.pickbox .pcask{margin:0;border-radius:0;border-bottom:1px solid var(--line)}
+.pcask span{flex:1 1 100%;font-weight:800}.pcask small{display:block;font-weight:650;color:var(--muted);margin-top:2px}
+.pbookdef{display:flex;align-items:center;gap:8px;justify-content:center;margin:12px 0 0;font-size:12.5px;color:var(--muted);font-weight:700}
 .pqrow.qoff{opacity:.45}.pqrow.qoff .qn,.pqrow.qoff .qeye{color:var(--pfaint)}
 .qhidn,.qoffl{color:var(--pfaint)!important;font-weight:600!important;font-style:italic}
 .qhidn{font-size:12px!important;border-top-color:color-mix(in srgb,var(--line) 60%,transparent)!important}
@@ -122,6 +129,38 @@ function pMigrate(){
   S.settings.pkinds=fresh;S.settings.pkV=3;write();
 }
 let moneyBook="work";
+// Τι δείχνει το Ταμείο όταν ανοίγεις την εφαρμογή (ρύθμιση): "work" ή "personal"
+const pDefBook=()=>S.settings.defaultBook==="personal"?"personal":"work";
+// Κράτημα ~1 δευτερόλεπτο πάνω σε ένα στοιχείο (sel μέσα στο box). Επιστρέφει recent(): true λίγο μετά το κράτημα,
+// ώστε το κλικ που ακολουθεί το άφημα του δαχτύλου να αγνοείται.
+function pLongPress(box,sel,fire,skip){
+  let t=null,x=0,y=0,row=null,at=0;
+  const stop=()=>{clearTimeout(t);t=null;if(row){row.classList.remove("pressing");row=null}};
+  box.addEventListener("pointerdown",e=>{const r=e.target.closest(sel);if(!r||!box.contains(r)||(skip&&e.target.closest(skip)))return;
+    stop();row=r;x=e.clientX;y=e.clientY;r.classList.add("pressing");
+    t=setTimeout(()=>{stop();at=Date.now();try{navigator.vibrate&&navigator.vibrate(30)}catch(_){}fire(r)},900)});
+  box.addEventListener("pointermove",e=>{if(t&&(Math.abs(e.clientX-x)>10||Math.abs(e.clientY-y)>10))stop()});
+  ["pointerup","pointercancel","pointerleave"].forEach(ev=>box.addEventListener(ev,stop));
+  box.addEventListener("contextmenu",e=>{if(e.target.closest(sel))e.preventDefault()});
+  return{recent:()=>Date.now()-at<450};
+}
+// Ξεκίνημα: το Ταμείο ανοίγει στην προεπιλογή και οι υπενθυμίσεις των πάγιων συγχρονίζονται
+function pStartup(){
+  moneyBook=pDefBook();
+  (S.pfixed||[]).forEach(f=>{if(f.remind)syncFixReminder(f)});
+}
+// Υπενθύμιση πάγιου που πληρώθηκε ήδη αυτόν τον μήνα: δεν φαίνεται στις λίστες μέχρι να έρθει η ώρα της
+const pFixOfRem=r=>(S.pfixed||[]).find(f=>f.remId===r.id);
+function pRemHidden(r){const f=pFixOfRem(r);return !!f&&f.paid===ymKey(new Date())&&remDue(r)>new Date()}
+// Ολοκλήρωση υπενθύμισης πάγιου από τις Υπενθυμίσεις = «Πληρώθηκε» / «Εισπράχθηκε»
+function pRemDone(r){const f=pFixOfRem(r);if(!f)return false;
+  if(f.paid!==ymKey(new Date()))pFixPay(f);else{syncFixReminder(f);persist();render()}
+  return true}
+// Κλείνει την ειδοποίηση του κινητού και το παράθυρο ειδοποίησης μιας υπενθύμισης
+function pCloseAlert(id){
+  try{alertQ=alertQ.filter(a=>a.id!==id)}catch(_){}
+  try{navigator.serviceWorker&&navigator.serviceWorker.getRegistration().then(g=>g&&g.getNotifications&&g.getNotifications({tag:id}).then(ns=>ns.forEach(n=>n.close()))).catch(()=>{})}catch(_){}
+}
 let pf={dir:"all",kinds:[]};
 const pkinds=()=>S.settings.pkinds||DEF_PKINDS;
 const pKind=id=>pkinds().find(k=>k.id===id)||DEF_PKINDS.find(k=>k.id===id)||{id,emoji:"📦",name:"Άλλο",dir:"out",subs:[]};
@@ -237,6 +276,7 @@ function vPersonal(){
       <b class="amt ${pIn(e)?"in":"out"}">${pIn(e)?"+":"−"}${money(e.amount)}</b></div>`).join(""))
     :panel(`<div class="empty">${ent.length?T("Καμία κίνηση με αυτά τα φίλτρα."):T("Δεν έχεις προσωπικές κινήσεις σε αυτό το διάστημα. Πάτα «+ Έξοδο» ή «+ Έσοδο».")}</div>`);
   if((S.personal||[]).length)h+=`<button type="button" class="pwipe" data-act="pWipe">🗑 ${T("Διαγραφή όλων των κινήσεων ενός μήνα")}</button>`;
+  h+=`<label class="pbookdef"><input type="checkbox" data-pbdef="1" ${pDefBook()==="personal"?"checked":""}> ${T("Το Ταμείο να ανοίγει στα Προσωπικά")}</label>`;
   h+=`<p class="note" style="margin:10px 2px 0">${T("Τα προσωπικά είναι εντελώς χωριστά από την εργασία: δεν μετράνε στο Ταμείο, στους πελάτες ή στο κέρδος.")}</p>`;
   return h;
 }
@@ -244,27 +284,45 @@ function vPersonal(){
 function pCatPicker(dir,cb,back,sort){
   const ks=pkinds().filter(k=>k.dir===dir);
   openSheet({title:dir==="in"?T("Κατηγορία εσόδου"):T("Κατηγορία εξόδου"),cancelLabel:back?T("Πίσω"):T("Άκυρο"),onCancel:back||null,
-    body:`<div id="pcMain"><div class="pcatgrid ${sort?"sorting":""}">${ks.map((k,i)=>`<button type="button" data-pc="${k.id}"><span>${esc(k.emoji||"📦")}</span>${esc(T(k.name))}
+    body:`<div id="pcMain"><div id="pcAsk"></div><div class="pcatgrid ${sort?"sorting":""}">${ks.map((k,i)=>`<button type="button" data-pc="${k.id}"><span>${esc(k.emoji||"📦")}</span>${esc(T(k.name))}
         ${sort?`<i class="pcmv"><b data-pcl="${k.id}" class="${i?"":"dis"}">◀</b><b data-pcr="${k.id}" class="${i<ks.length-1?"":"dis"}">▶</b></i>`:""}</button>`).join("")}
       ${sort?"":`<button type="button" class="add" data-pcadd="1"><span>＋</span>${T("Νέα κατηγορία")}</button>`}</div>
-      <button type="button" class="btn ghost wide pcsort ${sort?"on":""}" data-pcsort="1">${sort?"✓ "+T("Τέλος ταξινόμησης"):"⇅ "+T("Αλλαγή σειράς εικονιδίων")}</button></div>
+      <button type="button" class="btn ghost wide pcsort ${sort?"on":""}" data-pcsort="1">${sort?"✓ "+T("Τέλος ταξινόμησης"):"⇅ "+T("Αλλαγή σειράς εικονιδίων")}</button>
+      ${sort?"":`<p class="note" style="margin:8px 2px 0">${T("Κράτα πατημένο ένα εικονίδιο για ένα δευτερόλεπτο για να το σβήσεις.")}</p>`}</div>
       <div id="pcSubs"></div>`});
-  let cur=null;
+  let cur=null,askSub=null;
   const subs=k=>{const kk=pKind(k);cur=k;
     if(!(kk.subs||[]).length){cb(k,"");return}
     $("#pcMain").hidden=true;
     $("#pcSubs").innerHTML=`<button type="button" class="pcback" data-pcback="1">‹ ${T("Όλες οι κατηγορίες")}</button><div class="pickbox pcsubs"><div class="picksec">${esc(kk.emoji||"")} ${esc(T(kk.name))} · ${T("υποκατηγορία")}</div>
       <button type="button" class="pickrow" data-ps="">${T("Χωρίς υποκατηγορία")}</button>`+
-      (kk.subs||[]).map(s=>`<button type="button" class="pickrow" data-ps="${esc(s)}">${esc(s)}</button>`).join("")+
-      `<button type="button" class="pickrow editrow" data-psadd="1">＋ ${T("Νέα υποκατηγορία")}</button><button type="button" class="pickrow editrow" data-psedit="1">✎ ${T("Σειρά και διαγραφή επιλογών")}</button></div>`;
+      (kk.subs||[]).map(s=>askSub===s?`<div class="pcask"><span>${T("Να σβηστεί το «{n}»;",{n:esc(s)})}</span><button type="button" class="btn softout small" data-psdel="${esc(s)}">🗑 ${T("Διαγραφή")}</button><button type="button" class="btn ghost small" data-pcno="1">${T("Άκυρο")}</button></div>`
+        :`<button type="button" class="pickrow" data-ps="${esc(s)}">${esc(s)}</button>`).join("")+
+      `<button type="button" class="pickrow editrow" data-psadd="1">＋ ${T("Νέα υποκατηγορία")}</button><button type="button" class="pickrow editrow" data-psedit="1">✎ ${T("Σειρά και διαγραφή επιλογών")}</button></div>
+      <p class="note" style="margin:8px 2px 0">${T("Κράτα πατημένη μια επιλογή για ένα δευτερόλεπτο για να τη σβήσεις.")}</p>`;
     const sb=$("#shBody");sb.scrollTop=0;if(sb.parentElement)sb.parentElement.scrollTop=0};
   const move=(id,d)=>{const all=S.settings.pkinds,same=all.filter(k=>k.dir===dir),i=same.findIndex(k=>k.id===id),j=i+d;if(j<0||j>=same.length)return;
     const a=all.indexOf(same[i]),b=all.indexOf(same[j]);[all[a],all[b]]=[all[b],all[a]];write();pCatPicker(dir,cb,back,true)};
+  const askCat=id=>{const k=pKind(id),n=(S.personal||[]).filter(e=>e.kind===id).length;
+    $("#pcAsk").innerHTML=id?`<div class="pcask"><span>${T("Να σβηστεί η κατηγορία «{n}»;",{n:esc(T(k.name))})}${n?`<small>${T("Οι {n} κινήσεις της μένουν.",{n})}</small>`:""}</span>
+      <button type="button" class="btn softout small" data-pcdel="${id}">🗑 ${T("Διαγραφή")}</button><button type="button" class="btn ghost small" data-pcno="1">${T("Άκυρο")}</button></div>`:"";
+    $("#shBody").querySelectorAll("[data-pc]").forEach(b=>b.classList.toggle("on",b.dataset.pc===id))};
+  const lp=sort?{recent:()=>false}:pLongPress($("#shBody"),"[data-pc],[data-ps]",el=>{
+    if(el.dataset.pc){askCat(el.dataset.pc);const sb=$("#shBody");sb.scrollTop=0;return}
+    if(el.dataset.ps){askSub=el.dataset.ps;subs(cur)}});
   $("#shBody").onclick=e=>{
+    if(lp.recent())return;
+    if(e.target.closest("[data-pcno]")){if(askSub!==null){askSub=null;subs(cur)}else askCat(null);return}
+    const cd=e.target.closest("[data-pcdel]");if(cd){const all=S.settings.pkinds,i=all.findIndex(k=>k.id===cd.dataset.pcdel);if(i<0)return;
+      const [k]=all.splice(i,1);write();render();pCatPicker(dir,cb,back);
+      undoToast(T("Η κατηγορία «{n}» σβήστηκε.",{n:T(k.name)}),()=>{all.splice(i,0,k);write();render();if($("#pcMain"))pCatPicker(dir,cb,back)});return}
+    const sd=e.target.closest("[data-psdel]");if(sd){const kk=pKind(cur),v=sd.dataset.psdel,i=(kk.subs||[]).indexOf(v);askSub=null;
+      if(i>=0){kk.subs.splice(i,1);write()}subs(cur);if(!(kk.subs||[]).length){$("#pcSubs").innerHTML="";$("#pcMain").hidden=false;cur=null}
+      undoToast(T("Το «{n}» σβήστηκε.",{n:v}),()=>{if(i>=0){kk.subs.splice(i,0,v);write()}});return}
     if(e.target.closest("[data-pcsort]")){pCatPicker(dir,cb,back,!sort);return}
     const l=e.target.closest("[data-pcl]");if(l){e.stopPropagation();move(l.dataset.pcl,-1);return}
     const r=e.target.closest("[data-pcr]");if(r){e.stopPropagation();move(r.dataset.pcr,1);return}
-    if(e.target.closest("[data-pcback]")){$("#pcSubs").innerHTML="";$("#pcMain").hidden=false;cur=null;return}
+    if(e.target.closest("[data-pcback]")){$("#pcSubs").innerHTML="";$("#pcMain").hidden=false;cur=null;askSub=null;return}
     if(sort)return;
     if(e.target.closest("[data-pcadd]")){const n=(prompt(T("Όνομα νέας κατηγορίας"))||"").trim();if(!n)return;
       const k={id:uid(),emoji:"📦",name:n,dir,subs:[]};S.settings.pkinds.push(k);write();cb(k.id,"");return}
@@ -385,11 +443,13 @@ function fixNextDue(f){const now=new Date();let d=new Date(now.getFullYear(),now
   if(f.paid===ymKey(now)||d<now)d=new Date(now.getFullYear(),now.getMonth()+1,Math.min(+f.day||1,28),10,0);return d}
 function syncFixReminder(f){
   const r=f.remId&&S.reminders.find(x=>x.id===f.remId);
-  if(!f.remind){if(r){r.deleted=true}f.remId=null;return}
+  if(!f.remind){if(r){r.deleted=true;pCloseAlert(r.id)}f.remId=null;return}
   const due=fixNextDue(f),when=new Date(due);when.setDate(when.getDate()-(+f.before||0));
   if(when<new Date()){const n=new Date();n.setMinutes(0,0,0);n.setHours(n.getHours()+1);if(n<due)when.setTime(n.getTime())}
   const text=(f.dir==="in"?T("Είσπραξη: {n} — {a}",{n:f.name,a:money(+f.amount||0)}):T("Πληρωμή: {n} — {a}",{n:f.name,a:money(+f.amount||0)}));
-  if(r){r.text=text;r.when=toLocalInput(when);r.repeat="month";r.deleted=false;r.done=false}
+  if(r){const nw=toLocalInput(when);
+    if(r.when!==nw||r.snoozeUntil||r.done){r.alerted=false;r.preAlerted=false;r.snoozeUntil=null;pCloseAlert(r.id)}
+    r.text=text;r.when=nw;r.repeat="month";r.deleted=false;r.done=false}
   else{const nr={id:uid(),text,when:toLocalInput(when),repeat:"month",remindBefore:0,sound:"",done:false,deleted:false,createdAt:Date.now()};S.reminders.push(nr);f.remId=nr.id}
 }
 // Λίστα επιλογών (υποκατηγορίες) μιας κατηγορίας: διαλέγεις, προσθέτεις, σβήνεις, αλλάζεις σειρά
@@ -457,7 +517,7 @@ function pFixQuick(){
   const keyOf=(dir,kind,name)=>dir+"|"+kind+"|"+norm(name);
   const find=(dir,kind,name)=>fx.find(f=>(f.dir||"out")===dir&&f.kind===kind&&norm(f.name)===norm(name));
   const vals={};fx.forEach(f=>{vals[keyOf(f.dir||"out",f.kind,f.name)]={amt:String(f.amount),day:String(f.day||"")}});
-  let mode="out",edit=false,ask=null,lpT=null,lpAt=0;const showHid=new Set();
+  let mode="out",edit=false,ask=null;const showHid=new Set();
   const itemsOf=(k,dir)=>{const base=(k.subs||[]).length?k.subs.slice():[T(k.name)];
     fx.forEach(f=>{if((f.dir||"out")===dir&&f.kind===k.id&&!base.some(n=>norm(n)===norm(f.name)))base.push(f.name)});return base};
   const ensureSubs=(k,dir)=>{if(!(k.subs||[]).length){k.subs=[T(k.name)]}return k.subs};
@@ -483,7 +543,7 @@ function pFixQuick(){
     let h=`<div class="seg qseg"><button type="button" data-qm="out" class="${mode==="out"?"on out":""}">🔴 ${T("Πάγια έξοδα")}</button><button type="button" data-qm="in" class="${mode==="in"?"on in":""}">🟢 ${T("Πάγια έσοδα")}</button></div>
       <div class="qhead ${mode}"><span>${mode==="out"?T("Σύνολο πάγιων εξόδων"):T("Σύνολο πάγιων εσόδων")}</span><b>${money(rnd(tot))}</b></div>
       <button type="button" class="btn ghost wide pqedit ${edit?"on":""}" data-qe="1">${edit?"✓ "+T("Τέλος επεξεργασίας"):"🚫 "+T("Απόκρυψη και διαγραφή")}</button>
-      <p class="note" style="margin:6px 2px 10px">${edit?T("Με το 👁 κρύβεις ό,τι δεν χρησιμοποιείς και με τον κάδο το σβήνεις εντελώς."):T("Γράψε ποσό και μέρα δίπλα σε όσα ισχύουν. Με ▲▼ αλλάζεις σειρά, με το ＋ δίπλα στον τίτλο προσθέτεις.")+" "+T("Για διαγραφή κράτα πατημένο το όνομα για ένα δευτερόλεπτο.")}</p>`;
+      <p class="note" style="margin:6px 2px 10px">${edit?T("Με το 👁 κρύβεις ό,τι δεν χρησιμοποιείς και με τον κάδο το σβήνεις εντελώς."):T("Γράψε ποσό και μέρα δίπλα σε όσα ισχύουν. Με ▲▼ αλλάζεις σειρά, με το ＋ δίπλα στον τίτλο προσθέτεις.")+" "+T("Για απόκρυψη ή διαγραφή κράτα πατημένο το όνομα για ένα δευτερόλεπτο.")}</p>`;
     let shown=0;
     ks.forEach(k=>{
       const items=itemsOf(k,mode);
@@ -497,7 +557,8 @@ function pFixQuick(){
         const arrows=`<span class="qarr"><button type="button" data-qu="${k.id}|${esc(name)}" ${si>0?"":"disabled"} aria-label="${T("Πιο πάνω")}">▲</button><button type="button" data-qd="${k.id}|${esc(name)}" ${si>=0&&si<subs.length-1?"":"disabled"} aria-label="${T("Πιο κάτω")}">▼</button></span>`;
         if(edit)return `<div class="pqrow qe ${off?"off":""}"><button type="button" class="qeye" data-qh="${esc(key)}" aria-label="${T("Εμφάνιση")}">${off?"🚫":"👁"}</button><span class="qn">${esc(name)}</span>
           <span class="qbtns">${arrows}<button type="button" class="mini del" data-qx="${k.id}|${esc(name)}" aria-label="${T("Διαγραφή")}">${ic("trash",15)}</button></span></div>`;
-        if(ask===key)return `<div class="pqrow qask"><span class="qn">${T("Να σβηστεί το «{n}»;",{n:esc(name)})}</span><button type="button" class="btn softout small" data-qx="${k.id}|${esc(name)}" data-qok="1">🗑 ${T("Διαγραφή")}</button><button type="button" class="btn ghost small" data-qno="1">${T("Άκυρο")}</button></div>`;
+        if(ask===key){const has=+numStr(v.amt||"")>0;return `<div class="pqrow qask"><span class="qn">${T("Τι να γίνει με το «{n}»;",{n:esc(name)})}</span>
+          <span class="qaskb">${has?"":`<button type="button" class="btn ghost small" data-qh="${esc(key)}" data-qok="1">${off?"👁 "+T("Εμφάνιση"):"🚫 "+T("Απόκρυψη")}</button>`}<button type="button" class="btn softout small" data-qx="${k.id}|${esc(name)}" data-qok="1">🗑 ${T("Διαγραφή")}</button><button type="button" class="btn ghost small" data-qno="1">${T("Άκυρο")}</button></span></div>`}
         if(off&&isHid(name))return `<div class="pqrow qoff" data-lp="${esc(key)}"><span class="qn">${esc(name)}</span><span class="qoffl">${T("κρυμμένο")}</span><button type="button" class="qeye" data-qh="${esc(key)}" aria-label="${T("Εμφάνιση")}">👁</button></div>`;
         return `<div class="pqrow ${+numStr(v.amt||"")>0?"has":""}" data-lp="${esc(key)}"><span class="qn">${esc(name)}</span>
           <span class="curr qa"><b>€</b><input inputmode="decimal" placeholder="0" data-qa="${esc(key)}" value="${esc(v.amt||"")}"></span>
@@ -513,21 +574,14 @@ function pFixQuick(){
     const t=[...box.querySelectorAll("[data-qa]")].reduce((x,i)=>x+(+numStr(i.value||"")||0),0),hb=box.querySelector(".qhead b");if(hb)hb.textContent=money(rnd(t))});
   box.addEventListener("change",e=>{const d=e.target.closest("[data-qdy]");if(!d)return;const k=d.dataset.qdy;vals[k]=Object.assign(vals[k]||{},{day:d.value});sheetDirty=true});
   box.addEventListener("keydown",e=>{const n=e.target.closest("[data-qnew]");if(n&&e.key==="Enter"){e.preventDefault();box.querySelector(`[data-qadd="${n.dataset.qnew}"]`).click()}});
-  // κράτημα ~1 δευτερόλεπτο πάνω στο όνομα: βγαίνει επιλογή διαγραφής
-  let lpX=0,lpY=0,lpRow=null;
-  const lpStop=()=>{clearTimeout(lpT);lpT=null;if(lpRow){lpRow.classList.remove("pressing");lpRow=null}};
-  box.addEventListener("pointerdown",e=>{if(edit)return;const r=e.target.closest("[data-lp]");if(!r||e.target.closest("input,select,button"))return;
-    lpStop();lpRow=r;lpX=e.clientX;lpY=e.clientY;r.classList.add("pressing");
-    lpT=setTimeout(()=>{const k=r.dataset.lp;lpStop();lpAt=Date.now();try{navigator.vibrate&&navigator.vibrate(30)}catch(_){}ask=k;paint()},900)});
-  box.addEventListener("pointermove",e=>{if(lpT&&(Math.abs(e.clientX-lpX)>10||Math.abs(e.clientY-lpY)>10))lpStop()});
-  ["pointerup","pointercancel","pointerleave"].forEach(t=>box.addEventListener(t,lpStop));
-  box.addEventListener("contextmenu",e=>{if(e.target.closest("[data-lp]"))e.preventDefault()});
+  // κράτημα ~1 δευτερόλεπτο πάνω στο όνομα: βγαίνει «Απόκρυψη» ή «Διαγραφή»
+  const lp=pLongPress(box,"[data-lp]",r=>{if(edit)return;ask=r.dataset.lp;paint()},"input,select,button");
   box.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
-    if(Date.now()-lpAt<450)return;
+    if(lp.recent())return;
     if(b.dataset.qno){ask=null;paint();return}
     if(b.dataset.qm){mode=b.dataset.qm;ask=null;paint();return}
     if(b.dataset.qe){edit=!edit;ask=null;paint();return}
-    if(b.dataset.qh){const k=b.dataset.qh;if(hid.has(k))hid.delete(k);else hid.add(k);S.settings.pqHide=[...hid];write();paint();return}
+    if(b.dataset.qh){ask=null;const k=b.dataset.qh;if(hid.has(k))hid.delete(k);else hid.add(k);S.settings.pqHide=[...hid];write();paint();return}
     const kk=id=>S.settings.pkinds.find(x=>x.id===id);
     if(b.dataset.qu||b.dataset.qd){const raw=b.dataset.qu||b.dataset.qd,id=raw.split("|")[0],name=raw.slice(id.length+1),k=kk(id),subs=ensureSubs(k,mode);
       const i=subs.findIndex(n=>norm(n)===norm(name)),st=b.dataset.qu?-1:1;let j=i+st;
@@ -586,6 +640,9 @@ function pFixPay(f){
   undoToast(inc?T("«{n}» εισπράχθηκε και μπήκε στα έσοδα.",{n:f.name}):T("«{n}» πληρώθηκε και μπήκε στα έξοδα.",{n:f.name}),()=>{const i=S.personal.indexOf(e);if(i>=0)S.personal.splice(i,1);f.paid=was;syncFixReminder(f);persist();render()});
 }
 
+document.addEventListener("change",e=>{const c=e.target.closest("[data-pbdef]");if(!c)return;
+  S.settings.defaultBook=c.checked?"personal":"work";write();
+  toast(c.checked?T("Το Ταμείο θα ανοίγει στα Προσωπικά."):T("Το Ταμείο θα ανοίγει στην Εργασία."))});
 /* ---------- Κουμπιά (data-act) των Προσωπικών ----------
    Καλείται από τον κεντρικό χειριστή κλικ του index.html· επιστρέφει true
    όταν η ενέργεια ανήκει εδώ. */
