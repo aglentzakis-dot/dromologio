@@ -59,6 +59,8 @@
 .pcatgrid button{position:relative}.pcatgrid.sorting button{border-style:dashed}
 .pcmv{display:flex;gap:6px;margin-top:4px;font-style:normal}.pcmv b{display:inline-flex;align-items:center;justify-content:center;width:30px;height:26px;border-radius:8px;background:var(--brand);color:var(--onbrand);font-size:12px}
 .pcmv b.dis{opacity:.25;pointer-events:none}
+.pcx{position:absolute;top:4px;right:4px;width:28px;height:28px;border-radius:50%;background:color-mix(in srgb,var(--red) 12%,var(--card));border:1px solid color-mix(in srgb,var(--red) 35%,var(--card));display:flex;align-items:center;justify-content:center;font-style:normal;font-size:14px}
+.pickrow.pshid{color:var(--pfaint);opacity:.6}.pickrow.pshid small{margin-left:auto;font-style:italic;font-size:11.5px}
 .pcsort{width:100%;margin-top:10px;border:1.5px dashed var(--line)}.pcsort.on{border-style:solid;border-color:var(--brand);color:var(--brand)}.pcatgrid button.on{border-color:var(--brand);background:color-mix(in srgb,var(--brand) 10%,var(--card))}.pcatgrid button.add{border-style:dashed;color:var(--muted)}
 .pkedit{display:flex;gap:8px;align-items:flex-start;padding:10px 12px;border-bottom:1px solid var(--line)}
 .pkedit .pke{width:52px;text-align:center;font-size:20px;margin:0;padding:6px 2px}
@@ -283,25 +285,46 @@ function vPersonal(){
   return h;
 }
 // Επιλογή κατηγορίας και υποκατηγορίας σε αναδυόμενο παράθυρο (κοινό για κινήσεις και πάγια)
+// Κοινός συγχρονισμός λιστών: ό,τι κρύβεις ή σβήνεις σε μία λίστα (γρήγορη λίστα παγίων, επιλογή κατηγορίας,
+// «Σειρά και διαγραφή επιλογών», «Κατηγορίες») ισχύει παντού.
+const pHidKey=(dir,kind,name)=>dir+"|"+kind+"|"+norm(name);
+const pHidSet=()=>new Set(Array.isArray(S.settings.pqHide)?S.settings.pqHide:[]);
+function pSetHidden(dir,kind,name,on){const h=pHidSet(),k=pHidKey(dir,kind,name);if(on)h.add(k);else h.delete(k);S.settings.pqHide=[...h];write()}
+// Σβήστηκε μια επιλογή (π.χ. Netflix): αν είναι και στα πάγια, ρωτάει να σταματήσει κι εκεί
+function pSubGone(kind,name,dir){
+  const h=pHidSet();h.delete(pHidKey(dir||"out",kind,name));S.settings.pqHide=[...h];
+  const f=(S.pfixed||[]).find(x=>x.kind===kind&&norm(x.name)===norm(name));
+  if(f&&confirm(T("Το «{n}» είναι και στα πάγια σου κάθε μήνα. Να σταματήσει κι εκεί;",{n:f.name})))pFixStop(f,true);
+  write();
+}
+// Σβήστηκε μια κατηγορία: ρωτάει για τα πάγια που ανήκουν σε αυτή
+function pKindGone(k){
+  const fs=(S.pfixed||[]).filter(x=>x.kind===k.id);
+  if(fs.length&&confirm(T("Η κατηγορία «{n}» έχει {c} πάγια ({l}). Να σταματήσουν κι αυτά;",{n:T(k.name),c:fs.length,l:fs.map(f=>f.name).join(", ")})))
+    fs.forEach(f=>{f.remind=false;syncFixReminder(f);S.pfixed.splice(S.pfixed.indexOf(f),1)});
+  S.settings.pqHide=[...pHidSet()].filter(x=>x.split("|")[1]!==k.id);write();
+}
 function pCatPicker(dir,cb,back,sort){
   const ks=pkinds().filter(k=>k.dir===dir);
   openSheet({title:dir==="in"?T("Κατηγορία εσόδου"):T("Κατηγορία εξόδου"),cancelLabel:back?T("Πίσω"):T("Άκυρο"),onCancel:back||null,
     body:`<div id="pcMain"><div id="pcAsk"></div><div class="pcatgrid ${sort?"sorting":""}">${ks.map((k,i)=>`<button type="button" data-pc="${k.id}"><span>${esc(k.emoji||"📦")}</span>${esc(T(k.name))}
-        ${sort?`<i class="pcmv"><b data-pcl="${k.id}" class="${i?"":"dis"}">◀</b><b data-pcr="${k.id}" class="${i<ks.length-1?"":"dis"}">▶</b></i>`:""}</button>`).join("")}
+        ${sort?`<i class="pcmv"><b data-pcl="${k.id}" class="${i?"":"dis"}">◀</b><b data-pcr="${k.id}" class="${i<ks.length-1?"":"dis"}">▶</b></i><i class="pcx" data-pcx="${k.id}" aria-label="${T("Διαγραφή")}">🗑</i>`:""}</button>`).join("")}
       ${sort?"":`<button type="button" class="add" data-pcadd="1"><span>＋</span>${T("Νέα κατηγορία")}</button>`}</div>
-      <button type="button" class="btn ghost wide pcsort ${sort?"on":""}" data-pcsort="1">${sort?"✓ "+T("Τέλος ταξινόμησης"):"⇅ "+T("Αλλαγή σειράς εικονιδίων")}</button>
-      ${sort?"":`<p class="note" style="margin:8px 2px 0">${T("Κράτα πατημένο ένα εικονίδιο για ένα δευτερόλεπτο για να το σβήσεις.")}</p>`}</div>
+      <button type="button" class="btn ghost wide pcsort ${sort?"on":""}" data-pcsort="1">${sort?"✓ "+T("Τέλος"):"✎ "+T("Σειρά και διαγραφή κατηγοριών")}</button>
+      <p class="note" style="margin:8px 2px 0">${sort?T("Με ◀ ▶ αλλάζεις θέση, με τον κάδο σβήνεις την κατηγορία."):T("Για διαγραφή: «Σειρά και διαγραφή κατηγοριών» ή κράτα πατημένο ένα εικονίδιο για ένα δευτερόλεπτο.")}</p></div>
       <div id="pcSubs"></div>`});
-  let cur=null,askSub=null;
+  let cur=null,askSub=null,showHid=false;
   const subs=k=>{const kk=pKind(k);cur=k;
     if(!(kk.subs||[]).length){cb(k,"");return}
+    const hs=pHidSet(),isH=s=>hs.has(pHidKey(dir,k,s)),hidN=(kk.subs||[]).filter(isH).length;
     $("#pcMain").hidden=true;
     $("#pcSubs").innerHTML=`<button type="button" class="pcback" data-pcback="1">‹ ${T("Όλες οι κατηγορίες")}</button><div class="pickbox pcsubs"><div class="picksec">${esc(kk.emoji||"")} ${esc(T(kk.name))} · ${T("υποκατηγορία")}</div>
       <button type="button" class="pickrow" data-ps="">${T("Χωρίς υποκατηγορία")}</button>`+
-      (kk.subs||[]).map(s=>askSub===s?`<div class="pcask"><span>${T("Να σβηστεί το «{n}»;",{n:esc(s)})}</span><button type="button" class="btn softout small" data-psdel="${esc(s)}">🗑 ${T("Διαγραφή")}</button><button type="button" class="btn ghost small" data-pcno="1">${T("Άκυρο")}</button></div>`
-        :`<button type="button" class="pickrow" data-ps="${esc(s)}">${esc(s)}</button>`).join("")+
+      (kk.subs||[]).filter(s=>showHid||!isH(s)||askSub===s).map(s=>askSub===s?`<div class="pcask"><span>${T("Τι να γίνει με το «{n}»;",{n:esc(s)})}</span><button type="button" class="btn ghost small" data-pshide="${esc(s)}">${isH(s)?"👁 "+T("Εμφάνιση"):"🚫 "+T("Απόκρυψη")}</button><button type="button" class="btn softout small" data-psdel="${esc(s)}">🗑 ${T("Διαγραφή")}</button><button type="button" class="btn ghost small" data-pcno="1">${T("Άκυρο")}</button></div>`
+        :`<button type="button" class="pickrow ${isH(s)?"pshid":""}" data-ps="${esc(s)}">${esc(s)}${isH(s)?`<small>${T("κρυμμένο")}</small>`:""}</button>`).join("")+
+      (hidN?`<button type="button" class="qhidn" data-pshow="1">${showHid?"▲ "+T("Απόκρυψη των κρυμμένων"):"🚫 "+pl(hidN,"{n} κρυμμένο · εμφάνιση","{n} κρυμμένα · εμφάνιση")}</button>`:"")+
       `<button type="button" class="pickrow editrow" data-psadd="1">＋ ${T("Νέα υποκατηγορία")}</button><button type="button" class="pickrow editrow" data-psedit="1">✎ ${T("Σειρά και διαγραφή επιλογών")}</button></div>
-      <p class="note" style="margin:8px 2px 0">${T("Κράτα πατημένη μια επιλογή για ένα δευτερόλεπτο για να τη σβήσεις.")}</p>`;
+      <p class="note" style="margin:8px 2px 0">${T("Κράτα πατημένη μια επιλογή για ένα δευτερόλεπτο για απόκρυψη ή διαγραφή. Ισχύει παντού, και στη γρήγορη λίστα παγίων.")}</p>`;
     const sb=$("#shBody");sb.scrollTop=0;if(sb.parentElement)sb.parentElement.scrollTop=0};
   const move=(id,d)=>{const all=S.settings.pkinds,same=all.filter(k=>k.dir===dir),i=same.findIndex(k=>k.id===id),j=i+d;if(j<0||j>=same.length)return;
     const a=all.indexOf(same[i]),b=all.indexOf(same[j]);[all[a],all[b]]=[all[b],all[a]];write();pCatPicker(dir,cb,back,true)};
@@ -309,23 +332,27 @@ function pCatPicker(dir,cb,back,sort){
     $("#pcAsk").innerHTML=id?`<div class="pcask"><span>${T("Να σβηστεί η κατηγορία «{n}»;",{n:esc(T(k.name))})}${n?`<small>${T("Οι {n} κινήσεις της μένουν.",{n})}</small>`:""}</span>
       <button type="button" class="btn softout small" data-pcdel="${id}">🗑 ${T("Διαγραφή")}</button><button type="button" class="btn ghost small" data-pcno="1">${T("Άκυρο")}</button></div>`:"";
     $("#shBody").querySelectorAll("[data-pc]").forEach(b=>b.classList.toggle("on",b.dataset.pc===id))};
-  const lp=sort?{recent:()=>false}:pLongPress($("#shBody"),"[data-pc],[data-ps]",el=>{
+  const lp=pLongPress($("#shBody"),"[data-pc],[data-ps]",el=>{if(sort&&el.dataset.pc){askCat(el.dataset.pc);return}
     if(el.dataset.pc){askCat(el.dataset.pc);const sb=$("#shBody");sb.scrollTop=0;return}
     if(el.dataset.ps){askSub=el.dataset.ps;subs(cur)}});
   $("#shBody").onclick=e=>{
     if(lp.recent())return;
     if(e.target.closest("[data-pcno]")){if(askSub!==null){askSub=null;subs(cur)}else askCat(null);return}
+    const cx=e.target.closest("[data-pcx]");if(cx){e.stopPropagation();askCat(cx.dataset.pcx);const sb=$("#shBody");sb.scrollTop=0;return}
+    if(e.target.closest("[data-pshow]")){showHid=!showHid;subs(cur);return}
+    const ph=e.target.closest("[data-pshide]");if(ph){const v=ph.dataset.pshide,on=!pHidSet().has(pHidKey(dir,cur,v));pSetHidden(dir,cur,v,on);askSub=null;subs(cur);
+      toast(on?T("Κρύφτηκε παντού, και στη γρήγορη λίστα παγίων."):T("Εμφανίζεται ξανά παντού."));return}
     const cd=e.target.closest("[data-pcdel]");if(cd){const all=S.settings.pkinds,i=all.findIndex(k=>k.id===cd.dataset.pcdel);if(i<0)return;
-      const [k]=all.splice(i,1);write();render();pCatPicker(dir,cb,back);
+      const [k]=all.splice(i,1);pKindGone(k);write();render();pCatPicker(dir,cb,back,sort);
       undoToast(T("Η κατηγορία «{n}» σβήστηκε.",{n:T(k.name)}),()=>{all.splice(i,0,k);write();render();if($("#pcMain"))pCatPicker(dir,cb,back)});return}
     const sd=e.target.closest("[data-psdel]");if(sd){const kk=pKind(cur),v=sd.dataset.psdel,i=(kk.subs||[]).indexOf(v);askSub=null;
-      if(i>=0){kk.subs.splice(i,1);write()}subs(cur);if(!(kk.subs||[]).length){$("#pcSubs").innerHTML="";$("#pcMain").hidden=false;cur=null}
+      if(i>=0){kk.subs.splice(i,1);write()}pSubGone(cur,v,dir);subs(cur);if(!(kk.subs||[]).length){$("#pcSubs").innerHTML="";$("#pcMain").hidden=false;cur=null}
       undoToast(T("Το «{n}» σβήστηκε.",{n:v}),()=>{if(i>=0){kk.subs.splice(i,0,v);write()}});return}
     if(e.target.closest("[data-pcsort]")){pCatPicker(dir,cb,back,!sort);return}
     const l=e.target.closest("[data-pcl]");if(l){e.stopPropagation();move(l.dataset.pcl,-1);return}
     const r=e.target.closest("[data-pcr]");if(r){e.stopPropagation();move(r.dataset.pcr,1);return}
     if(e.target.closest("[data-pcback]")){$("#pcSubs").innerHTML="";$("#pcMain").hidden=false;cur=null;askSub=null;return}
-    if(sort)return;
+    if(sort){if(e.target.closest("[data-pc]")&&!e.target.closest("[data-pcl],[data-pcr]"))askCat(e.target.closest("[data-pc]").dataset.pc);return}
     if(e.target.closest("[data-pcadd]")){const n=(prompt(T("Όνομα νέας κατηγορίας"))||"").trim();if(!n)return;
       const k={id:uid(),emoji:"📦",name:n,dir,subs:[]};S.settings.pkinds.push(k);write();cb(k.id,"");return}
     const c=e.target.closest("[data-pc]");if(c){subs(c.dataset.pc);return}
@@ -390,10 +417,11 @@ function pKindsSheet(){
   $("#shBody").addEventListener("change",e=>{
     const n=e.target.closest("[data-pkn]");if(n){const v=n.value.trim();if(v){ks[+n.dataset.pkn].name=v;write();render()}return}
     const m=e.target.closest("[data-pke]");if(m){ks[+m.dataset.pke].emoji=m.value.trim();write();render();return}
-    const s=e.target.closest("[data-pks]");if(s){ks[+s.dataset.pks].subs=s.value.split(",").map(x=>x.trim()).filter(Boolean);write();render()}});
+    const s=e.target.closest("[data-pks]");if(s){const k=ks[+s.dataset.pks],old=(k.subs||[]).slice();k.subs=s.value.split(",").map(x=>x.trim()).filter(Boolean);write();
+      old.filter(o=>!k.subs.some(n=>norm(n)===norm(o))).forEach(o=>pSubGone(k.id,o,k.dir));render()}});
   $("#shBody").addEventListener("click",e=>{const d=e.target.closest("[data-pkdel]");if(!d)return;const i=+d.dataset.pkdel;
     if(used(ks[i].id)&&!confirm(T("Υπάρχουν κινήσεις σε αυτή την κατηγορία. Θα μείνουν, αλλά θα φαίνονται ως «Άλλο». Να σβηστεί;")))return;
-    ks.splice(i,1);write();render();pKindsSheet()});
+    const[k]=ks.splice(i,1);pKindGone(k);write();render();pKindsSheet()});
   $("#pk_add").onclick=()=>{const n=val("pk_new");if(!n){toast(T("Γράψε όνομα."));return}ks.push({id:uid(),emoji:"📦",name:n,dir:val("pk_dir"),subs:[]});write();render();pKindsSheet()};
 }
 function pPickSheet(){
@@ -477,7 +505,7 @@ function subListSheet(kindId,onPick,back){
     const sw=(i,j)=>{[k.subs[i],k.subs[j]]=[k.subs[j],k.subs[i]];write();paint()};
     if(b.dataset.slu!=null){const i=+b.dataset.slu;if(i>0)sw(i,i-1);return}
     if(b.dataset.sld!=null){const i=+b.dataset.sld;if(i<k.subs.length-1)sw(i,i+1);return}
-    if(b.dataset.slx!=null){const i=+b.dataset.slx;if(confirm(T("Να σβηστεί η επιλογή «{n}» από τη λίστα;",{n:k.subs[i]}))){k.subs.splice(i,1);write();paint()}}};
+    if(b.dataset.slx!=null){const i=+b.dataset.slx;if(confirm(T("Να σβηστεί η επιλογή «{n}» από τη λίστα;",{n:k.subs[i]}))){const[v]=k.subs.splice(i,1);write();pSubGone(k.id,v,k.dir);paint()}}};
 }
 function pFixForm(f0,draft){
   pMigrate();
